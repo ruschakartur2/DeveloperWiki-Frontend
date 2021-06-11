@@ -1,29 +1,33 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/auth/";
+const USERS_URL = "http://localhost:8000/accounts/";
 
-const register = (username, email, password) => {
-  return axios.post(API_URL + "signup", {
-    username,
+const register = (email, password) => {
+  return axios.post(USERS_URL + "create/", {
     email,
     password,
   });
 };
 
-const login = (username, password) => {
+const login = (email, password) => {
   return axios
-    .post(API_URL + "signin", {
-      username,
+    .post(USERS_URL + "token/", {
+      email,
       password,
     })
     .then((response) => {
-      if (response.data.accessToken) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+      if (response.data.token) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("token", JSON.stringify(response.data.token));
       }
 
-      return response.data;
+      return response.data.user;
     });
 };
+
+const github = () => {
+
+}
 
 const logout = () => {
   localStorage.removeItem("user");
@@ -32,5 +36,6 @@ const logout = () => {
 export default {
   register,
   login,
+  github,
   logout,
 };

@@ -8,6 +8,9 @@ import CheckButton from "react-validation/build/button";
 
 import { login } from "../actions/auth";
 
+import LoginGithub from "react-login-github";
+import axios from "axios";
+
 const required = (value) => {
   if (!value) {
     return (
@@ -22,18 +25,18 @@ const Login = (props) => {
   const form = useRef();
   const checkBtn = useRef();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [accessToken, setAccessToken] = useState("");
   const { isLoggedIn } = useSelector(state => state.auth);
   const { message } = useSelector(state => state.message);
 
   const dispatch = useDispatch();
 
-  const onChangeUsername = (e) => {
-    const username = e.target.value;
-    setUsername(username);
+  const onChangeEmail = (e) => {
+    const email = e.target.value;
+    setEmail(email);
   };
 
   const onChangePassword = (e) => {
@@ -49,7 +52,7 @@ const Login = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      dispatch(login(username, password))
+      dispatch(login(email, password))
         .then(() => {
           props.history.push("/profile");
           window.location.reload();
@@ -66,6 +69,27 @@ const Login = (props) => {
     return <Redirect to="/profile" />;
   }
 
+
+
+
+
+  const onSuccess = response => {
+    return axios.post('https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', {
+      "client_id": "f64304f6601dbf74431b",
+      "client_secret": "d36f978f5e8fba938744ee5e844480b2c2033059",
+      "code": response.code,
+      "redirect_uri": "http://127.0.0.1:3000/login/",
+    }, {
+      headers: {
+        'Accept': 'application/json',
+      }
+    }).then(res => {
+    })
+
+  }
+  const onFailure = error => {
+    console.error(error)
+  }
   return (
     <div className="col-md-12">
       <div className="card card-container">
@@ -77,13 +101,13 @@ const Login = (props) => {
 
         <Form onSubmit={handleLogin} ref={form}>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <Input
-              type="text"
+              type="email"
               className="form-control"
-              name="username"
-              value={username}
-              onChange={onChangeUsername}
+              name="email"
+              value={email}
+              onChange={onChangeEmail}
               validations={[required]}
             />
           </div>
@@ -118,7 +142,11 @@ const Login = (props) => {
           )}
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
-      </div>
+
+
+        <LoginGithub clientId="f64304f6601dbf74431b"
+                     onSuccess={onSuccess}
+                     onFailure={onFailure}/></div>
     </div>
   );
 };
