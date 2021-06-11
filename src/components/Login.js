@@ -55,7 +55,6 @@ const Login = (props) => {
       dispatch(login(email, password))
         .then(() => {
           props.history.push("/profile");
-          window.location.reload();
         })
         .catch(() => {
           setLoading(false);
@@ -93,11 +92,7 @@ const Login = (props) => {
   return (
     <div className="col-md-12">
       <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
+        <h2 className="m-auto">Login</h2>
 
         <Form onSubmit={handleLogin} ref={form}>
           <div className="form-group">
