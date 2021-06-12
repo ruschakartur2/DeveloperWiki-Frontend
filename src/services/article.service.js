@@ -1,5 +1,4 @@
 import axios from 'axios';
-import react from 'react';
 import http from '../http-common';
 
 const getAll = () => {

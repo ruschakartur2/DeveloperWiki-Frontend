@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {retrieveArticles, findArticleByTitle} from "../actions/articles";
+import {retrieveArticles} from "../actions/articles";
 
 const ArticlesList = () => {
     const articles = useSelector(state=>state.articles);
@@ -8,13 +8,13 @@ const ArticlesList = () => {
 
     useEffect(()=>{
         dispatch(retrieveArticles());
-    },[])
+    },[]);
 
     return (
         <div>
-            <h1>ds</h1>
+            <h2 className="m-auto">Article list</h2>
 
-                {articles.map((article,index) => (
+                {articles ? articles.map((article,index) => (
                     <div className="card">
                         <div className="card-body">
                             <h5 className="card-title">{article.title}</h5>
@@ -23,7 +23,7 @@ const ArticlesList = () => {
 
                         </div>
                     </div>
-                ))}
+                )) : (<div>No articles now. Add here: click</div>)}
 
         </div>
     )

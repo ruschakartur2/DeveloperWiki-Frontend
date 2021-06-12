@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Router, Switch, Route, Link } from "react-router-dom";
 
@@ -46,9 +46,12 @@ const App = () => {
               <Link to={"/home"} className="nav-link">
                 Home
               </Link>
-              <Link to={"/article"} className="nav-link">
-                Articles
-              </Link>
+            </li>
+            <li className="nav-item"><Link to={"/article"} className="nav-link">
+              Articles
+            </Link>
+            </li>
+            <li className="nav-item">
               <Link to={"/add"} className="nav-link">
                 Add article
               </Link>

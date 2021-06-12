@@ -28,7 +28,6 @@ const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [accessToken, setAccessToken] = useState("");
   const { isLoggedIn } = useSelector(state => state.auth);
   const { message } = useSelector(state => state.message);
 
@@ -85,10 +84,10 @@ const Login = (props) => {
     }).then(res => {
     })
 
-  }
+  };
   const onFailure = error => {
     console.error(error)
-  }
+  };
   return (
     <div className="col-md-12">
       <div className="card card-container">
