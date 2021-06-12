@@ -9,7 +9,7 @@ import ArticleService from "../services/article.service";
 
 export const createArticle = (title,user,body) => async (dispatch) => {
     try {
-        const res = await ArticleService.create({title,user.body});
+        const res = await ArticleService.create({title,user,body});
 
         dispatch({
             type: ARTICLE_CREATE,
@@ -63,7 +63,7 @@ export const deleteArticle = (id) => async (dispatch) => {
     }
 }
 
-export const findByTitle = (title) => async (dispatch) => {
+export const findArticleByTitle = (title) => async (dispatch) => {
     try {
         const res = await ArticleService.findByTitle(title);
 

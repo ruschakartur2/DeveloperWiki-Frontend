@@ -9,6 +9,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
+import ArticlesList from "./components/ArticlesList";
+import AddArticle from "./components/AddArticle";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
@@ -43,6 +45,12 @@ const App = () => {
             <li className="nav-item">
               <Link to={"/home"} className="nav-link">
                 Home
+              </Link>
+              <Link to={"/article"} className="nav-link">
+                Articles
+              </Link>
+              <Link to={"/add"} className="nav-link">
+                Add article
               </Link>
             </li>
 
@@ -93,6 +101,8 @@ const App = () => {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/article" component={ArticlesList} />
+            <Route exact path="/add" component={AddArticle} />
 
           </Switch>
         </div>

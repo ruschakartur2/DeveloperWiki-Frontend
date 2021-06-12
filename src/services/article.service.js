@@ -3,7 +3,11 @@ import react from 'react';
 import http from '../http-common';
 
 const getAll = () => {
-    return http.get('articles');
+    return axios.get('http://localhost:8000/articles',
+        {
+            headers: {
+            'Content-type': 'application/json'
+    }});
 };
 
 const get = id => {
