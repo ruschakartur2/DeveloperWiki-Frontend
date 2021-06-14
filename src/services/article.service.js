@@ -41,7 +41,7 @@ const remove = id => {
 };
 
 const findByTitle = title => {
-    return axios.get(`http://localhost:8000/articles?title=${title}`,
+    return axios.get(`http://localhost:8000/articles?search=${title}`,
         {
             headers: {
                 'Content-type': 'application/json'
