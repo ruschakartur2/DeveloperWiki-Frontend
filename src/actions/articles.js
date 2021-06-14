@@ -36,7 +36,7 @@ export const retrieveArticles = () => async (dispatch) => {
     }
 }
 
-export const updateArticles = (id,data) => async (dispatch) => {
+export const updateArticle = (id,data) => async (dispatch) => {
     try {
         const res = ArticleService.update(id,data);
 

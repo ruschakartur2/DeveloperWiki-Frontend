@@ -1,5 +1,4 @@
 import axios from 'axios';
-import http from '../http-common';
 
 const getAll = () => {
     return axios.get('http://localhost:8000/articles/',
@@ -10,7 +9,12 @@ const getAll = () => {
 };
 
 const get = id => {
-    return http.get(`articles/${id}`);
+    return axios.get(`http://localhost:8000/articles/${id}`,
+        {
+            headers: {
+                'Content-type': 'application/json'
+            }}
+    );
 };
 
 const create = (title,body,author) => {
@@ -26,7 +30,7 @@ const create = (title,body,author) => {
 };
 
 const update = (id,data) => {
-    return axios.put(`http://localhost:8000/articles/${id}`, data,
+    return axios.put(`http://localhost:8000/articles/${id}/`, data,
         {
             headers: {
                 'Content-type': 'application/json'

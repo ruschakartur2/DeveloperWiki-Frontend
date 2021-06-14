@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {retrieveArticles} from "../actions/articles";
 import ReactHtmlParser from 'react-html-parser';
 import {findArticleByTitle} from '../actions/articles';
+import { Link } from "react-router-dom";
 
 const ArticlesList = () => {
     const articles = useSelector(state=>state.articles);
@@ -52,9 +53,20 @@ const ArticlesList = () => {
                 {articles ? articles.map((article,index) => (
                     <div className="card">
                         <div className="card-body">
+                            <Link
+                                to={"/articles/" + article.id}
+                                className=""
+                            >
                             <h5 className="card-title">{article.title}</h5>
+                            </Link>
                             <h6 className="card-subtitle mb-2 text-muted">{article.author.email}</h6>
                             <p className="card-text">{ReactHtmlParser (article.body)}</p>
+                            <Link
+                                to={"/articles/" + article.id}
+                                className="badge badge-warning"
+                            >
+                                Edit
+                            </Link>
 
                         </div>
                     </div>
