@@ -47,25 +47,20 @@ const App = () => {
                 Home
               </Link>
             </li>
-            <li className="nav-item"><Link to={"/article"} className="nav-link">
+            <li className="nav-item"><Link to={"/articles"} className="nav-link">
               Articles
             </Link>
             </li>
-            <li className="nav-item">
+            {currentUser && (
+                <li className="nav-item">
               <Link to={"/add"} className="nav-link">
                 Add article
               </Link>
-            </li>
+            </li>)  }
 
 
 
-            {currentUser && (
-              <li className="nav-item">
-                <Link to={"/user"} className="nav-link">
-                  User
-                </Link>
-              </li>
-            )}
+
           </div>
 
           {currentUser ? (
@@ -104,7 +99,7 @@ const App = () => {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
-            <Route exact path="/article" component={ArticlesList} />
+            <Route exact path="/articles" component={ArticlesList} />
             <Route exact path="/add" component={AddArticle} />
 
           </Switch>

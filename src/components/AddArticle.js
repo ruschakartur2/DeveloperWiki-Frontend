@@ -1,11 +1,12 @@
 import React, {useRef, useState} from 'react';
-
+import { useDispatch, useSelector } from "react-redux";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-
+import { createArticle } from "../actions/articles";
+import { Redirect } from 'react-router-dom';
 
 const required = (value) => {
     if (!value) {
@@ -17,13 +18,20 @@ const required = (value) => {
     }
 };
 
-const AddArticle = () => {
+const AddArticle = (props) => {
+    const { user: currentUser } = useSelector((state) => state.auth);
+    const { isLoggedIn } = useSelector(state => state.auth);
+
+    const dispatch = useDispatch();
+
+
     const [loading, setLoading] = useState(false);
-    const form = useRef();
     const checkBtn = useRef();
+    const form = useRef();
 
     const [body,setBody] = useState("");
     const [title,setTitle] = useState("");
+    const [submitted, setSubmitted] = useState(false);
 
 
     const onChangeTitle = (e) => {
@@ -32,18 +40,29 @@ const AddArticle = () => {
     };
     const onChangeBody = (e) => {
         const body = e;
-        console.log(body);
         setBody(body);
     };
 
-    const handleSubmit = (e) => {
-        console.log(e);
+    const handleAdd = (e) => {
+        e.preventDefault();
+        console.log(currentUser.id)
+        dispatch(createArticle(title,body.toString(), currentUser.id))
+            .then((data)=>{
+                setSubmitted(true);
+                props.history.push('/articles')
+                console.log(data);
+            }).catch(e=>{
+                console.log(e);
+        })
     };
-
+    if (!isLoggedIn) {
+        return <Redirect to="/login" />;
+    }
     return (
+
         <div>
             <h2 className="m-auto">New article</h2>
-            <Form onSubmit={handleSubmit} ref={form}>
+            <Form ref={form} onSubmit={handleAdd}>
                 <div className="form-group">
                     <label htmlFor="email">Title</label>
                     <Input
@@ -73,7 +92,8 @@ const AddArticle = () => {
                 <CheckButton style={{ display: "none" }} ref={checkBtn} />
             </Form>
         </div>
-        );
+
+    );
 };
 
 export default AddArticle;
