@@ -6,15 +6,22 @@ import ArticleDataService from '../services/article.service';
 
 const Article = (props) => {
 
-    const initialArticleState = {
-        id: null,
-        title: "",
-        body: "",
 
+    const [currentArticle, setCurrentArticle] = useState({});
+    const dispatch = useDispatch();
+
+    const [newTitle,setNewTitle] = useState(currentArticle.title);
+    const [newBody, setNewBody] = useState(currentArticle.body);
+
+    const handleNewTitleChange = e => {
+        const newTitle = e.target.value;
+        setNewTitle(newTitle)
     };
 
-    const [currentArticle, setCurrentArticle] = useState(initialArticleState);
-    const dispatch = useDispatch();
+    const handleNewBodyChange = e => {
+        const newBody = e.target.value;
+        setNewBody(newBody);
+    };
 
     const getTutorial = id => {
         ArticleDataService.get(id)
@@ -25,19 +32,19 @@ const Article = (props) => {
             .catch(e => {
                 console.log(e);
             })
-    }
+    };
 
     useEffect(()=>{
         getTutorial(props.match.params.id);
-    },[props.match.params.id])
+    },[props.match.params.id]);
 
-    const handleInputChange = event => {
-        const { name, value } = event.target;
-        setCurrentArticle({ ...currentArticle, [name]: value });
-    };
 
     const updateContent = () => {
-        dispatch(updateArticle(currentArticle.id, currentArticle))
+        dispatch(updateArticle(currentArticle.id, {
+            'title': newTitle,
+            'body': newBody,
+            'author': currentArticle.author
+        }))
             .then(response => {
                 console.log(response);
 
@@ -60,8 +67,8 @@ const Article = (props) => {
                                 className="form-control"
                                 id="title"
                                 name="title"
-                                value={currentArticle.title}
-                                onChange={handleInputChange}
+                                value={newTitle}
+                                onChange={handleNewTitleChange}
                             />
                         </div>
                         <div className="form-group">
@@ -71,8 +78,8 @@ const Article = (props) => {
                                 className="form-control"
                                 id="description"
                                 name="description"
-                                value={currentArticle.body}
-                                onChange={handleInputChange}
+                                value={newBody}
+                                onChange={handleNewBodyChange}
                             />
                         </div>
 
