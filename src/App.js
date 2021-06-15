@@ -11,7 +11,7 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import ArticlesList from "./components/ArticlesList";
 import AddArticle from "./components/AddArticle";
-import Article from "./components/Article";
+import UpdateArticle from "./components/UpdateArticle";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
@@ -102,7 +102,7 @@ const App = () => {
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/articles" component={ArticlesList} />
             <Route exact path="/add" component={AddArticle} />
-            <Route exact path="/articles/:id" component={Article} />
+            <Route exact path="/articles/:id" component={UpdateArticle} />
 
           </Switch>
         </div>

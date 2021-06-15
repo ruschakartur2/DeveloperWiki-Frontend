@@ -30,7 +30,7 @@ const create = (title,body,author) => {
 };
 
 const update = (id,data) => {
-    return axios.put(`http://localhost:8000/articles/${id}/`, data,
+    return axios.patch(`http://localhost:8000/articles/${id}/`, data,
         {
             headers: {
                 'Content-type': 'application/json'

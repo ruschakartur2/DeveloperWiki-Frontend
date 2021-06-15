@@ -6,6 +6,8 @@ import {findArticleByTitle} from '../actions/articles';
 import { Link } from "react-router-dom";
 
 const ArticlesList = () => {
+    const { user: currentUser } = useSelector((state) => state.auth);
+
     const articles = useSelector(state=>state.articles);
     const dispatch = useDispatch();
 
@@ -61,12 +63,14 @@ const ArticlesList = () => {
                             </Link>
                             <h6 className="card-subtitle mb-2 text-muted">{article.author.email}</h6>
                             <p className="card-text">{ReactHtmlParser (article.body)}</p>
+                            {article.author.id == currentUser.id &&
                             <Link
                                 to={"/articles/" + article.id}
                                 className="badge badge-warning"
                             >
                                 Edit
                             </Link>
+                            }
 
                         </div>
                     </div>

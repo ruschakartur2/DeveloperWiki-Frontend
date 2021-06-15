@@ -4,6 +4,8 @@
   "private": true,
   "proxy": "https://swiki.bvblogic.dev/",
   "dependencies": {
+    "@aeaton/react-prosemirror": "^2.0.3",
+    "@aeaton/react-prosemirror-config-default": "^2.0.3",
     "@okteto/react-oauth2-login": "0.0.7",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",

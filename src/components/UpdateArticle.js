@@ -4,24 +4,20 @@ import {useDispatch} from 'react-redux';
 import {updateArticle, deleteArticle} from '../actions/articles';
 import ArticleDataService from '../services/article.service';
 
+
+
+import ReactQuill from 'react-quill';
+
+
 const Article = (props) => {
-
-
-    const [currentArticle, setCurrentArticle] = useState({});
+    const initialArticleState = {
+        id: null,
+        title: "",
+        body: "",
+    };
+    const [currentArticle, setCurrentArticle] = useState(initialArticleState);
     const dispatch = useDispatch();
 
-    const [newTitle,setNewTitle] = useState(currentArticle.title);
-    const [newBody, setNewBody] = useState(currentArticle.body);
-
-    const handleNewTitleChange = e => {
-        const newTitle = e.target.value;
-        setNewTitle(newTitle)
-    };
-
-    const handleNewBodyChange = e => {
-        const newBody = e.target.value;
-        setNewBody(newBody);
-    };
 
     const getTutorial = id => {
         ArticleDataService.get(id)
@@ -32,19 +28,29 @@ const Article = (props) => {
             .catch(e => {
                 console.log(e);
             })
-    };
+    }
 
     useEffect(()=>{
         getTutorial(props.match.params.id);
-    },[props.match.params.id]);
+    },[props.match.params.id])
+    const handleBodyChange = (event) => {
+        setCurrentArticle({ ...currentArticle, body: event });
+        console.log({...currentArticle})
+        console.log(event)
+    }
+    const handleInputChange = event => {
+        setCurrentArticle({ ...currentArticle, title: event.target.value });
+        console.log({...currentArticle})
+    };
+
+
 
 
     const updateContent = () => {
+
         dispatch(updateArticle(currentArticle.id, {
-            'title': newTitle,
-            'body': newBody,
-            'author': currentArticle.author
-        }))
+                                                'title': currentArticle.title,
+                                                'body': currentArticle.body }))
             .then(response => {
                 console.log(response);
 
@@ -57,42 +63,40 @@ const Article = (props) => {
     return (
         <div>
 
-                <div className="edit-form">
-                    <h4>Tutorial</h4>
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="title">Title</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="title"
-                                name="title"
-                                value={newTitle}
-                                onChange={handleNewTitleChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="description">Text</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="description"
-                                name="description"
-                                value={newBody}
-                                onChange={handleNewBodyChange}
-                            />
-                        </div>
+            <div className="edit-form">
+                <h4>Tutorial</h4>
+                <form>
+                    <div className="form-group">
+                        <label htmlFor="title">Title</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="title"
+                            name="title"
+                            value={currentArticle.title}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <ReactQuill name="body"
+                                    theme="snow"
+                                    value={currentArticle.body}
+                                    onChange={handleBodyChange}
+                                    />
+
+                    </div>
 
 
-                    </form>
-                    <button
-                        type="submit"
-                        className="badge badge-success"
-                        onClick={updateContent}
-                    >
-                        Update
-                    </button>
-                </div>
+                </form>
+                <button
+                    type="submit"
+                    className="badge badge-success"
+                    onClick={updateContent}
+                >
+                    Update
+                </button>
+            </div>
         </div>
     )
 
