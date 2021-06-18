@@ -26,23 +26,23 @@ export const createArticle = (title,body,author) => async (dispatch) => {
 export const retrieveArticles = () => async (dispatch) => {
     try {
         const res = await ArticleService.getAll();
-
         dispatch({
             type: ARTICLE_RETRIEVE,
-            payload: res.data,
+            payload: res.data.results,
+
         });
     } catch (err) {
         console.log(err);
     }
 }
 
-export const updateArticle = (id,data) => async (dispatch) => {
+export const updateArticle = (slug,data) => async (dispatch) => {
     try {
-        const res = ArticleService.update(id,data);
+        const res = ArticleService.update(slug,data);
 
         dispatch({
             type: ARTICLE_UPDATE,
-            payload: data,
+            payload: data.results,
         });
         return Promise.resolve(res.data);
     } catch (err) {
@@ -69,7 +69,7 @@ export const findArticleByTitle = (title) => async (dispatch) => {
 
         dispatch({
             type: ARTICLE_RETRIEVE,
-            payload: res.data,
+            payload: res.data.results,
         });
     } catch (err) {
         console.log(err);

@@ -1,15 +1,17 @@
 import axios from 'axios';
+const ARTICLE_URL = 'http://localhost:8000/api/articles'
 
 const getAll = () => {
-    return axios.get('http://localhost:8000/articles/',
+    return axios.get(ARTICLE_URL,
         {
             headers: {
-            'Content-type': 'application/json'
+            'Content-type': 'application/json',
+
     }});
 };
 
-const get = id => {
-    return axios.get(`http://localhost:8000/articles/${id}`,
+const get = slug => {
+    return axios.get(`${ARTICLE_URL}/${slug}`,
         {
             headers: {
                 'Content-type': 'application/json'
@@ -18,34 +20,39 @@ const get = id => {
 };
 
 const create = (title,body,author) => {
-    return axios.post('http://localhost:8000/articles/', {
+    return axios.post(ARTICLE_URL+'/', {
             'title': title,
+            'slug': title.replace(' ', ''),
             'body': body,
             'author': author
         },
         {
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
+
             }});
 };
 
-const update = (id,data) => {
-    return axios.patch(`http://localhost:8000/articles/${id}/`, data,
+const update = (slug,data) => {
+    return axios.patch(`${ARTICLE_URL}/${slug}/`, data,
         {
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
             }});
 };
 const remove = id => {
-    return axios.delete(`http://localhost:8000/articles/${id}`,
+    return axios.delete(`${ARTICLE_URL}/${id}`,
         {
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
             }});
 };
 
 const findByTitle = title => {
-    return axios.get(`http://localhost:8000/articles?search=${title}`,
+    return axios.get(`${ARTICLE_URL}/?search=${title}`,
         {
             headers: {
                 'Content-type': 'application/json'

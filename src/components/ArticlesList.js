@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 const ArticlesList = () => {
     const { user: currentUser } = useSelector((state) => state.auth);
-
     const articles = useSelector(state=>state.articles);
     const dispatch = useDispatch();
 
@@ -52,20 +51,20 @@ const ArticlesList = () => {
             </div>
             <h2 className="m-auto">Article list</h2>
 
-                {articles ? articles.map((article,index) => (
+                {articles.length>1 ? articles.map((article,index) => (
                     <div className="card">
                         <div className="card-body">
                             <Link
-                                to={"/articles/" + article.id}
+                                to={"/update/" + article.slug}
                                 className=""
                             >
                             <h5 className="card-title">{article.title}</h5>
                             </Link>
                             <h6 className="card-subtitle mb-2 text-muted">{article.author.email}</h6>
                             <p className="card-text">{ReactHtmlParser (article.body)}</p>
-                            {article.author.id == currentUser.id &&
+                            {currentUser && article.author.id == currentUser.id &&
                             <Link
-                                to={"/articles/" + article.id}
+                                to={"/update/" + article.slug}
                                 className="badge badge-warning"
                             >
                                 Edit
