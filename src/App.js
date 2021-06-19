@@ -12,6 +12,7 @@ import Profile from "./components/Profile";
 import ArticlesList from "./components/ArticlesList";
 import AddArticle from "./components/AddArticle";
 import ArticleUpdate from "./components/UpdateArticle";
+import Article from "./components/Article";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
@@ -103,6 +104,7 @@ const App = () => {
             <Route exact path="/articles" component={ArticlesList} />
             <Route exact path="/add" component={AddArticle} />
             <Route exact path="/update/:id" component={ArticleUpdate} />
+            <Route exact path="/article/:id" component={Article} />
 
           </Switch>
         </div>

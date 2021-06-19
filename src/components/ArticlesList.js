@@ -17,51 +17,48 @@ const ArticlesList = () => {
         dispatch(retrieveArticles());
     },[dispatch]);
 
-    const onChangeSearchTitle = e => {
-        const searchTitle = e.target.value;
-        setSearchTitle(searchTitle);
-    }
+
 
     const findByTitle = (e) => {
+
+        const searchTitle = e.target.value;
+        setSearchTitle(searchTitle);
         dispatch(findArticleByTitle(searchTitle)).
             then(res => {
                 console.log(res);
         })
+
     }
 
     return (
         <div>
+
             <div className="input-group mb-3">
                 <input
                     type="text"
                     className="form-control"
                     placeholder="Search by title"
                     value={searchTitle}
-                    onChange={onChangeSearchTitle}
+                    onChange={findByTitle}
                 />
                 <div className="input-group-append">
-                    <button
-                        className="btn btn-outline-secondary"
-                        type="button"
-                        onClick={findByTitle}
-                    >
-                        Search
-                    </button>
+
                 </div>
             </div>
-            <h2 className="m-auto">Article list</h2>
 
-                {articles.length>1 ? articles.map((article,index) => (
+                <h2 className="m-auto">Article list</h2>
+
+                {articles.length>=1 ? articles.map((article,index) => (
                     <div className="card">
-                        <div className="card-body">
+                        <div className="card-body max-font-size">
                             <Link
-                                to={"/update/" + article.slug}
+                                to={"/article/" + article.slug}
                                 className=""
                             >
                             <h5 className="card-title">{article.title}</h5>
                             </Link>
                             <h6 className="card-subtitle mb-2 text-muted">{article.author.email}</h6>
-                            <p className="card-text">{ReactHtmlParser (article.body)}</p>
+                            <p className="card-text ">{ReactHtmlParser (article.body)}</p>
                             {currentUser && article.author.id == currentUser.id &&
                             <Link
                                 to={"/update/" + article.slug}

@@ -27,7 +27,6 @@ const ArticleUpdate = (props) => {
         ArticleDataService.get(id)
             .then(response=>{
                 setCurrentArticle(response.data);
-                console.log(response.data);
                 setNewTitle(response.data.title);
                 setNewBody(response.data.body);
 
@@ -39,7 +38,6 @@ const ArticleUpdate = (props) => {
 
     useEffect(()=>{
         getTutorial(props.match.params.id);
-        console.log();
     },[props.match.params.id])
 
     const updateContent = () => {
@@ -49,8 +47,8 @@ const ArticleUpdate = (props) => {
             )
             .then(response => {
                 console.log(response);
-                setSuccess(true);
-            })
+                props.history.push('/article/'+currentArticle.slug)
+                })
             .catch(e => {
                 console.log(e);
             });
@@ -63,7 +61,7 @@ const ArticleUpdate = (props) => {
         }))
             .then(response => {
                 console.log(response);
-                setSuccess(true);
+                props.history.push('/article/'+currentArticle.slug)
             })
             .catch(e => {
                 console.log(e);
@@ -78,9 +76,14 @@ const ArticleUpdate = (props) => {
     const handleBodyChange = e => {
         setNewBody(e)
     }
+    if (!currentUser) {
+        props.history.push('/articles')
+
+    }
     if (currentArticle.author) {
-        if (currentArticle.author.id != currentUser.id) {
+        if (currentArticle.author.id !== currentUser.id) {
             props.history.push('/articles')
+
         }
     }
     return (

@@ -30,3 +30,16 @@ label {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
+.max-font-size h1{
+  font-size:21pt;
+}
+.max-font-size h2{
+  font-size:18pt;
+}
+.max-font-size h3 {
+  font-size: 16pt;
+}
+.max-font-size p {
+  font-size:12pt;
+}
