@@ -42,7 +42,7 @@ export const updateArticle = (slug,data) => async (dispatch) => {
 
         dispatch({
             type: ARTICLE_UPDATE,
-            payload: data.results,
+            payload: data,
         });
         return Promise.resolve(res.data);
     } catch (err) {

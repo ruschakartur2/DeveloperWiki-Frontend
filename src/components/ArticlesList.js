@@ -58,7 +58,13 @@ const ArticlesList = () => {
                             <h5 className="card-title">{article.title}</h5>
                             </Link>
                             <h6 className="card-subtitle mb-2 text-muted">{article.author.email}</h6>
-                            <p className="card-text ">{ReactHtmlParser (article.body)}</p>
+                            <div className="card-text ">{
+                                ReactHtmlParser (article.body.slice(0,255))
+                            }
+                            {
+                                article.body.length > 255 && <Link to={'/article/'+ article.slug}></Link>
+                            }
+                            </div>
                             {currentUser && article.author.id == currentUser.id &&
                             <Link
                                 to={"/update/" + article.slug}
