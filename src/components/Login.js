@@ -28,7 +28,6 @@ const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [accessToken, setAccessToken] = useState("");
   const { isLoggedIn } = useSelector(state => state.auth);
   const { message } = useSelector(state => state.message);
 
@@ -55,7 +54,6 @@ const Login = (props) => {
       dispatch(login(email, password))
         .then(() => {
           props.history.push("/profile");
-          window.location.reload();
         })
         .catch(() => {
           setLoading(false);
@@ -86,18 +84,14 @@ const Login = (props) => {
     }).then(res => {
     })
 
-  }
+  };
   const onFailure = error => {
     console.error(error)
-  }
+  };
   return (
     <div className="col-md-12">
       <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
+        <h2 className="m-auto">Login</h2>
 
         <Form onSubmit={handleLogin} ref={form}>
           <div className="form-group">

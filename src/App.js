@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Router, Switch, Route, Link } from "react-router-dom";
 
@@ -9,6 +9,10 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
+import ArticlesList from "./components/ArticlesList";
+import AddArticle from "./components/AddArticle";
+import ArticleUpdate from "./components/UpdateArticle";
+import Article from "./components/Article";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
@@ -45,16 +49,20 @@ const App = () => {
                 Home
               </Link>
             </li>
-
-
-
+            <li className="nav-item"><Link to={"/articles"} className="nav-link">
+              Articles
+            </Link>
+            </li>
             {currentUser && (
-              <li className="nav-item">
-                <Link to={"/user"} className="nav-link">
-                  User
-                </Link>
-              </li>
-            )}
+                <li className="nav-item">
+              <Link to={"/add"} className="nav-link">
+                Add article
+              </Link>
+            </li>)  }
+
+
+
+
           </div>
 
           {currentUser ? (
@@ -93,6 +101,10 @@ const App = () => {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/articles" component={ArticlesList} />
+            <Route exact path="/add" component={AddArticle} />
+            <Route exact path="/update/:id" component={ArticleUpdate} />
+            <Route exact path="/article/:id" component={Article} />
 
           </Switch>
         </div>

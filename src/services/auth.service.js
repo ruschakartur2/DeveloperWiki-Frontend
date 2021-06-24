@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const USERS_URL = "http://localhost:8000/accounts/";
+const USERS_URL = "http://localhost:8000/api/accounts/";
 
 const register = (email, password) => {
   return axios.post(USERS_URL + "create/", {
@@ -11,7 +11,7 @@ const register = (email, password) => {
 
 const login = (email, password) => {
   return axios
-    .post(USERS_URL + "token/", {
+    .post(USERS_URL + "login/", {
       email,
       password,
     })
@@ -31,6 +31,7 @@ const github = () => {
 
 const logout = () => {
   localStorage.removeItem("user");
+  localStorage.removeItem('token');
 };
 
 export default {
