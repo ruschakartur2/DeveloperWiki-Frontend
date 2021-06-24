@@ -1,0 +1,60 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run the tests
+      run: npm test
+    - name: Build
+      run: npm run build
+    
+    - name: Add artifact frontend
+      uses: actions/upload-artifact@v2
+      with:
+        name: frontend
+        path: ./build
+        
+        
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download a single artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: frontend
+                
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SOURCE: "."
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_PORT: ${{ secrets.PORT }}
+          TARGET: '/home/artur/frontend'
+          ARGS: "-rltgoDzvO"
