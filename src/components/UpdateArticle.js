@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {updateArticle, deleteArticle} from '../actions/articles';
+import {updateArticle} from '../actions/articles';
 import ArticleDataService from '../services/article.service';
 
 import ReactQuill from 'react-quill';
@@ -15,7 +15,6 @@ const ArticleUpdate = (props) => {
     };
 
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
-    const [success, setSuccess] = useState(false);
     const [newTitle, setNewTitle] = useState('');
     const [newBody, setNewBody] = useState('');
 

@@ -25,7 +25,6 @@ const AddArticle = (props) => {
     const dispatch = useDispatch();
 
 
-    const [loading, setLoading] = useState(false);
     const checkBtn = useRef();
     const form = useRef();
 
@@ -80,8 +79,8 @@ const AddArticle = (props) => {
                     </label>
                 </div>
                 <div className="form-group">
-                    <button className="btn btn-primary btn-block" disabled={loading}>
-                        {loading && (
+                    <button className="btn btn-primary btn-block" disabled={submitted}>
+                        {submitted && (
                             <span className="spinner-border spinner-border-sm"></span>
                         )}
                         <span>Add article</span>

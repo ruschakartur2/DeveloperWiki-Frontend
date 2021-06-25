@@ -6,7 +6,6 @@ const getAll = () => {
         {
             headers: {
             'Content-type': 'application/json',
-
     }});
 };
 

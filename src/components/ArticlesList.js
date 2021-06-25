@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {retrieveArticles} from "../actions/articles";
+
 import ReactHtmlParser from 'react-html-parser';
 import {findArticleByTitle} from '../actions/articles';
 import { Link } from "react-router-dom";
 
-const ArticlesList = () => {
-    const { user: currentUser } = useSelector((state) => state.auth);
+const ArticlesList = (props) => {
     const articles = useSelector(state=>state.articles);
     const dispatch = useDispatch();
 
@@ -18,13 +18,12 @@ const ArticlesList = () => {
     },[dispatch]);
 
 
-
     const findByTitle = (e) => {
 
         const searchTitle = e.target.value;
         setSearchTitle(searchTitle);
-        dispatch(findArticleByTitle(searchTitle)).
-            then(res => {
+        dispatch(findArticleByTitle(searchTitle))
+            .then(res => {
                 console.log(res);
         })
 
@@ -55,24 +54,19 @@ const ArticlesList = () => {
                                 to={"/article/" + article.slug}
                                 className=""
                             >
-                            <h5 className="card-title">{article.title}</h5>
+                            <h3 className="card-title">{article.title}</h3>
                             </Link>
-                            <h6 className="card-subtitle mb-2 text-muted">{article.author.email}</h6>
-                            <div className="card-text ">{
+
+                            <h5 className="mt-2 mb-2 text-muted">{article.author.email}</h5>
+                            <small className="text-muted">{article.created_at} | {article.views}</small><br/>
+                            <div className="card-text mt-3">{
                                 ReactHtmlParser (article.body.slice(0,255))
                             }
                             {
-                                article.body.length > 255 && <Link to={'/article/'+ article.slug}></Link>
+                                article.body.length >= 255 && <Link to={'/article/'+ article.slug}>Read more</Link>
                             }
                             </div>
-                            {currentUser && article.author.id == currentUser.id &&
-                            <Link
-                                to={"/update/" + article.slug}
-                                className="badge badge-warning"
-                            >
-                                Edit
-                            </Link>
-                            }
+
 
                         </div>
                     </div>
