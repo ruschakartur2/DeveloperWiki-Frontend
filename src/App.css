@@ -43,6 +43,9 @@ label {
 .max-font-size p {
   font-size:12pt;
 }
+.max {
+  max-width:1080px;
+}
 
 
 .online {
