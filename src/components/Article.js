@@ -2,7 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import ArticleDataService from '../services/article.service';
+import {deleteArticle} from '../actions/articles';
 import ReactHtmlParser from 'react-html-parser';
+import { Link } from "react-router-dom";
 
 
 const Article = (props) => {
@@ -15,7 +17,6 @@ const Article = (props) => {
     };
 
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
-    const [success, setSuccess] = useState(false);
 
     const { user: currentUser } = useSelector((state) => state.auth);
 
@@ -30,9 +31,19 @@ const Article = (props) => {
                 console.log(e);
             })
     }
+    const removeArticle = () => {
+        dispatch(deleteArticle(currentArticle.slug))
+            .then(() => {
+                props.history.push("/articles/");
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
 
     useEffect(()=>{
         getArticle(props.match.params.id);
+
     },[props.match.params.id])
 
 
@@ -43,11 +54,24 @@ const Article = (props) => {
                     <div className="col-md-12">
 
                         <div className="">
-                            <h1 className="hidden-xs hidden-sm">{currentArticle.title}</h1>
+                            <h1 className="hidden-xs hidden-sm">{currentArticle.title} </h1>
                             <hr/>
-                                <small>{currentArticle.created_at}</small><br/>
+                                <small className="text-muted">{currentArticle.created_at} | {currentArticle.views}</small><br/>
                                 <small><strong>{currentArticle.author && currentArticle.author.email}</strong></small>
-                                <hr/>
+                            <hr/>
+                            {currentArticle.author && currentUser && currentArticle.author.id === currentUser.id && (
+                            <div>
+                            <Link
+                                to={"/update/" + currentArticle.slug}
+                                className="btn btn-warning"
+                            >
+                                Edit
+                            </Link>
+                                <small className="btn btn-danger ml-4" onClick={removeArticle}>delete</small>
+
+                            </div>
+                            ) }
+                            <hr/>
                                     <p className="text-justify">
                                         {ReactHtmlParser (currentArticle.body)}
                                     </p>

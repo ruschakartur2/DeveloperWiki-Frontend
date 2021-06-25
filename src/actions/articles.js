@@ -50,13 +50,13 @@ export const updateArticle = (slug,data) => async (dispatch) => {
     }
 }
 
-export const deleteArticle = (id) => async (dispatch) => {
+export const deleteArticle = (slug) => async (dispatch) => {
     try {
-        await ArticleService.remove(id);
+        await ArticleService.remove(slug);
 
         dispatch({
             type: ARTICLE_DELETE,
-            payload: {id},
+            payload: {slug},
         });
     } catch (err) {
         console.log(err)

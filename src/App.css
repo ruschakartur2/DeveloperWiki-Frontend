@@ -43,3 +43,9 @@ label {
 .max-font-size p {
   font-size:12pt;
 }
+.online {
+  color: darkgreen;
+}
+.offline {
+  color:darkred;
+}

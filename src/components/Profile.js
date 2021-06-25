@@ -13,16 +13,14 @@ const Profile = () => {
     <div className="container">
       <header className="jumbotron">
         <h3>
-          <strong>{currentUser.username}</strong> Profile
+          <strong>{currentUser.email}</strong> profile
         </h3>
+          {currentUser.is_active ?
+              (<h5 className="online"> Online</h5>)
+              : (<h5 className="offline">Offline</h5>)
+          }
       </header>
-
-      <p>
-        <strong>Here from:</strong> {currentUser.date_joined}
-      </p>
-      <p>
-        <strong>Email:</strong> {currentUser.email}
-      </p>
+        
 
     </div>
   );
