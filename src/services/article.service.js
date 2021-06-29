@@ -6,6 +6,8 @@ const getAll = () => {
         {
             headers: {
             'Content-type': 'application/json',
+            'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
+
     }});
 };
 
@@ -13,7 +15,9 @@ const get = slug => {
     return axios.get(`${ARTICLE_URL}/${slug}/`,
         {
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
+
             }}
     );
 };
@@ -42,7 +46,7 @@ const update = (slug,data) => {
             }});
 };
 const remove = id => {
-    return axios.delete(`${ARTICLE_URL}/${id}`,
+    return axios.delete(`${ARTICLE_URL}/${id}/`,
         {
             headers: {
                 'Content-type': 'application/json',
