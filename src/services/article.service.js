@@ -15,6 +15,8 @@ const get = slug => {
         {
             headers: {
                 'Content-type': 'application/json',
+                'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
+
 
             }}
     );
