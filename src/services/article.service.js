@@ -2,7 +2,7 @@ import axios from 'axios';
 const ARTICLE_URL = "https://swiki.bvblogic.dev/api/v1/articles"
 
 const getAll = () => {
-    return axios.get(ARTICLE_URL,
+    return axios.get(ARTICLE_URL/,
         {
             headers: {
             'Content-type': 'application/json',
@@ -10,7 +10,7 @@ const getAll = () => {
 };
 
 const get = slug => {
-    return axios.get(`${ARTICLE_URL}/${slug}`,
+    return axios.get(`${ARTICLE_URL}/${slug}/`,
         {
             headers: {
                 'Content-type': 'application/json'
