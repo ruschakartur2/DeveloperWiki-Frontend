@@ -3,6 +3,7 @@ import {
     ARTICLE_RETRIEVE,
     ARTICLE_UPDATE,
     ARTICLE_DELETE,
+    SET_CURRENT_PAGE,
     } from './types';
 
 import ArticleService from "../services/article.service";
@@ -23,17 +24,25 @@ export const createArticle = (title,body,author) => async (dispatch) => {
     }
 };
 
-export const retrieveArticles = () => async (dispatch) => {
+export const retrieveArticles = (page) => async (dispatch) => {
     try {
-        const res = await ArticleService.getAll();
+        const res = await ArticleService.getAll(page);
         dispatch({
             type: ARTICLE_RETRIEVE,
-            payload: res.data.results,
+            payload: res.data,
 
         });
+        return Promise.resolve(res.data);
+
     } catch (err) {
         console.log(err);
     }
+}
+export const setCurrentPage = (page) => async (dispatch) => {
+    dispatch({
+        type: SET_CURRENT_PAGE,
+        payload: page,
+    })
 }
 
 export const updateArticle = (slug,data) => async (dispatch) => {
@@ -69,7 +78,7 @@ export const findArticleByTitle = (title) => async (dispatch) => {
 
         dispatch({
             type: ARTICLE_RETRIEVE,
-            payload: res.data.results,
+            payload: res.data,
         });
     } catch (err) {
         console.log(err);

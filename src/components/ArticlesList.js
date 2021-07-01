@@ -2,26 +2,34 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {retrieveArticles} from "../actions/articles";
 
+import {createPages} from '../pagesCreator';
 import ReactHtmlParser from 'react-html-parser';
-import {findArticleByTitle} from '../actions/articles';
+import {findArticleByTitle, setCurrentPage} from '../actions/articles';
 import { Link } from "react-router-dom";
 
 const ArticlesList = (props) => {
-    const articles = useSelector(state=>state.articles);
+    const articles = useSelector(state=>state.articles.items);
+    const currentPage = useSelector(state=>state.articles.currentPage);
+    const totalCount = useSelector(state=>state.articles.totalCount);
     const dispatch = useDispatch();
 
     const [searchTitle,setSearchTitle] = useState("");
+    const pagesCount = Math.ceil(totalCount/10)
+    const pages =[];
 
+    createPages(pages,pagesCount, currentPage)
 
     useEffect(()=>{
-        dispatch(retrieveArticles());
-    },[dispatch]);
+        dispatch(retrieveArticles(currentPage));
+
+    },[currentPage]);
 
 
     const findByTitle = (e) => {
 
         const searchTitle = e.target.value;
         setSearchTitle(searchTitle);
+        dispatch(setCurrentPage(1))
         dispatch(findArticleByTitle(searchTitle))
             .then(res => {
                 console.log(res);
@@ -47,7 +55,7 @@ const ArticlesList = (props) => {
 
                 <h2 className="m-auto">Article list</h2>
 
-                {articles.length>=1 ? articles.map((article,index) => (
+                {articles && articles.length >=1 ? articles.map((article,index) => (
                     <div className="card">
                         <div className="card-body max-font-size">
                             <Link
@@ -71,7 +79,12 @@ const ArticlesList = (props) => {
                         </div>
                     </div>
                 )) : (<div>No articles now. Add here: click</div>)}
-
+            <div className="pages">
+                {pages.map((page,index) => <span key={index}
+                                                 className={currentPage == page ? "current-page" : "page"}
+                                                 onClick={() => dispatch(setCurrentPage(page))}
+                                            >{page}</span> )}
+            </div>
         </div>
     )
 }
