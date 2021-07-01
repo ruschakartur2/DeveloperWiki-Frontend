@@ -53,7 +53,7 @@ const Article = (props) => {
                 <div className="row">
                     <div className="col-md-12">
 
-                        <div className="">
+                        <div className="container">
                             <h1 className="hidden-xs hidden-sm">{currentArticle.title} </h1>
                             <hr/>
                                 <small className="text-muted">{currentArticle.created_at} | {currentArticle.views}</small><br/>
@@ -72,9 +72,9 @@ const Article = (props) => {
                             </div>
                             ) }
                             <hr/>
-                                    <p className="text-justify">
+                                    <div className="text-justify max">
                                         {ReactHtmlParser (currentArticle.body)}
-                                    </p>
+                                    </div>
                         </div>
                     </div>
                 </div>
