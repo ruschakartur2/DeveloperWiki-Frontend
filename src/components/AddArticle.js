@@ -5,7 +5,7 @@ import 'react-quill/dist/quill.snow.css';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import { createArticle } from "../actions/articles";
+import { createArticle, setCurrentPage } from "../actions/articles";
 import { Redirect } from 'react-router-dom';
 
 const required = (value) => {
@@ -48,6 +48,7 @@ const AddArticle = (props) => {
         dispatch(createArticle(title,body.toString(), currentUser.id))
             .then((data)=>{
                 setSubmitted(true);
+                dispatch(setCurrentPage(1))
                 props.history.push('/articles')
                 console.log(data);
             }).catch(e=>{

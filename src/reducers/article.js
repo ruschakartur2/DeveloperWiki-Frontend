@@ -3,19 +3,33 @@ import {
     ARTICLE_RETRIEVE,
     ARTICLE_UPDATE,
     ARTICLE_DELETE,
+    SET_CURRENT_PAGE,
 } from "../actions/types";
 
-const initialState = [];
+const initialState = {
+    items: [],
+    currentPage: 1,
+    totalCount: 0
+};
 
 function articleReducer(articles = initialState, action) {
     const {type, payload} = action;
 
     switch (type) {
         case ARTICLE_CREATE:
-            return [...articles,payload];
+            return [...articles.items,payload];
 
         case ARTICLE_RETRIEVE:
-            return payload;
+            return {
+                ...articles,
+                items: action.payload.results,
+                totalCount: action.payload.count,
+            };
+        case SET_CURRENT_PAGE:
+            return {
+                ...articles,
+                currentPage: action.payload
+            };
 
         case ARTICLE_UPDATE:
             return articles.map((article)=>{

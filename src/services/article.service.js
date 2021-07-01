@@ -1,13 +1,16 @@
 import axios from 'axios';
 const ARTICLE_URL = "https://swiki.bvblogic.dev/api/v1/articles"
 
-const getAll = () => {
-    return axios.get(ARTICLE_URL+'/',
+
+const getAll = (page) => {
+    return axios.get(ARTICLE_URL +`/?page=${page}`,
+
         {
             headers: {
             'Content-type': 'application/json',
 
-    }});
+            }});
+
 };
 
 const get = slug => {
@@ -16,8 +19,6 @@ const get = slug => {
             headers: {
                 'Content-type': 'application/json',
                 'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
-
-
             }}
     );
 };
