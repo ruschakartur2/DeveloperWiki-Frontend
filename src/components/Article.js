@@ -44,7 +44,7 @@ const Article = (props) => {
     useEffect(()=>{
         getArticle(props.match.params.id);
 
-    },[])
+    },[props.match.params.id])
 
 
     return (
