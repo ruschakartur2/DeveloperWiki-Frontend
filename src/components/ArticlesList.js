@@ -22,7 +22,7 @@ const ArticlesList = (props) => {
     useEffect(()=>{
         dispatch(retrieveArticles(currentPage));
 
-    },[currentPage]);
+    },[currentPage, dispatch]);
 
 
     const findByTitle = (e) => {
