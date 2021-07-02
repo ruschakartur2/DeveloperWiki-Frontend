@@ -45,17 +45,15 @@ const Article = (props) => {
 
     useEffect(()=>{
         getArticle(props.match.params.id);
-    },[props.match.params.id])
+    },[])
+
 
     return (
         <div className="container">
             <div className="well">
                 <div className="row">
                     <div className="col-md-12">
-
-
-                        <div className="container">
-
+                        <div className="">
                             <h1 className="hidden-xs hidden-sm">{currentArticle.title} </h1>
                             <hr/>
                         <hr/>
@@ -75,11 +73,7 @@ const Article = (props) => {
                             </div>
                             ) }
                             <hr/>
-
                                     <div className="text-justify">
-
-                                    <div className="text-justify max">
-
                                         {ReactHtmlParser (currentArticle.body)}
                                     </div>
                         </div>
