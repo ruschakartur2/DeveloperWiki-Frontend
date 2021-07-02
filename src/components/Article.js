@@ -5,7 +5,7 @@ import ArticleDataService from '../services/article.service';
 import {deleteArticle} from '../actions/articles';
 import ReactHtmlParser from 'react-html-parser';
 import { Link } from "react-router-dom";
-
+import Comment from './Comment';
 
 const Article = (props) => {
     const initialArticleState = {
@@ -19,6 +19,7 @@ const Article = (props) => {
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
 
     const { user: currentUser } = useSelector((state) => state.auth);
+    const comments = useSelector((state) => state.comments);
 
     const dispatch = useDispatch();
 
@@ -41,11 +42,10 @@ const Article = (props) => {
             });
     };
 
+
     useEffect(()=>{
         getArticle(props.match.params.id);
-
     },[props.match.params.id])
-
 
     return (
         <div className="container">
@@ -53,10 +53,13 @@ const Article = (props) => {
                 <div className="row">
                     <div className="col-md-12">
 
+
                         <div className="container">
+
                             <h1 className="hidden-xs hidden-sm">{currentArticle.title} </h1>
                             <hr/>
-                                <small className="text-muted">{currentArticle.created_at} | {currentArticle.views}</small><br/>
+                        <hr/>
+                            <small className="text-muted">{currentArticle.created_at} | {currentArticle.views}</small><br/>
                                 <small><strong>{currentArticle.author && currentArticle.author.email}</strong></small>
                             <hr/>
                             {currentArticle.author && currentUser && currentArticle.author.id === currentUser.id && (
@@ -72,10 +75,16 @@ const Article = (props) => {
                             </div>
                             ) }
                             <hr/>
+
+                                    <div className="text-justify">
+
                                     <div className="text-justify max">
+
                                         {ReactHtmlParser (currentArticle.body)}
                                     </div>
                         </div>
+                        <hr/>
+                        <Comment article={currentArticle}/>
                     </div>
                 </div>
             </div>
