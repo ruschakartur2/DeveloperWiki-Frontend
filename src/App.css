@@ -43,13 +43,17 @@ label {
 .max-font-size p {
   font-size:12pt;
 }
+.max img {
+  max-width:1080px;
+}
+
+
 .online {
   color: darkgreen;
 }
 .offline {
   color:darkred;
 }
-
 .pages {
   margin: 20px 0;
 }
@@ -64,6 +68,7 @@ label {
   border: 2px solid gray;
   font-weight: 700;
 }
+
 
 
 a {
@@ -132,3 +137,4 @@ a {
   color:salmon;
   font-weight: 800;
 }
+
