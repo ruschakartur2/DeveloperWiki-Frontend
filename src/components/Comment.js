@@ -20,9 +20,7 @@ const Comment = (comment) => {
                 console.log(e);
             });
     };
-    const handleReplyClick = (e) => {
-        setReply(true);
-    }
+ 
   
 
 
@@ -38,7 +36,7 @@ const Comment = (comment) => {
                 {currentUser.id && comment.author.id && currentUser.id === comment.author.id &&
                 ( <small className="btn btn-danger" onClick={removeComment}>delete</small>
                 )}
-                <span onClick={handleReplyClick}>Reply</span>
+                <span>Reply</span>
 
             </div>
         </div>
