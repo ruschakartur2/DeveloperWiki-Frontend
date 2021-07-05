@@ -12,10 +12,11 @@ const get = article => {
         }
     );
 };
-const create = (article,content) => {
+const create = (article,content,parent) => {
     return axios.post(COMMENT_URL+'/', {
-            'article': article.id,
+            'article': article,
             'content': content,
+            'parent': parent,
         },
         {
             headers: {
@@ -25,15 +26,15 @@ const create = (article,content) => {
             }
         });
 };
-// const update = (id,data) => {
-//     return axios.patch(`${COMMENT_URL}/${id}/`, data,
-//         {
-//             headers: {
-//                 'Content-type': 'application/json',
-//                 'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
-//             }
-//         });
-// };
+const update = (id,data) => {
+     return axios.patch(`${COMMENT_URL}/${id}/`, data,
+         {
+             headers: {
+                 'Content-type': 'application/json',
+                 'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
+             }
+         });
+ };
 const remove = id => {
     return axios.delete(`${COMMENT_URL}/${id}/`,
         {

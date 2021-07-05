@@ -43,17 +43,13 @@ label {
 .max-font-size p {
   font-size:12pt;
 }
-.max img {
-  max-width:1080px;
-}
-
-
 .online {
   color: darkgreen;
 }
 .offline {
   color:darkred;
 }
+
 .pages {
   margin: 20px 0;
 }
@@ -68,7 +64,6 @@ label {
   border: 2px solid gray;
   font-weight: 700;
 }
-
 
 
 a {
@@ -138,3 +133,7 @@ a {
   font-weight: 800;
 }
 
+.comment-block {
+  padding:3vh;
+  background-color: beige;
+}

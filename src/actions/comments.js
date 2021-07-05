@@ -1,15 +1,15 @@
 import {
     COMMENT_CREATE,
     COMMENT_RETRIEVE,
-    COMMENT_UPDATE,
     COMMENT_DELETE,
+    COMMENT_UPDATE,
 } from './types';
 
 import CommentService from "../services/comment.service";
 
-export const createComment = (article,content) => async (dispatch) => {
+export const createComment = (article,content,parent) => async (dispatch) => {
     try {
-        const res = await CommentService.create(article,content);
+        const res = await CommentService.create(article,content,parent);
 
         dispatch({
             type: COMMENT_CREATE,
@@ -38,19 +38,19 @@ export const retrieveComments = (articleId) => async (dispatch) => {
     }
 }
 
-// export const updateComment = (id,data) => async (dispatch) => {
-//     try {
-//         const res = CommentService.update(id,data);
-//
-//         dispatch({
-//             type: COMMENT_UPDATE,
-//             payload: data,
-//         });
-//         return Promise.resolve(res.data);
-//     } catch (err) {
-//         return Promise.reject(err);
-//     }
-// }
+export const updateComment = (id,data) => async (dispatch) => {
+    try {
+        const res = CommentService.update(id,data);
+
+        dispatch({
+            type: COMMENT_UPDATE,
+            payload: data,
+        });
+        return Promise.resolve(res.data);
+    } catch (err) {
+        return Promise.reject(err);
+    }
+}
 
 export const deleteComment = id => async (dispatch) => {
     try {

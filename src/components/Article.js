@@ -5,7 +5,7 @@ import ArticleDataService from '../services/article.service';
 import {deleteArticle} from '../actions/articles';
 import ReactHtmlParser from 'react-html-parser';
 import { Link } from "react-router-dom";
-import Comment from './Comment';
+import CommentList from './CommentList';
 
 const Article = (props) => {
     const initialArticleState = {
@@ -19,7 +19,6 @@ const Article = (props) => {
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
 
     const { user: currentUser } = useSelector((state) => state.auth);
-    const comments = useSelector((state) => state.comments);
 
     const dispatch = useDispatch();
 
@@ -78,7 +77,7 @@ const Article = (props) => {
                                     </div>
                         </div>
                         <hr/>
-                        <Comment article={currentArticle}/>
+                        <CommentList article={currentArticle}/>
                     </div>
                 </div>
             </div>
