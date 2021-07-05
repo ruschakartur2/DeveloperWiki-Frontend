@@ -65,7 +65,7 @@ const AddComment = (props) => {
                 </div>
 
                 <div className="form-group">
-                    <button className="btn btn-primary btn-block"}>
+                    <button className="btn btn-primary btn-block">
                       
                         <span>Comment</span>
                     </button>
