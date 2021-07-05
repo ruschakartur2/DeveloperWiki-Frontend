@@ -132,3 +132,8 @@ a {
   color:salmon;
   font-weight: 800;
 }
+
+.comment-block {
+  padding:3vh;
+  background-color: beige;
+}
