@@ -1,7 +1,6 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {deleteComment} from '../actions/comments';
 import {retrieveComments} from "../actions/comments";
 
 import CommentTree from './CommentTree';
@@ -14,7 +13,7 @@ const CommentList = (props) => {
 
     useEffect(()=>{
         dispatch(retrieveComments(props.article))
-    },[props.article])
+    },[props.article, dispatch])
 
     return (
         <ul>
