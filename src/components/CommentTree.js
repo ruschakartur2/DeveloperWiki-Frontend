@@ -10,9 +10,7 @@ const StyledWrapper = styled.div`
 
 
 const CommentTree = (props) => {
-    const hasChildren = (comment) => {
-        return comment.children && comment.children.length;
-    }
+
     const level = props.level || 0;
     return (
         <StyledWrapper level={level}>
