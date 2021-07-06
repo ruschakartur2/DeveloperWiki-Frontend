@@ -38,9 +38,11 @@ const AddComment = (props) => {
         e.preventDefault();
         dispatch(createComment(props.article, content, props.parent))
             .then((data)=>{
-                console.log(data);
-                window.location.reload();
+                e.preventDefault();
                 setContent(' ');
+                if(props.parent) {
+                    window.location.reload();
+                }
             }).catch(e=>{
             console.log(e);
         })

@@ -12,8 +12,10 @@ const CommentList = (props) => {
     const dispatch = useDispatch();
 
     useEffect(()=>{
+        if(props.article != null){
         dispatch(retrieveComments(props.article))
-    },[props.article, dispatch])
+            }
+        },[props.article, dispatch])
 
     return (
         <ul>
