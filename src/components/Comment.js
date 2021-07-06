@@ -27,12 +27,10 @@ const Comment = (comment) => {
                 console.log(e);
             });
     };
+
     const handleReplyClick = (e) => {
         setReply(!reply);
     }
-
-
-
 
     return (
         <div className="comment-block">
