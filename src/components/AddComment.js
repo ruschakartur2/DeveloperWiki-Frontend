@@ -1,6 +1,5 @@
 import React, {useRef, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -19,7 +18,6 @@ const required = (value) => {
 };
 
 const AddComment = (props) => {
-    const { user: currentUser } = useSelector((state) => state.auth);
     const { isLoggedIn } = useSelector(state => state.auth);
 
     const dispatch = useDispatch();
@@ -29,7 +27,6 @@ const AddComment = (props) => {
     const form = useRef();
 
     const [content,setContent] = useState("");
-    const [submitted, setSubmitted] = useState(false);
 
 
     const onChangeContent = (e) => {
@@ -39,10 +36,10 @@ const AddComment = (props) => {
 
     const handleAddComment = (e) => {
         e.preventDefault();
-
-        dispatch(createComment(props.article.id, content))
+        dispatch(createComment(props.article, content, props.parent))
             .then((data)=>{
                 console.log(data);
+                window.location.reload();
                 setContent(' ');
             }).catch(e=>{
             console.log(e);
@@ -68,10 +65,7 @@ const AddComment = (props) => {
                 </div>
 
                 <div className="form-group">
-                    <button className="btn btn-primary btn-block" disabled={submitted}>
-                        {submitted && (
-                            <span className="spinner-border spinner-border-sm"></span>
-                        )}
+                    <button className="btn btn-primary btn-block">
                         <span>Comment</span>
                     </button>
                 </div>

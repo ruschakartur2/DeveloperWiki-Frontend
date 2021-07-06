@@ -10,18 +10,14 @@ const StyledWrapper = styled.div`
 
 
 const CommentTree = (props) => {
-    const hasChildren = (comment) => {
-        return comment.children && comment.children.length;
-    }
+
     const level = props.level || 0;
     return (
         <StyledWrapper level={level}>
             {props.comments.map((comment, i) => {
                 return <div key={`level-${level}-${i}`}>
-
                     <Comment {...comment}/>
                     <CommentTree comments={comment.children} level={level+1}/>
-
                     </div>
             })}
         </StyledWrapper>

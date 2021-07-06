@@ -1,21 +1,16 @@
-import React, {useRef, useState} from 'react';
-import styled from 'styled-components';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteComment, updateComment} from '../actions/comments';
+import {deleteComment} from '../actions/comments';
 
 
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
+import AddComment from "./AddComment";
 
 const Comment = (comment) => {
     const { user: currentUser } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
-    const checkBtn = useRef();
-    const form = useRef();
 
-    const [content,setContent] = useState("");
+
     const [reply,setReply] = useState(false);
 
     const removeComment = (e) => {
@@ -23,18 +18,16 @@ const Comment = (comment) => {
         dispatch(deleteComment(comment.id))
             .then(() => {
                 console.log('deleted');
+                window.location.reload();
             })
             .catch(e => {
                 console.log(e);
             });
     };
     const handleReplyClick = (e) => {
-        setReply(true);
+        setReply(!reply);
     }
-    const onChangeContent = (e) => {
-        const content = e.target.value;
-        setContent(content);
-    };
+
 
 
     return (
@@ -46,12 +39,13 @@ const Comment = (comment) => {
             <hr/>
             </div>
             <div className="optional">
-                {currentUser.id && comment.author.id && currentUser.id == comment.author.id &&
+                {currentUser.id && comment.author.id && currentUser.id === comment.author.id &&
                 ( <small className="btn btn-danger" onClick={removeComment}>delete</small>
                 )}
                 <span onClick={handleReplyClick}>Reply</span>
+                {reply && (<div> {comment.article && (<AddComment article={comment.article} parent={comment.id}/>)}</div>) }
 
-            </div>
+                </div>
         </div>
 
     )

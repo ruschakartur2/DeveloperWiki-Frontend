@@ -7,9 +7,9 @@ import {
 
 import CommentService from "../services/comment.service";
 
-export const createComment = (article,content,parent) => async (dispatch) => {
+export const createComment = (article,content,author,parent) => async (dispatch) => {
     try {
-        const res = await CommentService.create(article,content,parent);
+        const res = await CommentService.create(article,content,author,parent);
 
         dispatch({
             type: COMMENT_CREATE,
