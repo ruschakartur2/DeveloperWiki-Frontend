@@ -77,8 +77,10 @@ const Article = (props) => {
                                     </div>
                         </div>
                         <hr/>
+                                         {currentArticle && (
                         <CommentList article={currentArticle}/>
-                    </div>
+                                            )}
+                      </div>
                 </div>
             </div>
         </div>
