@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, } from 'react';
+
 import {useDispatch, useSelector} from 'react-redux';
 
 import {retrieveComments} from "../actions/comments";
@@ -18,7 +19,7 @@ const CommentList = (props) => {
     return (
         <ul>
                 <CommentTree comments={comments}/>
-                <AddComment article={props.article}/>
+                <AddComment article={props.article.id}/>
         </ul>
     )
 

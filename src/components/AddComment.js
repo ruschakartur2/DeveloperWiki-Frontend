@@ -36,10 +36,10 @@ const AddComment = (props) => {
 
     const handleAddComment = (e) => {
         e.preventDefault();
-
-        dispatch(createComment(props.article.id, content))
+        dispatch(createComment(props.article, content, props.parent))
             .then((data)=>{
                 console.log(data);
+                window.location.reload();
                 setContent(' ');
             }).catch(e=>{
             console.log(e);
@@ -66,7 +66,6 @@ const AddComment = (props) => {
 
                 <div className="form-group">
                     <button className="btn btn-primary btn-block">
-                      
                         <span>Comment</span>
                     </button>
                 </div>
