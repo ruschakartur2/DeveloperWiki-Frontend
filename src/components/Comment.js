@@ -43,7 +43,7 @@ const Comment = (comment) => {
                 )}
                 <span onClick={handleReplyClick}>Reply</span>
                 {reply && (<div> {comment.article && (<AddComment article={comment.article} parent={comment.id}/>)}</div>) }
-                <span>Reply</span>
+                
                 </div>
         </div>
 
