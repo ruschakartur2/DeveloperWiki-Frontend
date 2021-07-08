@@ -104,6 +104,7 @@ const Article = (props) => {
                         <AddComment article={currentArticle}/>
 
                     </div>
+
                 </div>
             </div>
         </div>

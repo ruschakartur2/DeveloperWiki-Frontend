@@ -48,6 +48,7 @@ const Comment = (comment) => {
                 ( <small className="btn btn-danger" onClick={removeComment}>delete</small>
                 )}
                 <span onClick={handleReplyClick}>Reply</span>
+
                 {isLoggedIn && reply && (<div> {comment.article && (<AddComment article={comment.article} parent={comment.id}/>)}</div>) }
 
                 </div>
