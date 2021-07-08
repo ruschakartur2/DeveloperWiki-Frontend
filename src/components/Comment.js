@@ -12,8 +12,6 @@ const Comment = (comment) => {
     const { user: currentUser } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
-
-
     const [reply,setReply] = useState(false);
 
     const removeComment = (e) => {
@@ -22,6 +20,7 @@ const Comment = (comment) => {
             .then(() => {
                 console.log('deleted');
                 e.preventDefault();
+                // TODO: 1) dispatch to retrieve
             })
             .catch(e => {
                 console.log(e);
@@ -33,9 +32,13 @@ const Comment = (comment) => {
     }
 
     return (
+        <div>
+        {comment && comment.id !== null && (
         <div className="comment-block">
+
             <div className="test">
             <p>{comment.date_posted} | <i className="author"> {comment.author.email} </i></p>
+
             <hr/>
         <p>{comment.content}</p>
             <hr/>
@@ -48,8 +51,10 @@ const Comment = (comment) => {
                 {isLoggedIn && reply && (<div> {comment.article && (<AddComment article={comment.article} parent={comment.id}/>)}</div>) }
 
                 </div>
-        </div>
 
+        </div>
+        )}
+    </div>
     )
 
 }

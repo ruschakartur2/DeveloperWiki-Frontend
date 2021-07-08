@@ -18,6 +18,8 @@ import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
 
 import { history } from "./helpers/history";
+import CommentTree from "./components/CommentTree";
+import AddComment from "./components/AddComment";
 
 const App = () => {
 
@@ -105,6 +107,9 @@ const App = () => {
             <Route exact path="/add" component={AddArticle} />
             <Route exact path="/update/:id" component={ArticleUpdate} />
             <Route exact path="/article/:id" component={Article} />
+            <Route exact path="/comment/:id" component={Comment} />
+            <Route exact path="/comments" component={CommentTree} />
+            <Route exact path="/comment/add" component={AddComment} />
 
           </Switch>
         </div>

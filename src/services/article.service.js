@@ -3,24 +3,19 @@ const ARTICLE_URL = "http://localhost:8000/api/articles"
 
 
 const getAll = (page) => {
-    return axios.get(ARTICLE_URL +`/?page=${page}`,
-
-        {
-            headers: {
-            'Content-type': 'application/json',
-
-            }});
+    return axios.get(ARTICLE_URL +`/?page=${page}`, {
+            headers: {'Content-type': 'application/json',}
+        });
 
 };
 
 const get = slug => {
-    return axios.get(`${ARTICLE_URL}/${slug}/`,
-        {
+    return axios.get(`${ARTICLE_URL}/${slug}/`, {
             headers: {
                 'Content-type': 'application/json',
                 'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
-            }}
-    );
+            }
+    });
 };
 
 const create = (title,body,author) => {

@@ -1,9 +1,9 @@
 import axios from 'axios';
-const COMMENT_URL = 'https://swiki.bvblogic.dev/api/v1/comments'
+const COMMENT_URL = 'http://localhost:8000/api/comments'
 
 
-const get = article => {
-    return axios.get(`${COMMENT_URL}/?article=${article.id}`,
+const get = (article,page) => {
+    return axios.get(`${COMMENT_URL}/?article=${article.id}&page=${page}`,
         {
             headers: {
                 'Content-type': 'application/json',
