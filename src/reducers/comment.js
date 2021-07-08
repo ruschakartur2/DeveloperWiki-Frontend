@@ -2,38 +2,39 @@ import {
     COMMENT_CREATE,
     COMMENT_RETRIEVE,
     COMMENT_DELETE,
-    COMMENT_UPDATE,
 } from "../actions/types";
 
-const initialState = [];
+const initialState = {
+    comments: [],
+    totalCount: null,
+};
 
-function commentReducer(comments = initialState, action) {
+function commentReducer(state = initialState, action) {
     const {type, payload} = action;
 
     switch (type) {
         case COMMENT_CREATE:
-            return [...comments,payload];
+            console.log(state);
+            return {
+                ...state,
+                comments: action.payload,
+            };
 
         case COMMENT_RETRIEVE:
-            return payload
-
-        case COMMENT_UPDATE:
-            return comments.map((comment)=>{
-                if(comment.id === payload.id){
-                    return {
-                        ...comment,
-                        ...payload,
-                    };
-                } else {
-                    return comment;
-                }
-            });
+            return {
+                ...state,
+                comments:  action.payload.results,
+                totalCount: action.payload.count,
+            };
 
         case COMMENT_DELETE:
-            return comments.filter(({id}) => id !== payload.id);
+            return {
+                ...state,
+                comments: [...state.comments.filter(({id}) => id !== payload.id)]
+            }
 
         default:
-            return comments;
+            return state;
     }
 }
 

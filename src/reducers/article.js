@@ -17,6 +17,7 @@ function articleReducer(articles = initialState, action) {
 
     switch (type) {
         case ARTICLE_CREATE:
+
             return [...articles.items,payload];
 
         case ARTICLE_RETRIEVE:
@@ -44,7 +45,7 @@ function articleReducer(articles = initialState, action) {
             });
 
         case ARTICLE_DELETE:
-            return articles.filter(({id}) => id !== payload.id);
+            return articles.items.filter(({id}) => id !== payload.id);
 
         default:
             return articles;

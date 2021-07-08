@@ -1,4 +1,3 @@
-
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {deleteComment} from '../actions/comments';
@@ -6,8 +5,10 @@ import {deleteComment} from '../actions/comments';
 
 import AddComment from "./AddComment";
 
-
 const Comment = (comment) => {
+
+    const { isLoggedIn } = useSelector(state => state.auth);
+
     const { user: currentUser } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
@@ -18,7 +19,8 @@ const Comment = (comment) => {
         dispatch(deleteComment(comment.id))
             .then(() => {
                 console.log('deleted');
-                window.location.reload();
+                e.preventDefault();
+                // TODO: 1) dispatch to retrieve
             })
             .catch(e => {
                 console.log(e);
@@ -30,9 +32,13 @@ const Comment = (comment) => {
     }
 
     return (
+        <div>
+        {comment && comment.id !== null && (
         <div className="comment-block">
+
             <div className="test">
             <p>{comment.date_posted} | <i className="author"> {comment.author.email} </i></p>
+
             <hr/>
         <p>{comment.content}</p>
             <hr/>
@@ -42,11 +48,14 @@ const Comment = (comment) => {
                 ( <small className="btn btn-danger" onClick={removeComment}>delete</small>
                 )}
                 <span onClick={handleReplyClick}>Reply</span>
-                {reply && (<div> {comment.article && (<AddComment article={comment.article} parent={comment.id}/>)}</div>) }
-                
-                </div>
-        </div>
 
+                {isLoggedIn && reply && (<div> {comment.article && (<AddComment article={comment.article} parent={comment.id}/>)}</div>) }
+
+                </div>
+
+        </div>
+        )}
+    </div>
     )
 
 }
