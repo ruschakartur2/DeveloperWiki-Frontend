@@ -18,15 +18,6 @@ const Article = (props) => {
         created_at: "",
     };
 
-    const initialCommentsState = [
-        {
-            id: null,
-            content: "",
-            author: null,
-            parent: null,
-            children: null
-        }
-    ]
 
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
     //const [comments, setComments] = useState(initialCommentsState);
@@ -34,10 +25,13 @@ const Article = (props) => {
     const comments = useSelector((state)=> state.comments.comments);
     const dispatch = useDispatch();
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const getArticle = id => {
         ArticleDataService.get(id)
             .then(response => {
                 setCurrentArticle(response.data);
+                dispatch(retrieveComments(response.data, 1))
+
             })
             .catch(e => {
                 console.log(e);
@@ -55,17 +49,15 @@ const Article = (props) => {
 
 
     useEffect(() => {
-        getArticle(props.match.params.id);
-    }, [props.match.params.id])
+        getArticle(props.match.params.id)
+    }, [getArticle, props.match.params.id])
 
 
 
-    if (currentArticle.id) {
-    }
-    useEffect(()=> {
-        dispatch(retrieveComments(currentArticle, 1))
 
-    }, [currentArticle])
+
+
+
 
     return (
         <div className="container">
@@ -99,7 +91,7 @@ const Article = (props) => {
                         </div>
                         <hr/>
                         {currentArticle && comments && comments.length >= 1 && (
-                            <div><CommentTree comments={comments} article={currentArticle.id}/>
+                            <div><CommentTree comments={comments} article={currentArticle}/>
                             </div>)}
                         <AddComment article={currentArticle}/>
 

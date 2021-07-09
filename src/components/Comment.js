@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteComment} from '../actions/comments';
+import {deleteComment, retrieveComments} from '../actions/comments';
 
 
 import AddComment from "./AddComment";
 
-const Comment = (comment) => {
+const Comment = (props) => {
 
     const { isLoggedIn } = useSelector(state => state.auth);
 
@@ -16,40 +16,38 @@ const Comment = (comment) => {
 
     const removeComment = (e) => {
         e.preventDefault();
-        dispatch(deleteComment(comment.id))
+        dispatch(deleteComment(props.comment.id))
             .then(() => {
                 console.log('deleted');
+                dispatch(retrieveComments(props.article, 1))
                 e.preventDefault();
-                // TODO: 1) dispatch to retrieve
             })
             .catch(e => {
                 console.log(e);
             });
     };
 
-    const handleReplyClick = (e) => {
+    const handleReplyClick = () => {
         setReply(!reply);
     }
-
     return (
         <div>
-        {comment && comment.id !== null && (
+        {props.comment && props.author && props.comment.id !== null && (
         <div className="comment-block">
 
             <div className="test">
-            <p>{comment.date_posted} | <i className="author"> {comment.author.email} </i></p>
+            <p>{props.comment.date_posted} | <i className="author"> {props.author.email} </i></p>
 
             <hr/>
-        <p>{comment.content}</p>
+        <p>{props.comment.content}</p>
             <hr/>
             </div>
             <div className="optional">
-                {currentUser.id && comment.author.id && currentUser.id === comment.author.id &&
+                {currentUser.id && props.author.id && currentUser.id === props.author.id &&
                 ( <small className="btn btn-danger" onClick={removeComment}>delete</small>
                 )}
                 <span onClick={handleReplyClick}>Reply</span>
-
-                {isLoggedIn && reply && (<div> {comment.article && (<AddComment article={comment.article} parent={comment.id}/>)}</div>) }
+                {isLoggedIn && reply && (<div> {props.article && (<AddComment article={props.article} parent={props.comment.id}/>)}</div>) }
 
                 </div>
 
