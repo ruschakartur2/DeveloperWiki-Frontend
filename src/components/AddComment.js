@@ -36,7 +36,7 @@ const AddComment = (props) => {
     const handleAddComment = (e) => {
         console.log(props);
         e.preventDefault();
-        if (props.parent == null) {
+
         dispatch(createComment(props.article.id, content, props.parent))
             .then(() => {
                 console.log(props);
@@ -45,8 +45,9 @@ const AddComment = (props) => {
             }).catch(e => {
             console.log(e);
         })
-        }
-    };
+
+
+    }
     if (!isLoggedIn) {
         return <Redirect to="/login"/>;
     }
