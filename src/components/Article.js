@@ -30,8 +30,6 @@ const Article = (props) => {
         ArticleDataService.get(id)
             .then(response => {
                 setCurrentArticle(response.data);
-                dispatch(retrieveComments(response.data, 1))
-
             })
             .catch(e => {
                 console.log(e);
@@ -50,12 +48,11 @@ const Article = (props) => {
 
     useEffect(() => {
         getArticle(props.match.params.id)
-    }, [getArticle, props.match.params.id])
+    }, [props.match.params.id])
 
-
-
-
-
+    useEffect(()=>{
+        dispatch(retrieveComments(currentArticle, 1))
+    }, [currentArticle])
 
 
 
