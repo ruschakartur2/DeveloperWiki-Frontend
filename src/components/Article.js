@@ -52,7 +52,7 @@ const Article = (props) => {
 
     useEffect(()=>{
         dispatch(retrieveComments(currentArticle, 1))
-    }, [currentArticle])
+    }, [currentArticle, dispatch])
 
 
 
