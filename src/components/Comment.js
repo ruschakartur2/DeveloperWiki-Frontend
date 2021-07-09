@@ -47,7 +47,7 @@ const Comment = (props) => {
                 ( <small className="btn btn-danger" onClick={removeComment}>delete</small>
                 )}
                 <span onClick={handleReplyClick}>Reply</span>
-                {isLoggedIn && reply && (<div> {props.article && (<AddComment article={props.article} parent={props.comment.id}/>)}</div>) }
+                {isLoggedIn && reply && (<div> {comment.article && (<AddComment article={comment.article} parent={comment.id}/>)}</div>) }
 
                 </div>
 
