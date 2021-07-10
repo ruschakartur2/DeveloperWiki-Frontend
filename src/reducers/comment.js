@@ -7,6 +7,7 @@ import {
 const initialState = {
     comments: [],
     totalCount: null,
+    currentPage: 1,
 };
 
 function commentReducer(state = initialState, action) {
@@ -14,16 +15,20 @@ function commentReducer(state = initialState, action) {
 
     switch (type) {
         case COMMENT_CREATE:
-            console.log(state);
             return {
                 ...state,
-                comments: action.payload,
+                comments: [
+                    action.payload
+                ],
             };
 
         case COMMENT_RETRIEVE:
             return {
                 ...state,
-                comments:  action.payload.results,
+                comments: [
+
+                    ...action.payload.results,
+                ],
                 totalCount: action.payload.count,
             };
 

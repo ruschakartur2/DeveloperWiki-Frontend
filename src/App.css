@@ -137,3 +137,25 @@ a {
   padding:3vh;
   background-color: beige;
 }
+
+.tag__block {
+  max-height: 400px;
+  background-color:cornsilk;
+  text-align: center;
+
+  overflow: auto;
+}
+.tag__item {
+  width:100%;
+  background-color: #6b6e80;
+  padding:2vh;
+  color:white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.tag__title {
+  padding:1vh 3vh;
+  border-radius: 20px;
+  border:1px solid yellow;
+  cursor:pointer;
+}

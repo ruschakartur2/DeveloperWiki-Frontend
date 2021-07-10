@@ -3,37 +3,43 @@ import {
     ARTICLE_RETRIEVE,
     ARTICLE_UPDATE,
     ARTICLE_DELETE,
-    SET_CURRENT_PAGE,
+    SET_CURRENT_PAGE, TAG_RETRIEVE,
 } from "../actions/types";
 
 const initialState = {
     items: [],
     currentPage: 1,
-    totalCount: 0
+    totalCount: 0,
+    tags: [],
 };
 
-function articleReducer(articles = initialState, action) {
+function articleReducer(state = initialState, action) {
     const {type, payload} = action;
 
     switch (type) {
         case ARTICLE_CREATE:
 
-            return [...articles.items,payload];
+            return [...state.items,payload];
 
         case ARTICLE_RETRIEVE:
             return {
-                ...articles,
+                ...state,
                 items: action.payload.results,
                 totalCount: action.payload.count,
             };
+        case TAG_RETRIEVE:
+            return {
+                ...state,
+                tags: action.payload,
+            }
         case SET_CURRENT_PAGE:
             return {
-                ...articles,
+                ...state,
                 currentPage: action.payload
             };
 
         case ARTICLE_UPDATE:
-            return articles.map((article)=>{
+            return state.map((article)=>{
                 if(article.id === payload.id){
                     return {
                         ...article,
@@ -45,10 +51,10 @@ function articleReducer(articles = initialState, action) {
             });
 
         case ARTICLE_DELETE:
-            return articles.items.filter(({id}) => id !== payload.id);
+            return state.items.filter(({id}) => id !== payload.id);
 
         default:
-            return articles;
+            return state;
     }
 }
 

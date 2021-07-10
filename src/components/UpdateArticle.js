@@ -5,18 +5,22 @@ import {updateArticle} from '../actions/articles';
 import ArticleDataService from '../services/article.service';
 
 import ReactQuill from 'react-quill';
+import {retrieveTags} from "../actions/tags";
 
 const ArticleUpdate = (props) => {
     const initialArticleState = {
         id: null,
         title: "",
+        tags: [],
         body: "",
         slug: "",
     };
+    const tags = useSelector(state => state.articles.tags);
 
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
     const [newTitle, setNewTitle] = useState('');
     const [newBody, setNewBody] = useState('');
+    const [selectedTags, setSelectedTags] = useState([])
 
     const { user: currentUser } = useSelector((state) => state.auth);
 
@@ -28,7 +32,7 @@ const ArticleUpdate = (props) => {
                 setCurrentArticle(response.data);
                 setNewTitle(response.data.title);
                 setNewBody(response.data.body);
-
+                setSelectedTags(response.data.tags);
             })
             .catch(e => {
                 console.log(e);
@@ -37,11 +41,13 @@ const ArticleUpdate = (props) => {
 
     useEffect(()=>{
         getTutorial(props.match.params.id);
-    },[props.match.params.id])
+        dispatch(retrieveTags());
+    },[props.match.params.id, dispatch]);
 
     const updateContent = () => {
        dispatch(updateArticle(currentArticle.slug, {
                                                 'title': newTitle,
+                                                'tags': selectedTags,
                                                 'body': newBody })
             )
             .then(response => {
@@ -56,6 +62,7 @@ const ArticleUpdate = (props) => {
     const previousUpdate = () => {
         dispatch(updateArticle(currentArticle.slug, {
             'title': currentArticle.previous_version.title,
+            'tags': currentArticle.previous_version.tags,
             'body': currentArticle.previous_version.body,
         }))
             .then(response => {
@@ -74,6 +81,10 @@ const ArticleUpdate = (props) => {
 
     const handleBodyChange = e => {
         setNewBody(e)
+    }
+    const handleTagsChange = (e) => {
+        let tags = Array.from(e.target.selectedOptions, option => option.value);
+        setSelectedTags(tags)
     }
     if (!currentUser) {
         props.history.push('/articles')
@@ -103,6 +114,11 @@ const ArticleUpdate = (props) => {
                         />
                     </div>
 
+                    <select multiple={true} defaultValue={selectedTags} onChange={handleTagsChange}>
+                        {tags && tags.map((sTag, index) => (
+                            <option value={sTag.title}>{sTag.title}</option>
+                        ))}
+                    </select>
                     <div className="form-group">
                         <ReactQuill name="body"
                                     theme="snow"

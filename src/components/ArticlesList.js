@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {retrieveArticles} from "../actions/articles";
+import {getArticleByTag, retrieveArticles} from "../actions/articles";
 
 import {createPages} from '../pagesCreator';
 import ReactHtmlParser from 'react-html-parser';
 import {findArticleByTitle, setCurrentPage} from '../actions/articles';
 import { Link } from "react-router-dom";
+import {retrieveTags} from "../actions/tags";
 
-const ArticlesList = (props) => {
+const ArticlesList = () => {
     const articles = useSelector(state=>state.articles.items);
+    const tags = useSelector(state=>state.articles.tags);
     const currentPage = useSelector(state=>state.articles.currentPage);
     const totalCount = useSelector(state=>state.articles.totalCount);
     const dispatch = useDispatch();
@@ -23,10 +25,15 @@ const ArticlesList = (props) => {
         dispatch(retrieveArticles(currentPage));
     },[currentPage,dispatch]);
 
-
+    const getByTag = (tag) => {
+        dispatch(setCurrentPage(1))
+        dispatch(getArticleByTag(tag))
+            .then((res)=>{
+                console.log(res)
+            })
+    }
 
     const findByTitle = (e) => {
-
         const searchTitle = e.target.value;
         setSearchTitle(searchTitle);
         dispatch(setCurrentPage(1))
@@ -34,12 +41,14 @@ const ArticlesList = (props) => {
             .then(res => {
                 console.log(res);
         })
-
     }
-
+    useEffect(()=>{
+        dispatch(retrieveTags());
+    },[dispatch]);
+    console.log(articles);
+    console.log(tags);
     return (
-        <div>
-
+        <div className="row">
             <div className="input-group mb-3">
                 <input
                     type="text"
@@ -52,11 +61,13 @@ const ArticlesList = (props) => {
 
                 </div>
             </div>
+            <div className="col-8">
+
 
                 <h2 className="m-auto">Article list</h2>
 
                 {articles && articles.length >=1 ? articles.map((article,index) => (
-                    <div className="card">
+                    <div className="card" key={index}>
                         <div className="card-body max-font-size">
                             <Link
                                 to={"/article/" + article.slug}
@@ -64,7 +75,9 @@ const ArticlesList = (props) => {
                             >
                             <h3 className="card-title">{article.title}</h3>
                             </Link>
-
+                            <h5 className="text-danger">{article.tags && article.tags.length>=1 ? article.tags.map((tag,key)=> (
+                                <span key={key} className="tag__title mr-3" onClick={(e)=>{getByTag(tag)}}>{tag}</span>
+                            )) : (<span className="tag__title">Without tag</span>)}</h5>
                             <h5 className="mt-2 mb-2 text-muted">{article.author.email}</h5>
                             <small className="text-muted">{article.created_at} | {article.views}</small><br/>
                             <div className="card-text mt-3">{
@@ -84,6 +97,14 @@ const ArticlesList = (props) => {
                                                  className={currentPage === page ? "current-page" : "page"}
                                                  onClick={() => dispatch(setCurrentPage(page))}
                                             >{page}</span> )}
+            </div>
+            </div>
+            <div className="col-4 tag__block">
+                <h2>Tags</h2>
+                {tags && tags.map((tag,index)=> (
+                    <p key={index} onClick={(e) => getByTag(tag.title)} className="tag__item">{tag.title}</p>
+                    )
+                )}
             </div>
         </div>
     )

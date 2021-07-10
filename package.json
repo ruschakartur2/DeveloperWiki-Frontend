@@ -13,6 +13,7 @@
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
     "react": "^16.13.1",
+    "react-bottom-scroll-listener": "^5.0.0",
     "react-dom": "^16.13.1",
     "react-github-login": "^1.0.3",
     "react-html-parser": "^2.0.2",

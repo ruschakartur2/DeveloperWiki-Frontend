@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-
 import ArticleDataService from '../services/article.service';
 import {deleteArticle} from '../actions/articles';
 import ReactHtmlParser from 'react-html-parser';
@@ -20,23 +19,21 @@ const Article = (props) => {
 
 
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
-    //const [comments, setComments] = useState(initialCommentsState);
     const {user: currentUser} = useSelector((state) => state.auth);
-    const comments = useSelector((state)=> state.comments.comments);
+    const comments = useSelector((state) => state.comments.comments);
+    const currentPage = useSelector((state)=> state.comments.currentPage);
     const dispatch = useDispatch();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getArticle = id => {
         ArticleDataService.get(id)
             .then(response => {
                 setCurrentArticle(response.data);
-                dispatch(retrieveComments(response.data, 1))
-
             })
             .catch(e => {
                 console.log(e);
             })
     }
+
     const removeArticle = () => {
         dispatch(deleteArticle(currentArticle.slug))
             .then(() => {
@@ -50,13 +47,20 @@ const Article = (props) => {
 
     useEffect(() => {
         getArticle(props.match.params.id)
-    }, [getArticle, props.match.params.id])
+    }, [props.match.params.id])
+
+    useEffect(() => {
+        dispatch(retrieveComments(currentArticle, currentPage));
+    }, [currentArticle, currentPage, dispatch])
 
 
 
-
-
-
+    const nextPage = () => {
+        console.log("clicked")
+        console.log(currentPage);
+        dispatch(retrieveComments(currentArticle, 2));
+        console.log(comments);
+    }
 
 
     return (
@@ -90,9 +94,17 @@ const Article = (props) => {
                             </div>
                         </div>
                         <hr/>
+
                         {currentArticle && comments && comments.length >= 1 && (
                             <div><CommentTree comments={comments} article={currentArticle}/>
+                                <p className="h3 text-warning">Loading...</p>
+                                <p className="h3 text-danger">Error</p>
+                                <hr/>
+
                             </div>)}
+                        <div onClick={nextPage}>Load more</div>
+
+                        <h2>Write now!</h2>
                         <AddComment article={currentArticle}/>
 
                     </div>

@@ -1,16 +1,18 @@
 import axios from 'axios';
-const ARTICLE_URL = "https://swiki.bvblogic.dev/api/v1/articles"
+const ARTICLE_URL = "http://localhost:8000/api/articles/"
 
 
 const getAll = (page) => {
-    return axios.get(ARTICLE_URL +`/?page=${page}`, {
+    return axios.get(ARTICLE_URL +`?page=${page}`, {
             headers: {'Content-type': 'application/json',}
         });
 
 };
 
+
+
 const get = slug => {
-    return axios.get(`${ARTICLE_URL}/${slug}/`, {
+    return axios.get(`${ARTICLE_URL}${slug}/`, {
             headers: {
                 'Content-type': 'application/json',
                 'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
@@ -18,9 +20,10 @@ const get = slug => {
     });
 };
 
-const create = (title,body,author) => {
-    return axios.post(ARTICLE_URL+'/', {
+const create = (title,tags,body,author) => {
+    return axios.post(ARTICLE_URL, {
             'title': title,
+            'tags': tags,
             'slug': title.replace(' ', ''),
             'body': body,
             'author': author
@@ -34,7 +37,7 @@ const create = (title,body,author) => {
 };
 
 const update = (slug,data) => {
-    return axios.patch(`${ARTICLE_URL}/${slug}/`, data,
+    return axios.patch(`${ARTICLE_URL}${slug}/`, data,
         {
             headers: {
                 'Content-type': 'application/json',
@@ -42,7 +45,7 @@ const update = (slug,data) => {
             }});
 };
 const remove = id => {
-    return axios.delete(`${ARTICLE_URL}/${id}/`,
+    return axios.delete(`${ARTICLE_URL}${id}/`,
         {
             headers: {
                 'Content-type': 'application/json',
@@ -51,7 +54,7 @@ const remove = id => {
 };
 
 const findByTitle = title => {
-    return axios.get(`${ARTICLE_URL}/?search=${title}`,
+    return axios.get(`${ARTICLE_URL}?search=${title}`,
         {
             headers: {
                 'Content-type': 'application/json'
@@ -60,13 +63,22 @@ const findByTitle = title => {
     );
 };
 
+const getByTag = tag => {
+    return axios.get(`${ARTICLE_URL}?tags__title=${tag}`,
+        {headers: {
+                    'Content-type': 'application/json'
+                }});
+}
+
+
 const ArticleService = {
     get,
     getAll,
     create,
     update,
     remove,
-    findByTitle
+    findByTitle,
+    getByTag,
 };
 
 export default ArticleService;
