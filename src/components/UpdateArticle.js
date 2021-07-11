@@ -101,6 +101,9 @@ const ArticleUpdate = (props) => {
 
             <div className="edit-form">
                 <h4>Article</h4>
+                <h5 className="text-danger">{currentArticle.tags && currentArticle.tags.length>=1 ? currentArticle.tags.map((tag,key)=> (
+                                <span key={key} className="tag__title mr-3">{tag}</span>
+                            )) : (<span className="tag__title">Without tag</span>)}</h5>
                 <form>
                     <div className="form-group">
                         <label htmlFor="title">Title</label>
