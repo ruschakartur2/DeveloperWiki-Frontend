@@ -39,7 +39,7 @@ function articleReducer(state = initialState, action) {
             };
 
         case ARTICLE_UPDATE:
-            return state.map((article)=>{
+            return state.items.map((article)=>{
                 if(article.id === payload.id){
                     return {
                         ...article,
