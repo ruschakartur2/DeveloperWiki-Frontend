@@ -28,6 +28,7 @@ const ArticlesList = () => {
     const getByTag = (tag) => {
         dispatch(setCurrentPage(1))
         dispatch(getArticleByTag(tag,currentPage))
+
         setSelectedTag(tag)
     }
 
@@ -100,7 +101,7 @@ const ArticlesList = () => {
             </div>
             <div className="col-4 tag__block">
                 <h2>Tags</h2>
-                {tags && tags.map((tag,index)=> (
+                {tags && tags.length>=1 && tags.map((tag,index)=> (
                     <p key={index} onClick={(e) => getByTag(tag.title)} className="tag__item">{tag.title}</p>
                     )
                 )}
