@@ -10,7 +10,6 @@ const initialState = {
     items: [],
     currentPage: 1,
     totalCount: 0,
-    tags: [],
 };
 
 function articleReducer(state = initialState, action) {
@@ -27,11 +26,7 @@ function articleReducer(state = initialState, action) {
                 items: action.payload.results,
                 totalCount: action.payload.count,
             };
-        case TAG_RETRIEVE:
-            return {
-                ...state,
-                tags: action.payload,
-            }
+      
         case SET_CURRENT_PAGE:
             return {
                 ...state,
