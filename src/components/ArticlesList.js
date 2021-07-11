@@ -10,7 +10,7 @@ import {retrieveTags} from "../actions/tags";
 
 const ArticlesList = () => {
     const articles = useSelector(state=>state.articles.items);
-    const tags = useSelector(state=>state.articles.tags);
+    const tags = useSelector(state=>state.admin.tags);
     const currentPage = useSelector(state=>state.articles.currentPage);
     const totalCount = useSelector(state=>state.articles.totalCount);
     const dispatch = useDispatch();
