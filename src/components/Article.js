@@ -49,6 +49,7 @@ const Article = (props) => {
         getArticle(props.match.params.id)
     }, [props.match.params.id])
 
+
     useEffect(() => {
         dispatch(retrieveComments(currentArticle, currentPage));
     }, [currentArticle, currentPage, dispatch])
