@@ -72,6 +72,9 @@ const Article = (props) => {
                         <div className="">
                             <h1 className="hidden-xs hidden-sm">{currentArticle.title} </h1>
                             <hr/>
+                            <h5 className="text-danger">{currentArticle.tags && currentArticle.tags.length>=1 ? currentArticle.tags.map((tag,key)=> (
+                                <span key={key} className="tag__title mr-3">{tag}</span>
+                            )) : (<span className="tag__title">Without tag</span>)}</h5>
                             <hr/>
                             <small
                                 className="text-muted">{currentArticle.created_at} | {currentArticle.views}</small><br/>
