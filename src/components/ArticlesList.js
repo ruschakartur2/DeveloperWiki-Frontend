@@ -28,9 +28,6 @@ const ArticlesList = () => {
     const getByTag = (tag) => {
         dispatch(setCurrentPage(1))
         dispatch(getArticleByTag(tag,currentPage))
-            .then((res)=>{
-                console.log(res)
-            })
     }
 
     const findByTitle = (e) => {
@@ -38,15 +35,12 @@ const ArticlesList = () => {
         setSearchTitle(searchTitle);
         dispatch(setCurrentPage(1))
         dispatch(findArticleByTitle(searchTitle,currentPage))
-            .then(res => {
-                console.log(res);
-        })
+        
     }
     useEffect(()=>{
         dispatch(retrieveTags());
     },[dispatch]);
 
-    console.log(tags);
     return (
         <div className="row">
             <div className="input-group mb-3">
