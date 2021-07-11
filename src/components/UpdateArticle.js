@@ -15,7 +15,7 @@ const ArticleUpdate = (props) => {
         body: "",
         slug: "",
     };
-    const tags = useSelector(state => state.articles.tags);
+    const tags = useSelector(state => state.admin.tags);
 
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
     const [newTitle, setNewTitle] = useState('');
@@ -71,6 +71,8 @@ const ArticleUpdate = (props) => {
             })
             .catch(e => {
                 console.log(e);
+                props.history.push('/article/'+currentArticle.slug)
+
             })
     }
 
@@ -117,12 +119,12 @@ const ArticleUpdate = (props) => {
                         />
                     </div>
 
-                    <select multiple={true} defaultValue={selectedTags} onChange={handleTagsChange}>
+                    <select className="form-control" multiple={true} defaultValue={selectedTags} onChange={handleTagsChange}>
                         {tags && tags.map((sTag, index) => (
                             <option value={sTag.title}>{sTag.title}</option>
                         ))}
                     </select>
-                    <div className="form-group">
+                    <div className="form-group mt-2">
                         <ReactQuill name="body"
                                     theme="snow"
                                     value={newBody}
