@@ -18,7 +18,7 @@ const ArticlesList = () => {
     const [searchTitle,setSearchTitle] = useState("");
     const pagesCount = Math.ceil(totalCount/10)
     const pages =[];
-
+    const [selectedTag, setSelectedTag] = useState("All")
     createPages(pages,pagesCount, currentPage)
 
     useEffect(()=>{
@@ -28,9 +28,12 @@ const ArticlesList = () => {
     const getByTag = (tag) => {
         dispatch(setCurrentPage(1))
         dispatch(getArticleByTag(tag,currentPage))
-            .then((res)=>{
-                console.log(res)
-            })
+        setSelectedTag(tag)
+    }
+
+    const clearTags = () => {
+        dispatch(retrieveArticles(currentPage));
+        setSelectedTag("All")
     }
 
     const findByTitle = (e) => {
@@ -38,15 +41,11 @@ const ArticlesList = () => {
         setSearchTitle(searchTitle);
         dispatch(setCurrentPage(1))
         dispatch(findArticleByTitle(searchTitle,currentPage))
-            .then(res => {
-                console.log(res);
-        })
     }
     useEffect(()=>{
         dispatch(retrieveTags());
     },[dispatch]);
 
-    console.log(tags);
     return (
         <div className="row">
             <div className="input-group mb-3">
@@ -65,7 +64,7 @@ const ArticlesList = () => {
 
 
                 <h2 className="m-auto">Article list</h2>
-
+                <div className=""><h5>Tag selected: {selectedTag}</h5> <span className="btn btn-warning c-pointer" onClick={clearTags}>Clear</span></div>
                 {articles && articles.length >=1 ? articles.map((article,index) => (
                     <div className="card" key={index}>
                         <div className="card-body max-font-size">
@@ -76,10 +75,10 @@ const ArticlesList = () => {
                             <h3 className="card-title">{article.title}</h3>
                             </Link>
                             <h5 className="text-danger">{article.tags && article.tags.length>=1 ? article.tags.map((tag,key)=> (
-                                <span key={key} className="tag__title mr-3" onClick={(e)=>{getByTag(tag)}}>{tag}</span>
-                            )) : (<span className="tag__title">Without tag</span>)}</h5>
+                                <span key={key} role="button" className="badge badge-dark  mr-3" onClick={(e)=>{getByTag(tag)}}>{tag}</span>
+                            )) : (<span className="badge badge-dark">Without tag</span>)}</h5>
                             <h5 className="mt-2 mb-2 text-muted">{article.author.email}</h5>
-                            <small className="text-muted">{article.created_at} | {article.views}</small><br/>
+                            <small className="text-muted">{article.created_at} | {article.visits}</small><br/>
                             <div className="card-text mt-3">{
                                 ReactHtmlParser (article.body.slice(0,255))
                             }
@@ -91,7 +90,7 @@ const ArticlesList = () => {
 
                         </div>
                     </div>
-                )) : (<div>No articles now. Add here: click</div>)}
+                )) : (<div>No articles now. Add here: <Link to="/add">click</Link></div>)}
             <div className="pages">
                 {pages.map((page,index) => <span key={index}
                                                  className={currentPage === page ? "current-page" : "page"}

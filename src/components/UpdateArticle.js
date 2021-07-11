@@ -15,7 +15,7 @@ const ArticleUpdate = (props) => {
         body: "",
         slug: "",
     };
-    const tags = useSelector(state => state.articles.tags);
+    const tags = useSelector(state => state.admin.tags);
 
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
     const [newTitle, setNewTitle] = useState('');
@@ -105,8 +105,8 @@ const ArticleUpdate = (props) => {
             <div className="edit-form">
                 <h4>Article</h4>
                 <h5 className="text-danger">{currentArticle.tags && currentArticle.tags.length>=1 ? currentArticle.tags.map((tag,key)=> (
-                    <span key={key} className="tag__title mr-3">{tag}</span>
-                )) : (<span className="tag__title">Without tag</span>)}</h5>
+                    <span key={key} className="badge badge-dark mr-3">{tag}</span>
+                )) : (<span className="badge badge-dark">Without tag</span>)}</h5>
                 <form>
                     <div className="form-group">
                         <label htmlFor="title">Title</label>

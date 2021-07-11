@@ -24,7 +24,7 @@ const AddArticle = (props) => {
 
     const {user: currentUser} = useSelector((state) => state.auth);
     const {isLoggedIn} = useSelector(state => state.auth);
-    const tags = useSelector(state => state.articles.tags);
+    const tags = useSelector(state => state.admin.tags);
     const dispatch = useDispatch();
 
     const checkBtn = useRef();
