@@ -21,7 +21,6 @@ const AddComment = (props) => {
     const {isLoggedIn} = useSelector(state => state.auth);
 
     const dispatch = useDispatch();
-    const [loading,setLoading] = useState(false);
     const checkBtn = useRef();
     const form = useRef();
 
@@ -68,7 +67,7 @@ const AddComment = (props) => {
                 </div>
 
                 <div className="form-group">
-                    <button className="btn btn-primary btn-block" disabled={loading}>
+                    <button className="btn btn-primary btn-block">
                         <span>Comment</span>
                     </button>
                 </div>
