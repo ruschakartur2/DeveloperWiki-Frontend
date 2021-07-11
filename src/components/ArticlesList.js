@@ -10,7 +10,7 @@ import {retrieveTags} from "../actions/tags";
 
 const ArticlesList = () => {
     const articles = useSelector(state=>state.articles.items);
-    const tags = useSelector(state=>state.articles.tags);
+    const tags = useSelector(state=>state.admin.tags);
     const currentPage = useSelector(state=>state.articles.currentPage);
     const totalCount = useSelector(state=>state.articles.totalCount);
     const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const ArticlesList = () => {
 
     const getByTag = (tag) => {
         dispatch(setCurrentPage(1))
-        dispatch(getArticleByTag(tag))
+        dispatch(getArticleByTag(tag,currentPage))
             .then((res)=>{
                 console.log(res)
             })
@@ -37,7 +37,7 @@ const ArticlesList = () => {
         const searchTitle = e.target.value;
         setSearchTitle(searchTitle);
         dispatch(setCurrentPage(1))
-        dispatch(findArticleByTitle(searchTitle))
+        dispatch(findArticleByTitle(searchTitle,currentPage))
             .then(res => {
                 console.log(res);
         })
@@ -45,7 +45,7 @@ const ArticlesList = () => {
     useEffect(()=>{
         dispatch(retrieveTags());
     },[dispatch]);
-    console.log(articles);
+
     console.log(tags);
     return (
         <div className="row">

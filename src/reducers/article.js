@@ -3,14 +3,13 @@ import {
     ARTICLE_RETRIEVE,
     ARTICLE_UPDATE,
     ARTICLE_DELETE,
-    SET_CURRENT_PAGE, TAG_RETRIEVE,
+    SET_CURRENT_PAGE,
 } from "../actions/types";
 
 const initialState = {
     items: [],
     currentPage: 1,
     totalCount: 0,
-    tags: [],
 };
 
 function articleReducer(state = initialState, action) {
@@ -27,11 +26,7 @@ function articleReducer(state = initialState, action) {
                 items: action.payload.results,
                 totalCount: action.payload.count,
             };
-        case TAG_RETRIEVE:
-            return {
-                ...state,
-                tags: action.payload,
-            }
+
         case SET_CURRENT_PAGE:
             return {
                 ...state,
@@ -39,7 +34,7 @@ function articleReducer(state = initialState, action) {
             };
 
         case ARTICLE_UPDATE:
-            return state.map((article)=>{
+            return state.items.map((article)=>{
                 if(article.id === payload.id){
                     return {
                         ...article,

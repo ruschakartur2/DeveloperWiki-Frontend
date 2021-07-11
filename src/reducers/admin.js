@@ -17,13 +17,14 @@ function adminReducer(state = initialState, action) {
             return {
                 ...state,
                 tags: [
-                    action.payload
-                ]
-            };
+                    ...state.tags,action.payload
+                ],
+            }
+
         case TAG_RETRIEVE:
             return {
                 ...state,
-                tags: action.payload.results,
+                tags: action.payload,
             };
 
         case TAG_DELETE:

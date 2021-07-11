@@ -86,12 +86,12 @@ const AddArticle = (props) => {
                     />
                 </div>
 
-                <select multiple={true} defaultValue={selectedTags} onChange={onChangeTags}>
+                <select className="form-control" multiple={true} defaultValue={selectedTags} onChange={onChangeTags}>
                     {tags && tags.map((sTag, index) => (
-                        <option value={sTag.title}>{sTag.title}</option>
+                        <option key={index} value={sTag.title}>{sTag.title}</option>
                     ))}
                 </select>
-                <div className="form-group">
+                <div className="form-group mt-2">
                     <label htmlFor="body">
                         <ReactQuill name="body" theme="snow" value={body} onChange={onChangeBody}/>
                     </label>

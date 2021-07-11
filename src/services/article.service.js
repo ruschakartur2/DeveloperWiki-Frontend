@@ -53,8 +53,8 @@ const remove = id => {
             }});
 };
 
-const findByTitle = title => {
-    return axios.get(`${ARTICLE_URL}?search=${title}`,
+const findByTitle = (title,page) => {
+    return axios.get(`${ARTICLE_URL}?search=${title}&page=${page}`,
         {
             headers: {
                 'Content-type': 'application/json'
@@ -63,8 +63,8 @@ const findByTitle = title => {
     );
 };
 
-const getByTag = tag => {
-    return axios.get(`${ARTICLE_URL}?tags__title=${tag}`,
+const getByTag = (tag,page) => {
+    return axios.get(`${ARTICLE_URL}?tags__title=${tag}&page=${page}`,
         {headers: {
                     'Content-type': 'application/json'
                 }});
