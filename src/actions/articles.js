@@ -8,9 +8,9 @@ import {
 
 import ArticleService from "../services/article.service";
 
-export const createArticle = (title,body,author) => async (dispatch) => {
+export const createArticle = (title,tags,body,author) => async (dispatch) => {
     try {
-        const res = await ArticleService.create(title,body,author);
+        const res = await ArticleService.create(title,tags,body,author);
 
         dispatch({
             type: ARTICLE_CREATE,
@@ -82,5 +82,19 @@ export const findArticleByTitle = (title) => async (dispatch) => {
         });
     } catch (err) {
         console.log(err);
+    }
+}
+
+export const getArticleByTag = (tag) => async (dispatch) => {
+    try {
+        const res = await ArticleService.getByTag(tag);
+
+        dispatch({
+            type: ARTICLE_RETRIEVE,
+            payload: res.data,
+        });
+    }
+    catch (err){
+        console.log(err)
     }
 }

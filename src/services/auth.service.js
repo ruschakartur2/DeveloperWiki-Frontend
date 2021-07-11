@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const USERS_URL = "https://swiki.bvblogic.dev/api/v1/accounts/";
+const USERS_URL = "http://localhost:8000/api/comments/";
 
 const register = (email, password) => {
   return axios.post(USERS_URL + "create/", {

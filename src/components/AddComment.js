@@ -56,7 +56,6 @@ const AddComment = (props) => {
         <div>
             <Form ref={form} onSubmit={handleAddComment}>
                 <div className="form-group">
-                    <label htmlFor="content">Text</label>
                     <Input
                         type="text"
                         className="form-control"
