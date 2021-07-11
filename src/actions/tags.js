@@ -13,7 +13,7 @@ export const retrieveTags = () => async (dispatch) => {
         const res = await TagService.getAll();
         dispatch({
             type: TAG_RETRIEVE,
-            payload: res.data.results,
+            payload: res.data,
 
         });
         return Promise.resolve(res.data);
