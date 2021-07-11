@@ -26,6 +26,7 @@ const Tag = () => {
     return (
         <div>
             <h2>Tags</h2>
+            <h4 className="text-muted">In beta version avaliable to all users, but in production that option can use only admins</h4>
             {tags && tags.map((tag,index)=> (
                     <p key={index} className="tag__item">{tag.title}</p>
                 )
