@@ -24,7 +24,7 @@ const AddArticle = (props) => {
 
     const {user: currentUser} = useSelector((state) => state.auth);
     const {isLoggedIn} = useSelector(state => state.auth);
-    const tags = useSelector(state => state.articles.tags);
+    const tags = useSelector(state => state.admin.tags);
     const dispatch = useDispatch();
 
     const checkBtn = useRef();
@@ -86,12 +86,12 @@ const AddArticle = (props) => {
                     />
                 </div>
 
-                <select multiple={true} defaultValue={selectedTags} onChange={onChangeTags}>
+                <select className="form-control" multiple={true} defaultValue={selectedTags} onChange={onChangeTags}>
                     {tags && tags.map((sTag, index) => (
                         <option value={sTag.title}>{sTag.title}</option>
                     ))}
                 </select>
-                <div className="form-group">
+                <div className="form-group mt-2">
                     <label htmlFor="body">
                         <ReactQuill name="body" theme="snow" value={body} onChange={onChangeBody}/>
                     </label>
