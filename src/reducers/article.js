@@ -3,7 +3,7 @@ import {
     ARTICLE_RETRIEVE,
     ARTICLE_UPDATE,
     ARTICLE_DELETE,
-    SET_CURRENT_PAGE, TAG_RETRIEVE,
+    SET_CURRENT_PAGE,
 } from "../actions/types";
 
 const initialState = {
