@@ -51,11 +51,12 @@ const ArticleUpdate = (props) => {
                                                 'body': newBody })
             )
             .then(response => {
-                console.log(response);
                 props.history.push('/article/'+currentArticle.slug)
                 })
             .catch(e => {
                 console.log(e);
+                props.history.push('/article/'+currentArticle.slug)
+
             });
     }
 
@@ -104,8 +105,10 @@ const ArticleUpdate = (props) => {
             <div className="edit-form">
                 <h4>Article</h4>
                 <h5 className="text-danger">{currentArticle.tags && currentArticle.tags.length>=1 ? currentArticle.tags.map((tag,key)=> (
-                                <span key={key} className="tag__title mr-3">{tag}</span>
-                            )) : (<span className="tag__title">Without tag</span>)}</h5>
+
+                    <span key={key} className="tag__title mr-3">{tag}</span>
+                )) : (<span className="tag__title">Without tag</span>)}</h5>
+
                 <form>
                     <div className="form-group">
                         <label htmlFor="title">Title</label>
@@ -121,7 +124,7 @@ const ArticleUpdate = (props) => {
 
                     <select className="form-control" multiple={true} defaultValue={selectedTags} onChange={handleTagsChange}>
                         {tags && tags.map((sTag, index) => (
-                            <option value={sTag.title}>{sTag.title}</option>
+                            <option key={index} value={sTag.title}>{sTag.title}</option>
                         ))}
                     </select>
                     <div className="form-group mt-2">

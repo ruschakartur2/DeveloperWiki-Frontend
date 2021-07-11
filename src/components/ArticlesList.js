@@ -27,7 +27,7 @@ const ArticlesList = () => {
 
     const getByTag = (tag) => {
         dispatch(setCurrentPage(1))
-        dispatch(getArticleByTag(tag))
+        dispatch(getArticleByTag(tag,currentPage))
             .then((res)=>{
                 console.log(res)
             })
@@ -37,7 +37,7 @@ const ArticlesList = () => {
         const searchTitle = e.target.value;
         setSearchTitle(searchTitle);
         dispatch(setCurrentPage(1))
-        dispatch(findArticleByTitle(searchTitle))
+        dispatch(findArticleByTitle(searchTitle,currentPage))
             .then(res => {
                 console.log(res);
         })
@@ -45,7 +45,7 @@ const ArticlesList = () => {
     useEffect(()=>{
         dispatch(retrieveTags());
     },[dispatch]);
-    console.log(articles);
+
     console.log(tags);
     return (
         <div className="row">

@@ -26,7 +26,7 @@ function articleReducer(state = initialState, action) {
                 items: action.payload.results,
                 totalCount: action.payload.count,
             };
-      
+
         case SET_CURRENT_PAGE:
             return {
                 ...state,

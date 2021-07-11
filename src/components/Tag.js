@@ -4,7 +4,7 @@ import {createTag, retrieveTags} from "../actions/tags";
 
 const Tag = () => {
     const dispatch = useDispatch();
-    const tags = useSelector((state)=>state.articles.tags)
+    const tags = useSelector((state)=>state.admin.tags)
 
     const [title,setTitle] = useState();
 

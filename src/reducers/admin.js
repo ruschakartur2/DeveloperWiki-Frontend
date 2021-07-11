@@ -20,6 +20,7 @@ function adminReducer(state = initialState, action) {
                     ...state.tags,action.payload
                 ],
             }
+
         case TAG_RETRIEVE:
             return {
                 ...state,

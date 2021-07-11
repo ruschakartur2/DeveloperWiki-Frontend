@@ -72,9 +72,9 @@ export const deleteArticle = (slug) => async (dispatch) => {
     }
 }
 
-export const findArticleByTitle = (title) => async (dispatch) => {
+export const findArticleByTitle = (title,page) => async (dispatch) => {
     try {
-        const res = await ArticleService.findByTitle(title);
+        const res = await ArticleService.findByTitle(title,page);
 
         dispatch({
             type: ARTICLE_RETRIEVE,
@@ -85,9 +85,9 @@ export const findArticleByTitle = (title) => async (dispatch) => {
     }
 }
 
-export const getArticleByTag = (tag) => async (dispatch) => {
+export const getArticleByTag = (tag,page) => async (dispatch) => {
     try {
-        const res = await ArticleService.getByTag(tag);
+        const res = await ArticleService.getByTag(tag,page);
 
         dispatch({
             type: ARTICLE_RETRIEVE,
