@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import ArticleDataService from '../services/article.service';
+import {Waypoint} from 'react-waypoint';
 import {deleteArticle} from '../actions/articles';
 import ReactHtmlParser from 'react-html-parser';
 import {Link} from "react-router-dom";
@@ -21,16 +22,15 @@ const Article = (props) => {
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
     const {user: currentUser} = useSelector((state) => state.auth);
     const comments = useSelector((state) => state.comments.comments);
-    const currentPage = useSelector((state)=> state.comments.currentPage);
+    const currentPage = useSelector((state) => state.comments.currentPage);
     const dispatch = useDispatch();
+    const [commentPage, setCommentPage] = useState(currentPage + 1);
+    const [loadedAll,setLoadedAll] = useState(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getArticle = id => {
         ArticleDataService.get(id)
             .then(response => {
                 setCurrentArticle(response.data);
-            })
-            .catch(e => {
-                console.log(e);
             })
     }
 
@@ -39,9 +39,6 @@ const Article = (props) => {
             .then(() => {
                 props.history.push("/articles/");
             })
-            .catch(e => {
-                console.log(e);
-            });
     };
 
 
@@ -55,12 +52,17 @@ const Article = (props) => {
     }, [currentArticle, currentPage, dispatch])
 
 
-
     const nextPage = () => {
-        console.log("clicked")
-        console.log(currentPage);
-        dispatch(retrieveComments(currentArticle, 2));
-        console.log(comments);
+        dispatch(retrieveComments(currentArticle, commentPage))
+            .then((res) => {
+                setCommentPage(commentPage + 1)
+                if(res === undefined) {
+                    setLoadedAll(true);
+                }
+            })
+            .catch((err) => {
+                setLoadedAll(true);
+            })
     }
 
 
@@ -72,7 +74,7 @@ const Article = (props) => {
                         <div className="">
                             <h1 className="hidden-xs hidden-sm">{currentArticle.title} </h1>
                             <hr/>
-                            <h5 className="text-danger">{currentArticle.tags && currentArticle.tags.length>=1 ? currentArticle.tags.map((tag,key)=> (
+                            <h5 className="text-danger">{currentArticle.tags && currentArticle.tags.length >= 1 ? currentArticle.tags.map((tag, key) => (
                                 <span key={key} className="badge badge-dark mr-3">{tag}</span>
                             )) : (<span className="badge badge-dark">Without tag</span>)}</h5>
                             <hr/>
@@ -100,13 +102,14 @@ const Article = (props) => {
                         <hr/>
 
                         {currentArticle && comments && comments.length >= 1 && (
-                            <div><CommentTree comments={comments} article={currentArticle}/>
-                                <p className="h3 text-warning">Loading...</p>
-                                <p className="h3 text-danger">Error</p>
-                                <hr/>
+                            <div>
+                                <CommentTree comments={comments} article={currentArticle}/>
 
+                                <hr/>
+                                {comments.length >= 10 && !loadedAll ? (
+                                    <Waypoint onEnter={nextPage}/>
+                                ) : <div>No more comments</div>}
                             </div>)}
-                        <div onClick={nextPage}>Load more</div>
 
                         <h2>Write now!</h2>
                         <AddComment article={currentArticle}/>

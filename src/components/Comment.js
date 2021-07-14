@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteComment, retrieveComments} from '../actions/comments';
+import {deleteComment} from '../actions/comments';
 
 
 import AddComment from "./AddComment";
@@ -19,7 +19,6 @@ const Comment = (props) => {
         dispatch(deleteComment(props.comment.id))
             .then(() => {
                 console.log('deleted');
-                dispatch(retrieveComments(props.article, 1))
                 e.preventDefault();
             })
             .catch(e => {

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {updateArticle} from '../actions/articles';
+import {setCurrentPage, updateArticle} from '../actions/articles';
 import ArticleDataService from '../services/article.service';
 
 import ReactQuill from 'react-quill';
@@ -14,6 +14,13 @@ const ArticleUpdate = (props) => {
         tags: [],
         body: "",
         slug: "",
+        previous_version: {
+            id: null,
+            title: "",
+            tags: [],
+            body: "",
+            slug: ""
+        }
     };
     const tags = useSelector(state => state.admin.tags);
 
@@ -21,7 +28,6 @@ const ArticleUpdate = (props) => {
     const [newTitle, setNewTitle] = useState('');
     const [newBody, setNewBody] = useState('');
     const [selectedTags, setSelectedTags] = useState([])
-
     const { user: currentUser } = useSelector((state) => state.auth);
 
     const dispatch = useDispatch();
@@ -51,13 +57,15 @@ const ArticleUpdate = (props) => {
                                                 'body': newBody })
             )
             .then(response => {
+
                 props.history.push('/article/'+currentArticle.slug)
                 })
             .catch(e => {
                 console.log(e);
-                props.history.push('/article/'+currentArticle.slug)
 
             });
+        dispatch(setCurrentPage(1))
+
     }
 
     const previousUpdate = () => {
@@ -72,9 +80,10 @@ const ArticleUpdate = (props) => {
             })
             .catch(e => {
                 console.log(e);
-                props.history.push('/article/'+currentArticle.slug)
 
             })
+        dispatch(setCurrentPage(1))
+
     }
 
     const handleTitleChange = e => {
