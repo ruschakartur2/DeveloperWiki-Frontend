@@ -130,7 +130,7 @@ const ArticleUpdate = (props) => {
                     </div>
 
                     <select className="form-control" multiple={true} defaultValue={selectedTags} onChange={handleTagsChange}>
-                        {tags && tags.map((sTag, index) => (
+                        {tags && tags.length>=1 && tags.map((sTag, index) => (
                             <option key={index} value={sTag.title}>{sTag.title}</option>
                         ))}
                     </select>
