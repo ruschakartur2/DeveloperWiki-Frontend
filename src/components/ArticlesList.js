@@ -23,6 +23,8 @@ const ArticlesList = () => {
 
     useEffect(()=>{
         dispatch(retrieveArticles(currentPage));
+        dispatch(retrieveTags());
+
     },[currentPage,dispatch]);
 
     const getByTag = (tag) => {
@@ -31,7 +33,7 @@ const ArticlesList = () => {
 
         setSelectedTag(tag)
     }
-
+    console.log(currentPage);
     const clearTags = () => {
         dispatch(retrieveArticles(currentPage));
         setSelectedTag("All")
@@ -43,9 +45,6 @@ const ArticlesList = () => {
         dispatch(setCurrentPage(1))
         dispatch(findArticleByTitle(searchTitle,currentPage))
     }
-    useEffect(()=>{
-        dispatch(retrieveTags());
-    },[dispatch]);
 
     return (
         <div className="row">

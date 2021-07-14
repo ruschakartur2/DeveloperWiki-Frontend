@@ -8,6 +8,7 @@ const initialState = {
     comments: [],
     totalCount: null,
     currentPage: 1,
+    newChild: false,
 };
 
 function commentReducer(state = initialState, action) {
@@ -17,17 +18,18 @@ function commentReducer(state = initialState, action) {
         case COMMENT_CREATE:
             return {
                 ...state,
-                comments: [
-                    action.payload
-                ],
+                pageNumber: state.pageNumber + 1,
+                comments: [...state.comments, action.payload],
+                loading: false,
+                show: {}
             };
+
 
         case COMMENT_RETRIEVE:
             return {
                 ...state,
                 comments: [
-
-                    ...action.payload.results,
+                    ...state.comments,...action.payload.results,
                 ],
                 totalCount: action.payload.count,
             };

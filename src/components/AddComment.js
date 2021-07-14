@@ -4,7 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import {createComment, retrieveComments} from "../actions/comments";
+import {createComment} from "../actions/comments";
 import {Redirect} from 'react-router-dom';
 
 const required = (value) => {
@@ -33,15 +33,14 @@ const AddComment = (props) => {
     };
 
     const handleAddComment = (e) => {
-        console.log(props);
         e.preventDefault();
 
         dispatch(createComment(props.article.id, content, props.parent))
             .then(() => {
-                console.log(props);
-                dispatch(retrieveComments(props.article, 1))
                 setContent(' ');
-
+                if(props.parent) {
+                    window.location.reload();
+                }
             }).catch(e => {
             console.log(e);
         })

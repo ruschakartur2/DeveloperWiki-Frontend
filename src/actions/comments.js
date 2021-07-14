@@ -1,7 +1,8 @@
 import {
     COMMENT_CREATE,
     COMMENT_RETRIEVE,
-    COMMENT_DELETE, SET_CURRENT_COMMENT_PAGE,
+    COMMENT_DELETE,
+    SET_CURRENT_COMMENT_PAGE,
 } from './types';
 
 import CommentService from "../services/comment.service";
@@ -36,6 +37,8 @@ export const retrieveComments = (articleId, page) => async (dispatch) => {
         console.log(err);
     }
 }
+
+
 
 export const deleteComment = id => async (dispatch) => {
     try {
