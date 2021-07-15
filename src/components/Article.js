@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import ArticleDataService from '../services/article.service';
 import {Waypoint} from 'react-waypoint';
-import {deleteArticle} from '../actions/articles';
+import {deleteArticle, setCurrentPage} from '../actions/articles';
 import ReactHtmlParser from 'react-html-parser';
 import {Link} from "react-router-dom";
 import CommentTree from "./CommentTree";
@@ -38,6 +38,8 @@ const Article = (props) => {
         dispatch(deleteArticle(currentArticle.slug))
             .then(() => {
                 props.history.push("/articles/");
+                dispatch(setCurrentPage(1));
+
             })
     };
 
