@@ -1,5 +1,5 @@
 import axios from 'axios';
-const COMMENT_URL = 'https://swiki.bvblogic.dev/api/v1/comments'
+const COMMENT_URL = 'http://localhost:8000/api/comments'
 
 
 const get = (article,page) => {
@@ -12,6 +12,8 @@ const get = (article,page) => {
         }
     );
 };
+
+
 const create = (article,content,parent) => {
     return axios.post(COMMENT_URL+'/', {
             'article': article,

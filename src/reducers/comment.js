@@ -29,7 +29,7 @@ function commentReducer(state = initialState, action) {
             return {
                 ...state,
                 comments: [
-                    ...state.comments,...action.payload.results,
+                    ...state.comments, ...action.payload.results,
                 ],
                 totalCount: action.payload.count,
             };

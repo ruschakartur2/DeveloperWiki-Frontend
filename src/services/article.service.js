@@ -1,9 +1,9 @@
 import axios from 'axios';
-const ARTICLE_URL = "https://swiki.bvblogic.dev/api/v1/articles/"
+const ARTICLE_URL = "http://localhost:8000/api/articles/"
 
 
-const getAll = (page) => {
-    return axios.get(ARTICLE_URL +`?page=${page}`, {
+const getAll = (page,popular=null, newest = null) => {
+    return axios.get(ARTICLE_URL +`?page=${page}&popular=${popular}&new=${newest}`, {
             headers: {'Content-type': 'application/json',}
         });
 
@@ -63,8 +63,8 @@ const findByTitle = (title,page) => {
     );
 };
 
-const getByTag = (tag,page) => {
-    return axios.get(`${ARTICLE_URL}?tags__title=${tag}&page=${page}`,
+const getByTag = (tag,page, popular = null, newest = null) => {
+    return axios.get(`${ARTICLE_URL}?tags__title=${tag}&page=${page}&popular=${popular}&new=${newest}`,
         {headers: {
                     'Content-type': 'application/json'
                 }});

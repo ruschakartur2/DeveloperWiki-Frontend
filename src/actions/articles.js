@@ -24,9 +24,9 @@ export const createArticle = (title,tags,body,author) => async (dispatch) => {
     }
 };
 
-export const retrieveArticles = (page) => async (dispatch) => {
+export const retrieveArticles = (page,popular, newest) => async (dispatch) => {
     try {
-        const res = await ArticleService.getAll(page);
+        const res = await ArticleService.getAll(page,popular, newest);
         dispatch({
             type: ARTICLE_RETRIEVE,
             payload: res.data,
@@ -38,6 +38,37 @@ export const retrieveArticles = (page) => async (dispatch) => {
         console.log(err);
     }
 }
+//
+// export const getNewest = (page,newest) => async (dispatch) => {
+//     try {
+//         const res = await ArticleService.getAll(page, newest);
+//         dispatch({
+//             type: ARTICLE_RETRIEVE,
+//             payload: res.data,
+//
+//         });
+//         return Promise.resolve(res.data);
+//
+//     } catch (err) {
+//         console.log(err);
+//     }
+// }
+//
+// export const getPopular = (page,popular) => async (dispatch) => {
+//     try {
+//         const res = await ArticleService.getAll(page,popular);
+//         dispatch({
+//             type: ARTICLE_RETRIEVE,
+//             payload: res.data,
+//
+//         });
+//         return Promise.resolve(res.data);
+//
+//     } catch (err) {
+//         console.log(err);
+//     }
+// }
+
 export const setCurrentPage = (page) => async (dispatch) => {
     dispatch({
         type: SET_CURRENT_PAGE,
@@ -85,9 +116,9 @@ export const findArticleByTitle = (title,page) => async (dispatch) => {
     }
 }
 
-export const getArticleByTag = (tag,page) => async (dispatch) => {
+export const getArticleByTag = (tag,page,popular,newest) => async (dispatch) => {
     try {
-        const res = await ArticleService.getByTag(tag,page);
+        const res = await ArticleService.getByTag(tag,page,popular,newest);
 
         dispatch({
             type: ARTICLE_RETRIEVE,

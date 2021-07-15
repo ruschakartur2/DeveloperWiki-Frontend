@@ -1,5 +1,5 @@
 import axios from 'axios';
-const TAG_URL = "https://swiki.bvblogic.dev/api/v1/tags/"
+const TAG_URL = "http://127.0.0.1:8000/api/tags/"
 
 
 const getAll = () => {
