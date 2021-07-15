@@ -23,7 +23,9 @@ const get = slug => {
 const create = (title,tags,body,author) => {
     return axios.post(ARTICLE_URL, {
             'title': title,
-            'tags': tags,
+            'tags': [
+                {'title': tags},
+            ],
             'slug': title.replace(' ', ''),
             'body': body,
             'author': author

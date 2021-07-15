@@ -3,8 +3,8 @@ import {
     ARTICLE_RETRIEVE,
     ARTICLE_UPDATE,
     ARTICLE_DELETE,
-    SET_CURRENT_PAGE,
-    } from './types';
+    SET_CURRENT_PAGE, SET_POPULAR,
+} from './types';
 
 import ArticleService from "../services/article.service";
 
@@ -73,6 +73,12 @@ export const setCurrentPage = (page) => async (dispatch) => {
     dispatch({
         type: SET_CURRENT_PAGE,
         payload: page,
+    })
+}
+export const setByPopular = (popular) => async (dispatch) => {
+    dispatch({
+        type: SET_POPULAR,
+        payload: popular
     })
 }
 

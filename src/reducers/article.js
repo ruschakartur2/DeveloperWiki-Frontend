@@ -3,13 +3,15 @@ import {
     ARTICLE_RETRIEVE,
     ARTICLE_UPDATE,
     ARTICLE_DELETE,
-    SET_CURRENT_PAGE,
+    SET_CURRENT_PAGE, SET_POPULAR, SET_NEWEST,
 } from "../actions/types";
 
 const initialState = {
     items: [],
     currentItem: {},
     currentPage: 1,
+    byPopular: false,
+    byNewest: false,
     totalCount: 0,
 };
 
@@ -34,6 +36,17 @@ function articleReducer(state = initialState, action) {
                 ...state,
                 currentPage: action.payload
             };
+
+        case SET_POPULAR:
+            return {
+                ...state,
+                byPopular: action.payload,
+            }
+        case SET_NEWEST:
+            return {
+                ...state,
+                byNewest: action.payload,
+            }
 
         case ARTICLE_UPDATE:
             return state.items.map((article)=>{

@@ -25,7 +25,7 @@ const Article = (props) => {
     const currentPage = useSelector((state) => state.comments.currentPage);
     const dispatch = useDispatch();
     const [commentPage, setCommentPage] = useState(currentPage + 1);
-    const [loadedAll,setLoadedAll] = useState(false);
+    const [loadedAll, setLoadedAll] = useState(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getArticle = id => {
         ArticleDataService.get(id)
@@ -58,7 +58,7 @@ const Article = (props) => {
         dispatch(retrieveComments(currentArticle, commentPage))
             .then((res) => {
                 setCommentPage(commentPage + 1)
-                if(res === undefined) {
+                if (res === undefined) {
                     setLoadedAll(true);
                 }
             })
