@@ -44,8 +44,8 @@ const AddArticle = (props) => {
         setBody(body);
     };
     const onChangeTags = (e) => {
-        let tags = Array.from(e.target.selectedOptions, option => option.value);
-        setSelectedTags(tags)
+        let tags = e.target.value;
+        setSelectedTags(tags);
     }
 
     useEffect(() => {
