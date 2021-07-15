@@ -1,5 +1,5 @@
 import axios from 'axios';
-const ARTICLE_URL = "https://swiki.bvblogic.dev/api/v1/article/"
+const ARTICLE_URL = "https://swiki.bvblogic.dev/api/v1/articles/"
 
 
 const getAll = (page,popular=null, newest = null) => {
