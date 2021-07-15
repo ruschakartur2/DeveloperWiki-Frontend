@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {setCurrentPage, updateArticle} from '../actions/articles';
+import {retrieveArticles, setCurrentPage, updateArticle} from '../actions/articles';
 import ArticleDataService from '../services/article.service';
 
 import ReactQuill from 'react-quill';
@@ -15,11 +15,7 @@ const ArticleUpdate = (props) => {
         body: "",
         slug: "",
         previous_version: {
-            id: null,
-            title: "",
-            tags: [],
-            body: "",
-            slug: ""
+
         }
     };
     const tags = useSelector(state => state.admin.tags);
@@ -47,6 +43,7 @@ const ArticleUpdate = (props) => {
 
     useEffect(()=>{
         getTutorial(props.match.params.id);
+        dispatch(retrieveArticles(1))
         dispatch(retrieveTags());
     },[props.match.params.id, dispatch]);
 
@@ -130,7 +127,7 @@ const ArticleUpdate = (props) => {
                     </div>
 
                     <select className="form-control" multiple={true} defaultValue={selectedTags} onChange={handleTagsChange}>
-                        {tags && tags.length>=1 && tags.map((sTag, index) => (
+                        {tags && tags.map((sTag, index) => (
                             <option key={index} value={sTag.title}>{sTag.title}</option>
                         ))}
                     </select>

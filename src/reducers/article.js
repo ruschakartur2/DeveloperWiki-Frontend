@@ -8,6 +8,7 @@ import {
 
 const initialState = {
     items: [],
+    currentItem: {},
     currentPage: 1,
     totalCount: 0,
 };
@@ -26,6 +27,7 @@ function articleReducer(state = initialState, action) {
                 items: action.payload.results,
                 totalCount: action.payload.count,
             };
+
 
         case SET_CURRENT_PAGE:
             return {
