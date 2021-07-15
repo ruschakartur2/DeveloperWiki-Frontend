@@ -50,7 +50,7 @@ const ArticleUpdate = (props) => {
     const updateContent = () => {
        dispatch(updateArticle(currentArticle.slug, {
                                                 'title': newTitle,
-                                                'tags': selectedTags,
+                                                'update_tags': [selectedTags],
                                                 'body': newBody })
             )
             .then(response => {
@@ -68,7 +68,7 @@ const ArticleUpdate = (props) => {
     const previousUpdate = () => {
         dispatch(updateArticle(currentArticle.slug, {
             'title': currentArticle.previous_version.title,
-            'tags': currentArticle.previous_version.tags,
+            'update_tags': currentArticle.previous_version.tags,
             'body': currentArticle.previous_version.body,
         }))
             .then(response => {
@@ -92,8 +92,9 @@ const ArticleUpdate = (props) => {
         setNewBody(e)
     }
     const handleTagsChange = (e) => {
-        let tags = Array.from(e.target.selectedOptions, option => option.value);
-        setSelectedTags(tags)
+            let tags = e.target.value;
+            console.log(tags);
+            setSelectedTags(tags);
     }
     if (!currentUser) {
         props.history.push('/articles')
@@ -111,7 +112,7 @@ const ArticleUpdate = (props) => {
             <div className="edit-form">
                 <h4>Article</h4>
                 <h5 className="text-danger">{currentArticle.tags && currentArticle.tags.length>=1 ? currentArticle.tags.map((tag,key)=> (
-                    <span key={key} className="badge badge-dark mr-3">{tag}</span>
+                    <span key={key} className="badge badge-dark mr-3">{tag.title}</span>
                 )) : (<span className="badge badge-dark">Without tag</span>)}</h5>
                 <form>
                     <div className="form-group">
@@ -126,11 +127,12 @@ const ArticleUpdate = (props) => {
                         />
                     </div>
 
-                    <select className="form-control" multiple={true} defaultValue={selectedTags} onChange={handleTagsChange}>
-                        {tags && tags.map((sTag, index) => (
+                    <input type="text" list="tags" name="tags" onChange={handleTagsChange}/>
+                    <datalist id="tags">
+                        {tags && tags.length>=1 && tags.map((sTag, index) => (
                             <option key={index} value={sTag.title}>{sTag.title}</option>
                         ))}
-                    </select>
+                    </datalist>
                     <div className="form-group mt-2">
                         <ReactQuill name="body"
                                     theme="snow"

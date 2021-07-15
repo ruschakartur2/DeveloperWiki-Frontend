@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getArticleByTag, retrieveArticles} from "../actions/articles";
+import {getArticleByTag, retrieveArticles, findArticleByTitle, setCurrentPage} from "../actions/articles";
 
 import {createPages} from '../pagesCreator';
 import ReactHtmlParser from 'react-html-parser';
-import {findArticleByTitle, setCurrentPage} from '../actions/articles';
 import {Link} from "react-router-dom";
 import {retrieveTags} from "../actions/tags";
 
@@ -12,6 +11,7 @@ const ArticlesList = () => {
     const articles = useSelector(state => state.articles.items);
     const tags = useSelector(state => state.admin.tags);
     const currentPage = useSelector(state => state.articles.currentPage);
+
     const totalCount = useSelector(state => state.articles.totalCount);
     const dispatch = useDispatch();
     const [activeNew, setActiveNew] = useState(false);

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import ArticleDataService from '../services/article.service';
 import {Waypoint} from 'react-waypoint';
-import {deleteArticle} from '../actions/articles';
+import {deleteArticle, setCurrentPage} from '../actions/articles';
 import ReactHtmlParser from 'react-html-parser';
 import {Link} from "react-router-dom";
 import CommentTree from "./CommentTree";
@@ -25,7 +25,7 @@ const Article = (props) => {
     const currentPage = useSelector((state) => state.comments.currentPage);
     const dispatch = useDispatch();
     const [commentPage, setCommentPage] = useState(currentPage + 1);
-    const [loadedAll,setLoadedAll] = useState(false);
+    const [loadedAll, setLoadedAll] = useState(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getArticle = id => {
         ArticleDataService.get(id)
@@ -38,6 +38,8 @@ const Article = (props) => {
         dispatch(deleteArticle(currentArticle.slug))
             .then(() => {
                 props.history.push("/articles/");
+                dispatch(setCurrentPage(1));
+
             })
     };
 
@@ -56,7 +58,7 @@ const Article = (props) => {
         dispatch(retrieveComments(currentArticle, commentPage))
             .then((res) => {
                 setCommentPage(commentPage + 1)
-                if(res === undefined) {
+                if (res === undefined) {
                     setLoadedAll(true);
                 }
             })

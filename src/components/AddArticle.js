@@ -56,7 +56,7 @@ const AddArticle = (props) => {
         e.preventDefault();
         console.log(selectedTags);
         console.log(currentUser.id)
-        dispatch(createArticle(title, selectedTags, body.toString(), currentUser.id))
+        dispatch(createArticle(title, [selectedTags], body.toString(), currentUser.id))
             .then((data) => {
                 setSubmitted(true);
                 dispatch(setCurrentPage(1))
@@ -86,11 +86,12 @@ const AddArticle = (props) => {
                     />
                 </div>
 
-                <select className="form-control" multiple={true} defaultValue={selectedTags} onChange={onChangeTags}>
+                <input type="text" list="tags" name="tags" onChange={onChangeTags}/>
+                <datalist id="tags">
                     {tags && tags.length>=1 && tags.map((sTag, index) => (
                         <option key={index} value={sTag.title}>{sTag.title}</option>
                     ))}
-                </select>
+                    </datalist>
                 <div className="form-group mt-2">
                     <label htmlFor="body">
                         <ReactQuill name="body" theme="snow" value={body} onChange={onChangeBody}/>
