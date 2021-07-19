@@ -112,7 +112,7 @@ const ArticleUpdate = (props) => {
             <div className="edit-form">
                 <h4>Article</h4>
                 <h5 className="text-danger">{currentArticle.tags && currentArticle.tags.length>=1 ? currentArticle.tags.map((tag,key)=> (
-                    <span key={key} className="badge badge-dark mr-3">{tag.title}</span>
+                    <span key={key} className="badge badge-dark mr-3">{tag}</span>
                 )) : (<span className="badge badge-dark">Without tag</span>)}</h5>
                 <form>
                     <div className="form-group">
@@ -127,7 +127,7 @@ const ArticleUpdate = (props) => {
                         />
                     </div>
 
-                    <input type="text" list="tags" name="tags" onChange={handleTagsChange}/>
+                    <input type="text" list="tags" value={selectedTags} name="tags" onChange={handleTagsChange}/>
                     <datalist id="tags">
                         {tags && tags.length>=1 && tags.map((sTag, index) => (
                             <option key={index} value={sTag.title}>{sTag.title}</option>
