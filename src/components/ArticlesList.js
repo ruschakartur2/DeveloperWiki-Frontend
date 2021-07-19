@@ -132,9 +132,24 @@ const ArticlesList = () => {
                     >{page}</span>)}
                 </div>
             </div>
-            <div className="col-4 tag__block">
+            <ul className="col-4 list-group tag__block overflow-auto list-group-flush">
                 {tags && tags.length >= 1 && tags.map((tag, index) => (
-                        <p key={index} onClick={(e) => getByTag(tag.title)} className="tag__item">{tag.title}</p>
+
+                        <li
+                            type="button"
+                            key={index}
+                            onClick={(e) => getByTag(tag.title)}
+                            className={
+                                selectedTag === tag.title ?
+                                    ('list-group-item d-flex justify-content-between align-items-center active') :
+                                    ('list-group-item d-flex justify-content-between align-items-center')
+                            }>
+                            {tag.title}
+                            <span className="badge badge-primary badge-pill">
+                        {tag.articles.length}
+                        </span>
+                        </li>
+
                     )
                 )}
             </ul>
