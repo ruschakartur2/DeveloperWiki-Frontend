@@ -34,12 +34,11 @@ const Article = (props) => {
             })
     }
 
-    const removeArticle = () => {
+    const removeArticle = (e) => {
         dispatch(deleteArticle(currentArticle.slug))
             .then(() => {
                 props.history.push("/articles/");
                 dispatch(setCurrentPage(1));
-
             })
     };
 

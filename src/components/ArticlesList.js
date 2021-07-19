@@ -137,7 +137,7 @@ const ArticlesList = () => {
                         <p key={index} onClick={(e) => getByTag(tag.title)} className="tag__item">{tag.title}</p>
                     )
                 )}
-            </div>
+            </ul>
         </div>
     )
 }

@@ -14,12 +14,13 @@ const Comment = (props) => {
 
     const [reply,setReply] = useState(false);
 
-    const removeComment = (e) => {
-        e.preventDefault();
+    const removeComment = () => {
         dispatch(deleteComment(props.comment.id))
             .then(() => {
                 console.log('deleted');
-                e.preventDefault();
+                if (props.comment.parent) {
+                    window.location.reload();
+                }
             })
             .catch(e => {
                 console.log(e);
