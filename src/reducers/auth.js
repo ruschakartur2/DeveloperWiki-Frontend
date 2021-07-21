@@ -3,7 +3,7 @@ import {
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT,
+  LOGOUT, PROFILE_UPDATE,
 } from "../actions/types";
 
 const user = JSON.parse(localStorage.getItem("user"));
@@ -38,6 +38,12 @@ export default function (state = initialState, action) {
         isLoggedIn: false,
         user: null,
       };
+    case PROFILE_UPDATE:
+      return {
+        ...state,
+        user: payload.user
+      }
+
     case LOGOUT:
       return {
         ...state,

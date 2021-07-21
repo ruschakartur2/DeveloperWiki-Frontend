@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {retrieveArticles, setCurrentPage, updateArticle} from '../actions/articles';
+import {AsetCurrentPage, updateArticle} from '../actions/articles';
 import ArticleDataService from '../services/article.service';
 
 import ReactQuill from 'react-quill';
-import {retrieveTags} from "../actions/tags";
 
 const ArticleUpdate = (props) => {
     const initialArticleState = {
@@ -19,7 +18,7 @@ const ArticleUpdate = (props) => {
         }
     };
     const tags = useSelector(state => state.admin.tags);
-
+    console.log(props.match.params);
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
     const [newTitle, setNewTitle] = useState('');
     const [newBody, setNewBody] = useState('');
@@ -28,7 +27,7 @@ const ArticleUpdate = (props) => {
 
     const dispatch = useDispatch();
 
-    const getTutorial = id => {
+    const getArticle = id => {
         ArticleDataService.get(id)
             .then(response=>{
                 setCurrentArticle(response.data);
@@ -42,21 +41,24 @@ const ArticleUpdate = (props) => {
     }
 
     useEffect(()=>{
-        getTutorial(props.match.params.id);
-        dispatch(retrieveArticles(1))
-        dispatch(retrieveTags());
+        getArticle(props.match.params.id);
     },[props.match.params.id, dispatch]);
-
+    const success = 'Your article successful updated'
+    const slug = currentArticle.slug
     const updateContent = () => {
        dispatch(updateArticle(currentArticle.slug, {
                                                 'title': newTitle,
-                                                'update_tags': [selectedTags],
+                                                'update_tags': selectedTags,
                                                 'body': newBody })
             )
             .then(response => {
-
-                props.history.push('/article/'+currentArticle.slug)
+                console.log(response)
+                props.history.push({
+                    pathname: '/articles',
+                    state: {message: success,
+                            slug: slug},
                 })
+            })
             .catch(e => {
                 console.log(e);
 
@@ -68,7 +70,6 @@ const ArticleUpdate = (props) => {
     const previousUpdate = () => {
         dispatch(updateArticle(currentArticle.slug, {
             'title': currentArticle.previous_version.title,
-            'update_tags': currentArticle.previous_version.tags,
             'body': currentArticle.previous_version.body,
         }))
             .then(response => {
@@ -92,8 +93,10 @@ const ArticleUpdate = (props) => {
         setNewBody(e)
     }
     const handleTagsChange = (e) => {
-            let tags = e.target.value;
-            console.log(tags);
+            const tags = []
+            let tag = e.target.value;
+            tags.push(tag)
+            console.log(selectedTags)
             setSelectedTags(tags);
     }
     if (!currentUser) {

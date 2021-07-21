@@ -88,6 +88,7 @@ const Article = (props) => {
                                     <Link
                                         to={"/update/" + currentArticle.slug}
                                         className="btn btn-warning"
+                                        params={{ article: currentArticle.slug }}
                                     >
                                         Edit
                                     </Link>

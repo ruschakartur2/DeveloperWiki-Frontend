@@ -7,7 +7,7 @@ import ReactHtmlParser from 'react-html-parser';
 import {Link} from "react-router-dom";
 import {retrieveTags} from "../actions/tags";
 
-const ArticlesList = () => {
+const ArticlesList = (props) => {
     const articles = useSelector(state => state.articles.items);
     const tags = useSelector(state => state.admin.tags);
     const currentPage = useSelector(state => state.articles.currentPage);
@@ -21,10 +21,16 @@ const ArticlesList = () => {
     const pages = [];
     const [selectedTag, setSelectedTag] = useState('')
     createPages(pages, pagesCount, currentPage)
+    const [message, setMessage] = useState('')
+    const [articleSlug, setArticleSlug] = useState('')
 
     useEffect(() => {
         dispatch(retrieveArticles(currentPage));
         dispatch(retrieveTags());
+        if (props.location.state) {
+            setMessage(props.location.state.message)
+            setArticleSlug(props.location.state.slug)
+        }
 
     }, [currentPage, dispatch]);
 
@@ -32,11 +38,11 @@ const ArticlesList = () => {
         dispatch(setCurrentPage(1))
         setSelectedTag(tag)
         if (activeNew) {
-            dispatch(getArticleByTag(tag, currentPage, null, 'get'))
+            dispatch(getArticleByTag(tag, currentPage, null, true))
         } else if (activePopular) {
-            dispatch(getArticleByTag(tag, currentPage, 'get', null))
+            dispatch(getArticleByTag(tag, currentPage, true, null))
         } else {
-            dispatch(getArticleByTag(tag, currentPage, null, null));
+            dispatch(getArticleByTag(tag, currentPage));
         }
     }
     const getPopulars = () => {
@@ -62,6 +68,12 @@ const ArticlesList = () => {
         setSelectedTag("")
     }
 
+    const closeAlert = () => {
+        setArticleSlug(null)
+        setMessage(null)
+        window.history.replaceState(null, '')
+    }
+
     const findByTitle = (e) => {
         const searchTitle = e.target.value;
         setSearchTitle(searchTitle);
@@ -84,6 +96,14 @@ const ArticlesList = () => {
                 </div>
             </div>
             <div className="col-8">
+                {message && articleSlug && (
+                    <div className="alert alert-warning alert-dismissible fade show" role="alert">
+                        {message}. <b><Link to={"article/" + articleSlug}>See
+                        now</Link></b>
+                        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={closeAlert}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>)}
 
 
                 <h2 className="m-auto">Article list</h2>

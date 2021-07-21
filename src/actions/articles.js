@@ -3,7 +3,8 @@ import {
     ARTICLE_RETRIEVE,
     ARTICLE_UPDATE,
     ARTICLE_DELETE,
-    SET_CURRENT_PAGE, SET_POPULAR,
+    SET_CURRENT_PAGE,
+
 } from './types';
 
 import ArticleService from "../services/article.service";
@@ -24,9 +25,9 @@ export const createArticle = (title,tags,body,author) => async (dispatch) => {
     }
 };
 
-export const retrieveArticles = (page,popular, newest) => async (dispatch) => {
+export const retrieveArticles = (page,popular, newest,my) => async (dispatch) => {
     try {
-        const res = await ArticleService.getAll(page,popular, newest);
+        const res = await ArticleService.getAll(page,popular, newest,my);
         dispatch({
             type: ARTICLE_RETRIEVE,
             payload: res.data,
@@ -75,12 +76,7 @@ export const setCurrentPage = (page) => async (dispatch) => {
         payload: page,
     })
 }
-export const setByPopular = (popular) => async (dispatch) => {
-    dispatch({
-        type: SET_POPULAR,
-        payload: popular
-    })
-}
+
 
 export const updateArticle = (slug,data) => async (dispatch) => {
     try {
