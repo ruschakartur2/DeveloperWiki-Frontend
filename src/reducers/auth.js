@@ -3,14 +3,14 @@ import {
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT, PROFILE_UPDATE,
+  LOGOUT, PROFILE_RETRIEVE, ARTICLE_UPDATE, PROFILE_UPDATE,
 } from "../actions/types";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = user
-  ? { isLoggedIn: true, user }
-  : { isLoggedIn: false, user: null };
+  ? { isLoggedIn: true, user, profile: null}
+  : { isLoggedIn: false, user: null, profile: null};
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
@@ -31,6 +31,7 @@ export default function (state = initialState, action) {
         ...state,
         isLoggedIn: true,
         user: payload.user,
+        profile: payload.profile,
       };
     case LOGIN_FAIL:
       return {
@@ -38,11 +39,17 @@ export default function (state = initialState, action) {
         isLoggedIn: false,
         user: null,
       };
+    case PROFILE_RETRIEVE:
+      return {
+        ...state,
+        profile: payload,
+      }
     case PROFILE_UPDATE:
       return {
         ...state,
-        user: payload.user
+        profile: payload,
       }
+
 
     case LOGOUT:
       return {

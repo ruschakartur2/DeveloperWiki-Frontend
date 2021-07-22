@@ -32,7 +32,7 @@ const ArticlesList = (props) => {
             setArticleSlug(props.location.state.slug)
         }
 
-    }, [currentPage, dispatch]);
+    }, [currentPage, dispatch, props.location.state]);
 
     const getByTag = (tag) => {
         dispatch(setCurrentPage(1))
@@ -100,7 +100,8 @@ const ArticlesList = (props) => {
                     <div className="alert alert-warning alert-dismissible fade show" role="alert">
                         {message}. <b><Link to={"article/" + articleSlug}>See
                         now</Link></b>
-                        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={closeAlert}>
+                        <button type="button" className="close" data-dismiss="alert" aria-label="Close"
+                                onClick={closeAlert}>
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>)}
@@ -131,7 +132,10 @@ const ArticlesList = (props) => {
                                     getByTag(tag)
                                 }}>{tag}</span>
                             )) : (<span className="badge badge-dark">Without tag</span>)}</h5>
-                            <h5 className="mt-2 mb-2 text-muted">{article.author.email}</h5>
+                            <div>
+                                <Link to={{pathname: "/profile/" + article.author.id, state: {id: article.author.id}}}
+                                      className="mt-2 mb-2 text-muted">{article.author.email}</Link>
+                            </div>
                             <small className="text-muted">{article.created_at} | {article.visits}</small><br/>
                             <div className="card-text mt-3">{
                                 ReactHtmlParser(article.body.slice(0, 255))

@@ -1,41 +1,43 @@
-import React from "react";
-import { Redirect } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import UpdateProfile from "./UpdateProfile";
+import {getProfile} from "../actions/auth";
 
 
 const Profile = () => {
-  const { user: currentUser } = useSelector((state) => state.auth);
+    const profile = useSelector(state => state.auth.profile);
+    const user = useSelector(state => state.auth.user);
+    const dispatch = useDispatch();
 
-  if (!currentUser) {
-    return <Redirect to="/login" />;
-  }
-
+    useEffect(()=>{
+        dispatch(getProfile(user.id));
+    },[dispatch])
 
   return (
-    <div className="container">
+      <div>
+      {profile && (
+
+          <div className="container">
       <header className="jumbotron">
-        <h3>
-          <strong>{currentUser.email}</strong> profile
+          <h3>
+          <strong>{profile.email}</strong> profile
         </h3>
         <h5>
-         <p> <i>{currentUser.first_name}</i> <span>{currentUser.last_name}</span></p>
-         <p> <u>{currentUser.city}</u></p>
-          <b>{currentUser.phone}</b>
-        </h5>
-          {currentUser.is_active ?
+            {profile.nickname}
+            </h5>
+          {profile.is_active ?
               (<h5 className="online"> Online</h5>)
               : (<h5 className="offline">Offline</h5>)
           }
-          <img src={"http://127.0.0.1:8000"+currentUser.image} alt="" className="rounded-circle" width="150px" height="150px"/>
+
+          <img src={profile.image ? ("http://127.0.0.1:8000"+profile.image) : ("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F352477108322644529%2F&psig=AOvVaw1QBGj5DDHEVw0YHyGvRmq4&ust=1627045855806000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCOj996Xg9vECFQAAAAAdAAAAABAD")} alt="" className="rounded-circle" width="150px" height="150px"/>
+
       </header>
-        <UpdateProfile email={currentUser.email}
-                       firstName={currentUser.first_name}
-                       lastName={currentUser.last_name}
-                       phone={currentUser.phone}
-                       city={currentUser.city}/>
+        <UpdateProfile profile={profile}/>
 
     </div>
+            )}
+      </div>
   );
 };
 

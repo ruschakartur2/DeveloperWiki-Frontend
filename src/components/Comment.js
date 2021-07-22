@@ -4,6 +4,7 @@ import {deleteComment} from '../actions/comments';
 
 
 import AddComment from "./AddComment";
+import {Link} from "react-router-dom";
 
 const Comment = (props) => {
 
@@ -36,9 +37,11 @@ const Comment = (props) => {
         <div className="comment-block">
 
             <div className="test">
-            <p>{props.comment.date_posted} | <i className="author"> {props.author.email} </i></p>
+            <p>{props.comment.date_posted} | <Link to={{pathname: "/profile/" + props.author.id, state: {id: props.author.id}}} className="mt-2 mb-2 author">{props.author.email}</Link>
+            </p>
 
-            <hr/>
+
+                <hr/>
         <p>{props.comment.content}</p>
             <hr/>
             </div>

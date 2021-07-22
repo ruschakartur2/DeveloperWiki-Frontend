@@ -15,23 +15,20 @@ import ArticleUpdate from "./components/UpdateArticle";
 import Article from "./components/Article";
 
 import {logout} from "./actions/auth";
-import {clearMessage} from "./actions/message";
 
 import {history} from "./helpers/history";
 import CommentTree from "./components/CommentTree";
 import AddComment from "./components/AddComment";
 import Tag from "./components/Tag";
+import UsersProfile from "./components/UsersProfile";
 
 const App = () => {
 
-    const {user: currentUser} = useSelector((state) => state.auth);
+    const profile = useSelector(state => state.auth.profile);
+    const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        history.listen((location) => {
-            dispatch(clearMessage()); // clear message when changing location
-        });
-    }, [dispatch]);
+
 
 
     const logOut = () => {
@@ -55,13 +52,13 @@ const App = () => {
                             Articles
                         </Link>
                         </li>
-                        {currentUser && (
+                        {profile && (
                             <li className="nav-item">
                                 <Link to={"/add"} className="nav-link">
                                     Add article
                                 </Link>
                             </li>)}
-                      {currentUser && (
+                      {profile && (
                           <li className="nav-item">
                           <Link to={"/tags"} className="nav-link">Tags</Link>
                           </li>
@@ -70,11 +67,11 @@ const App = () => {
 
                     </div>
 
-                    {currentUser ? (
+                    {profile ? (
                         <div className="navbar-nav ml-auto">
                             <li className="nav-item">
                                 <Link to={"/profile"} className="nav-link">
-                                    {currentUser.email}
+                                    {profile.email}
                                 </Link>
                             </li>
                             <li className="nav-item">
@@ -106,6 +103,7 @@ const App = () => {
                         <Route exact path="/login" component={Login}/>
                         <Route exact path="/register" component={Register}/>
                         <Route exact path="/profile" component={Profile}/>
+                        <Route exact path="/profile/:id" component={UsersProfile}/>
                         <Route exact path="/articles" component={ArticlesList}/>
                         <Route exact path="/add" component={AddArticle}/>
                         <Route exact path="/update/:id" component={ArticleUpdate}/>

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {AsetCurrentPage, updateArticle} from '../actions/articles';
+import {setCurrentPage, updateArticle} from '../actions/articles';
 import ArticleDataService from '../services/article.service';
 
 import ReactQuill from 'react-quill';
@@ -18,7 +18,6 @@ const ArticleUpdate = (props) => {
         }
     };
     const tags = useSelector(state => state.admin.tags);
-    console.log(props.match.params);
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
     const [newTitle, setNewTitle] = useState('');
     const [newBody, setNewBody] = useState('');
@@ -51,8 +50,7 @@ const ArticleUpdate = (props) => {
                                                 'update_tags': selectedTags,
                                                 'body': newBody })
             )
-            .then(response => {
-                console.log(response)
+            .then(() => {
                 props.history.push({
                     pathname: '/articles',
                     state: {message: success,
