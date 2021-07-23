@@ -19,24 +19,23 @@ const login = (email, password) => {
       if (response.data.token) {
         localStorage.setItem("user", JSON.stringify(response.data.user));
         localStorage.setItem("token", JSON.stringify(response.data.token));
+        localStorage.setItem("profile", JSON.stringify(response.data.profile));
       }
 
-      return response.data.user;
+      return response.data;
     });
 };
 
-const github = () => {
-
-}
 
 const logout = () => {
   localStorage.removeItem("user");
   localStorage.removeItem('token');
 };
 
+
+
 export default {
   register,
   login,
-  github,
   logout,
 };

@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {retrieveArticles, setCurrentPage, updateArticle} from '../actions/articles';
+import {setCurrentPage, updateArticle} from '../actions/articles';
 import ArticleDataService from '../services/article.service';
 
 import ReactQuill from 'react-quill';
-import {retrieveTags} from "../actions/tags";
+import Form from "react-validation/build/form";
 
 const ArticleUpdate = (props) => {
     const initialArticleState = {
@@ -19,6 +19,8 @@ const ArticleUpdate = (props) => {
         }
     };
     const tags = useSelector(state => state.admin.tags);
+    const [submitted, setSubmitted] = useState(false);
+    const form = useRef();
 
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
     const [newTitle, setNewTitle] = useState('');
@@ -28,7 +30,7 @@ const ArticleUpdate = (props) => {
 
     const dispatch = useDispatch();
 
-    const getTutorial = id => {
+    const getArticle = id => {
         ArticleDataService.get(id)
             .then(response=>{
                 setCurrentArticle(response.data);
@@ -42,21 +44,24 @@ const ArticleUpdate = (props) => {
     }
 
     useEffect(()=>{
-        getTutorial(props.match.params.id);
-        dispatch(retrieveArticles(1))
-        dispatch(retrieveTags());
+        getArticle(props.match.params.id);
     },[props.match.params.id, dispatch]);
-
+    const success = 'Your article successful updated'
+    const slug = currentArticle.slug
     const updateContent = () => {
        dispatch(updateArticle(currentArticle.slug, {
                                                 'title': newTitle,
-                                                'update_tags': [selectedTags],
+                                                'update_tags': selectedTags,
                                                 'body': newBody })
             )
-            .then(response => {
-
-                props.history.push('/article/'+currentArticle.slug)
+            .then(() => {
+                setSubmitted(true);
+                props.history.push({
+                    pathname: '/articles',
+                    state: {message: success,
+                            slug: slug},
                 })
+            })
             .catch(e => {
                 console.log(e);
 
@@ -68,7 +73,6 @@ const ArticleUpdate = (props) => {
     const previousUpdate = () => {
         dispatch(updateArticle(currentArticle.slug, {
             'title': currentArticle.previous_version.title,
-            'update_tags': currentArticle.previous_version.tags,
             'body': currentArticle.previous_version.body,
         }))
             .then(response => {
@@ -92,8 +96,10 @@ const ArticleUpdate = (props) => {
         setNewBody(e)
     }
     const handleTagsChange = (e) => {
-            let tags = e.target.value;
-            console.log(tags);
+            const tags = []
+            let tag = e.target.value;
+            tags.push(tag)
+            console.log(selectedTags)
             setSelectedTags(tags);
     }
     if (!currentUser) {
@@ -114,20 +120,26 @@ const ArticleUpdate = (props) => {
                 <h5 className="text-danger">{currentArticle.tags && currentArticle.tags.length>=1 ? currentArticle.tags.map((tag,key)=> (
                     <span key={key} className="badge badge-dark mr-3">{tag}</span>
                 )) : (<span className="badge badge-dark">Without tag</span>)}</h5>
-                <form>
+                <Form ref={form} onSubmit={updateContent}>
                     <div className="form-group">
                         <label htmlFor="title">Title</label>
                         <input
                             type="text"
                             className="form-control"
                             id="title"
+                            required={true}
                             name="title"
                             value={newTitle}
                             onChange={handleTitleChange}
                         />
                     </div>
-
-                    <input type="text" list="tags" value={selectedTags} name="tags" onChange={handleTagsChange}/>
+                    <label htmlFor="tags">Tags</label>
+                    <input type="text"
+                           list="tags"
+                           value={selectedTags}
+                           required={true}
+                           name="tags"
+                           onChange={handleTagsChange}/>
                     <datalist id="tags">
                         {tags && tags.length>=1 && tags.map((sTag, index) => (
                             <option key={index} value={sTag.title}>{sTag.title}</option>
@@ -140,14 +152,16 @@ const ArticleUpdate = (props) => {
                                     onChange={handleBodyChange}
                                     />
                     </div>
-                </form>
-                <button
-                    type="submit"
-                    className="badge badge-success"
-                    onClick={updateContent}
-                >
-                    Update
-                </button>
+                    <div className="form-group">
+                        <button className="btn btn-primary btn-block" disabled={submitted}>
+                            {submitted && (
+                                <span className="spinner-border spinner-border-sm"></span>
+                            )}
+                            <span>Update article</span>
+                        </button>
+                    </div>
+                </Form>
+
                 {currentArticle &&
                 <button
                     type="submit"

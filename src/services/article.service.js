@@ -1,26 +1,29 @@
 import axios from 'axios';
+
+
 const ARTICLE_URL = "https://swiki.bvblogic.dev/api/v1/articles/"
 
 
-const getAll = (page,popular=null, newest = null) => {
-    return axios.get(ARTICLE_URL +`?page=${page}&popular=${popular}&new=${newest}`, {
+
+const getAll = (page, popular = null, newest = null) => {
+    return axios.get(ARTICLE_URL + `?page=${page ? (page) : ('')}${popular ? ('&popular=1') : ('')}${newest ? ('&new=1') : ('')}`,
+        {
             headers: {'Content-type': 'application/json',}
         });
 
 };
 
 
-
 const get = slug => {
     return axios.get(`${ARTICLE_URL}${slug}/`, {
-            headers: {
-                'Content-type': 'application/json',
-                'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
-            }
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': 'Token ' + JSON.parse((localStorage.getItem('token'))),
+        }
     });
 };
 
-const create = (title,tags,body,author) => {
+const create = (title, tags, body, author) => {
     return axios.post(ARTICLE_URL, {
             'title': title,
             'update_tags': tags,
@@ -31,45 +34,63 @@ const create = (title,tags,body,author) => {
         {
             headers: {
                 'Content-type': 'application/json',
-                'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
+                'Authorization': 'Token ' + JSON.parse((localStorage.getItem('token'))),
 
-            }});
+            }
+        });
 };
 
-const update = (slug,data) => {
+const update = (slug, data) => {
     return axios.patch(`${ARTICLE_URL}${slug}/`, data,
         {
             headers: {
                 'Content-type': 'application/json',
-                'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
-            }});
+                'Authorization': 'Token ' + JSON.parse((localStorage.getItem('token'))),
+            }
+        });
 };
 const remove = id => {
     return axios.delete(`${ARTICLE_URL}${id}/`,
         {
             headers: {
                 'Content-type': 'application/json',
-                'Authorization': 'Token '+JSON.parse((localStorage.getItem('token'))),
-            }});
+                'Authorization': 'Token ' + JSON.parse((localStorage.getItem('token'))),
+            }
+        });
 };
 
-const findByTitle = (title,page) => {
+const findByTitle = (title, page) => {
     return axios.get(`${ARTICLE_URL}?search=${title}&page=${page}`,
         {
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': 'Token ' + JSON.parse((localStorage.getItem('token'))),
             }
         }
     );
 };
 
-const getByTag = (tag,page, popular = null, newest = null) => {
+
+const getByTag = (tag, page, popular = null, newest = null) => {
     return axios.get(`${ARTICLE_URL}?tags__title=${tag}&page=${page}&popular=${popular}&new=${newest}`,
-        {headers: {
-                    'Content-type': 'application/json'
-                }});
+        {
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': 'Token ' + JSON.parse((localStorage.getItem('token'))),
+
+            }
+        });
 }
 
+const getMyArticles = () => {
+    return axios.get(`${ARTICLE_URL}?my=get)`, {
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': 'Token ' + JSON.parse((localStorage.getItem('token'))),
+
+        }
+    })
+}
 
 const ArticleService = {
     get,
@@ -79,6 +100,7 @@ const ArticleService = {
     remove,
     findByTitle,
     getByTag,
+    getMyArticles,
 };
 
 export default ArticleService;

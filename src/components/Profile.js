@@ -1,28 +1,43 @@
-import React from "react";
-import { Redirect } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import UpdateProfile from "./UpdateProfile";
+import {getProfile} from "../actions/auth";
+
 
 const Profile = () => {
-  const { user: currentUser } = useSelector((state) => state.auth);
-  console.log(currentUser);
-  if (!currentUser) {
-    return <Redirect to="/login" />;
-  }
+    const profile = useSelector(state => state.auth.profile);
+    const user = useSelector(state => state.auth.user);
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch(getProfile(user.id));
+    },[dispatch])
 
   return (
-    <div className="container">
+      <div>
+      {profile && (
+
+          <div className="container">
       <header className="jumbotron">
-        <h3>
-          <strong>{currentUser.email}</strong> profile
+          <h3>
+          <strong>{profile.email}</strong> profile
         </h3>
-          {currentUser.is_active ?
+        <h5>
+            {profile.nickname}
+            </h5>
+          {profile.is_active ?
               (<h5 className="online"> Online</h5>)
               : (<h5 className="offline">Offline</h5>)
           }
+
+          <img src={profile.image ? ("http://127.0.0.1:8000"+profile.image) : ("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F352477108322644529%2F&psig=AOvVaw1QBGj5DDHEVw0YHyGvRmq4&ust=1627045855806000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCOj996Xg9vECFQAAAAAdAAAAABAD")} alt="" className="rounded-circle" width="150px" height="150px"/>
+
       </header>
-        
+        <UpdateProfile profile={profile}/>
 
     </div>
+            )}
+      </div>
   );
 };
 
