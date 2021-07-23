@@ -9,16 +9,6 @@ import {createArticle, setCurrentPage} from "../actions/articles";
 import {Redirect} from 'react-router-dom';
 import {retrieveTags} from "../actions/tags";
 
-const required = (value) => {
-    if (!value) {
-        return (
-            <div className="alert alert-danger" role="alert">
-                This field is required!
-            </div>
-        );
-    }
-};
-
 
 const AddArticle = (props) => {
 
@@ -33,7 +23,17 @@ const AddArticle = (props) => {
     const [body, setBody] = useState("");
     const [title, setTitle] = useState("");
     const [submitted, setSubmitted] = useState(false);
-    const [selectedTags, setSelectedTags] = useState([])
+    const [selectedTags, setSelectedTags] = useState('')
+    const [message, setMessage] = useState('');
+    const validateTitle = (value) => {
+        if (!value) {
+            return (
+                <div className="alert alert-danger" role="alert">
+                    This field is required!
+                </div>
+            );
+        }
+    }
 
     const onChangeTitle = (e) => {
         const title = e.target.value;
@@ -46,6 +46,8 @@ const AddArticle = (props) => {
     const onChangeTags = (e) => {
         let tags = e.target.value;
         setSelectedTags(tags);
+        setSubmitted(false)
+
     }
 
     useEffect(() => {
@@ -56,15 +58,20 @@ const AddArticle = (props) => {
         e.preventDefault();
         console.log(selectedTags);
         console.log(currentUser.id)
-        dispatch(createArticle(title, [selectedTags], body.toString(), currentUser.id))
-            .then((data) => {
-                setSubmitted(true);
-                dispatch(setCurrentPage(1))
-                props.history.push('/articles')
-                console.log(data);
-            }).catch(e => {
-            console.log(e);
-        })
+        if (selectedTags.length >= 1 && title.length >= 1 && body.length >= 1) {
+            dispatch(createArticle(title, [selectedTags], body.toString(), currentUser.id))
+                .then((data) => {
+                    setSubmitted(true);
+                    dispatch(setCurrentPage(1))
+                    props.history.push('/articles')
+                    console.log(data);
+                }).catch(e => {
+                console.log(e);
+            })
+        } else {
+            setMessage('Write all fields please');
+        }
+
     };
     if (!isLoggedIn) {
         return <Redirect to="/login"/>;
@@ -81,22 +88,36 @@ const AddArticle = (props) => {
                         className="form-control"
                         name="email"
                         value={title}
+                        required={true}
                         onChange={onChangeTitle}
-                        validations={[required]}
+                        validations={[validateTitle]}
                     />
                 </div>
+                <label htmlFor="tags">Tags</label>
+                <input type="text"
+                       list="tags"
+                       name="tags"
+                       className="form-control"
+                       value={selectedTags}
+                       required={true}
+                       onChange={onChangeTags}
 
-                <input type="text" list="tags" name="tags" onChange={onChangeTags}/>
+
+                />
                 <datalist id="tags">
-                    {tags && tags.length>=1 && tags.map((sTag, index) => (
-                        <option key={index} value={sTag.title}>{sTag.title}</option>
+                    {tags && tags.length >= 1 && tags.map((sTag, index) => (
+                        <option key={index}
+                                value={sTag.title}>{sTag.title}</option>
                     ))}
-                    </datalist>
+                </datalist>
+
                 <div className="form-group mt-2">
                     <label htmlFor="body">
-                        <ReactQuill name="body" theme="snow" value={body} onChange={onChangeBody}/>
+                        <ReactQuill required={true} name="body" theme="snow" value={body} onChange={onChangeBody}/>
                     </label>
                 </div>
+                {message && (<div className="alert alert-danger"><b>* {message}</b></div>
+                )}
                 <div className="form-group">
                     <button className="btn btn-primary btn-block" disabled={submitted}>
                         {submitted && (

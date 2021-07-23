@@ -3,7 +3,7 @@ import {
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT, PROFILE_RETRIEVE, ARTICLE_UPDATE, PROFILE_UPDATE,
+  LOGOUT, PROFILE_RETRIEVE, PROFILE_UPDATE,
 } from "../actions/types";
 
 const user = JSON.parse(localStorage.getItem("user"));
