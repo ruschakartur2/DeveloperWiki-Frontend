@@ -11,7 +11,7 @@ const Profile = () => {
 
     useEffect(()=>{
         dispatch(getProfile(user.id));
-    },[dispatch])
+    },[dispatch, user.id])
 
   return (
       <div>

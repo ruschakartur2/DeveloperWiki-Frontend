@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Router, Switch, Route, Link} from "react-router-dom";
 
@@ -25,7 +25,6 @@ import UsersProfile from "./components/UsersProfile";
 const App = () => {
 
     const profile = useSelector(state => state.auth.profile);
-    const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
 
 

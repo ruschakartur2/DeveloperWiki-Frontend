@@ -9,7 +9,7 @@ const UsersProfile = (props) => {
 
     useEffect(()=>{
         dispatch(getProfile(props.location.state.id));
-    },[dispatch])
+    },[dispatch, props.location.state.id])
 
     return (
         <div>
