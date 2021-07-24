@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Router, Switch, Route, Link} from "react-router-dom";
@@ -28,9 +29,12 @@ const App = () => {
     const dispatch = useDispatch();
     const user = useSelector(state=>state.auth.user);
 
+
     useEffect(()=>{
-        dispatch(getProfile(user.id));
-    },[dispatch, user.id])
+        if(user !== null) {
+            dispatch(getProfile(user.id));
+        }
+        },[dispatch,])
 
 
 
