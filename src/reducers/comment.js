@@ -1,7 +1,7 @@
 import {
     COMMENT_CREATE,
     COMMENT_RETRIEVE,
-    COMMENT_DELETE,
+    COMMENT_DELETE, COMMENT_RETRIEVE_MORE,
 } from "../actions/types";
 
 const initialState = {
@@ -29,10 +29,19 @@ function commentReducer(state = initialState, action) {
             return {
                 ...state,
                 comments: [
-                    ...state.comments, ...action.payload.results,
+                    ...action.payload.results,
                 ],
                 totalCount: action.payload.count,
             };
+
+        case COMMENT_RETRIEVE_MORE:
+            return {
+                ...state,
+                comments: [
+                    ...state.comments, ...action.payload.results,
+                ],
+
+            }
 
         case COMMENT_DELETE:
             return {

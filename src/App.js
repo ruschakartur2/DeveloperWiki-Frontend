@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Router, Switch, Route, Link} from "react-router-dom";
 
@@ -14,7 +14,7 @@ import AddArticle from "./components/AddArticle";
 import ArticleUpdate from "./components/UpdateArticle";
 import Article from "./components/Article";
 
-import {logout} from "./actions/auth";
+import {getProfile, logout} from "./actions/auth";
 
 import {history} from "./helpers/history";
 import CommentTree from "./components/CommentTree";
@@ -26,7 +26,11 @@ const App = () => {
 
     const profile = useSelector(state => state.auth.profile);
     const dispatch = useDispatch();
+    const user = useSelector(state=>state.auth.user);
 
+    useEffect(()=>{
+        dispatch(getProfile(user.id));
+    },[dispatch, user.id])
 
 
 
