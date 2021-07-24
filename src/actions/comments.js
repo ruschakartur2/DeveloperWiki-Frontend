@@ -2,7 +2,7 @@ import {
     COMMENT_CREATE,
     COMMENT_RETRIEVE,
     COMMENT_DELETE,
-    SET_CURRENT_COMMENT_PAGE,
+    SET_CURRENT_COMMENT_PAGE, COMMENT_RETRIEVE_MORE,
 } from './types';
 
 import CommentService from "../services/comment.service";
@@ -28,6 +28,21 @@ export const retrieveComments = (articleId, page) => async (dispatch) => {
         const res = await CommentService.get(articleId, page);
         dispatch({
             type: COMMENT_RETRIEVE,
+            payload: res.data,
+
+        });
+        return Promise.resolve(res.data);
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const retrieveCommentsMore = (articleId, page) => async (dispatch) => {
+    try {
+        const res = await CommentService.get(articleId, page);
+        dispatch({
+            type: COMMENT_RETRIEVE_MORE,
             payload: res.data,
 
         });

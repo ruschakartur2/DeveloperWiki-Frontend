@@ -7,7 +7,7 @@ import ReactHtmlParser from 'react-html-parser';
 import {Link} from "react-router-dom";
 import CommentTree from "./CommentTree";
 import AddComment from "./AddComment";
-import {retrieveComments} from "../actions/comments";
+import {retrieveComments, retrieveCommentsMore} from "../actions/comments";
 
 const Article = (props) => {
     const initialArticleState = {
@@ -54,7 +54,7 @@ const Article = (props) => {
 
 
     const nextPage = () => {
-        dispatch(retrieveComments(currentArticle, commentPage))
+        dispatch(retrieveCommentsMore(currentArticle, commentPage))
             .then((res) => {
                 setCommentPage(commentPage + 1)
                 if (res === undefined) {

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Router, Switch, Route, Link} from "react-router-dom";
@@ -14,7 +15,7 @@ import AddArticle from "./components/AddArticle";
 import ArticleUpdate from "./components/UpdateArticle";
 import Article from "./components/Article";
 
-import {logout} from "./actions/auth";
+import {getProfile, logout} from "./actions/auth";
 
 import {history} from "./helpers/history";
 import CommentTree from "./components/CommentTree";
@@ -25,9 +26,15 @@ import UsersProfile from "./components/UsersProfile";
 const App = () => {
 
     const profile = useSelector(state => state.auth.profile);
-    const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
+    const user = useSelector(state=>state.auth.user);
 
+
+    useEffect(()=>{
+        if(user !== null) {
+            dispatch(getProfile(user.id));
+        }
+        },[dispatch,])
 
 
 
