@@ -22,25 +22,31 @@ const UpdateProfile = (props) => {
     const form = useRef();
     const dispatch = useDispatch()
     const [nickname, setNickname] = useState(props.profile.nickname);
-    const [email, setEmail] = useState(props.profile.email);
+    const [image,setImage] = useState(null);
 
-    const onChangeEmail = (e) => {
-        const email = e.target.value;
-        setEmail(email);
-    };
+
     const onChangeNickname = (e) => {
         const nickname = e.target.value;
         setNickname(nickname);
     };
+    const onChangeImage = (e) => {
+        const image = e.target.files[0];
+        setImage(image);
+        console.log(image);
+    }
 
 
     const handleUpdateProfile = (e) => {
         e.preventDefault();
+        let form_data = new FormData();
+        form_data.append('nickname', nickname)
+        if (image !== null) {
+            form_data.append('image', image, image.name);
+        }
+
         dispatch(profileUpdate(props.profile.id,
-            {
-                'email': email,
-                'nickname': nickname
-            })
+                form_data,
+            )
         ).then(() => {
             dispatch(getProfile(props.profile.id))
         })
@@ -51,26 +57,25 @@ const UpdateProfile = (props) => {
 
         <div>
             <Form ref={form} onSubmit={handleUpdateProfile}>
-                <div className="form-group">
-                    <Input
-                        type="email"
-                        className="form-control"
-                        name="fistName"
-                        value={email}
-                        onChange={onChangeEmail}
-                        validations={[required]}
-                    />
-                </div>
+
+
                 <div className="form-group">
                     <Input
                         type="text"
                         className="form-control"
                         name="fistName"
                         value={nickname}
-                        placeholder="set nickname"
+                        placeholder="Set nickname"
                         onChange={onChangeNickname}
                         validations={[required]}
                     />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="image">Select image</label>
+                    <Input type="file"
+                           className="form-control-file"
+                           id="image"
+                           onChange={onChangeImage}/>
                 </div>
                 <div className="form-group">
                     <button className="btn btn-primary btn-block">
