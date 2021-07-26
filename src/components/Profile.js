@@ -30,7 +30,7 @@ const Profile = () => {
               : (<h5 className="offline">Offline</h5>)
           }
 
-          <img src={profile.image ? ("http://127.0.0.1:8000"+profile.image) : ("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F352477108322644529%2F&psig=AOvVaw1QBGj5DDHEVw0YHyGvRmq4&ust=1627045855806000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCOj996Xg9vECFQAAAAAdAAAAABAD")} alt="" className="rounded-circle" width="150px" height="150px"/>
+          <img src={profile.image} width="150px" height="150px" alt="Avatar"/>
 
       </header>
         <UpdateProfile profile={profile}/>

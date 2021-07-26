@@ -66,7 +66,10 @@ const AddArticle = (props) => {
                     props.history.push('/articles')
                     console.log(data);
                 }).catch(e => {
-                console.log(e);
+                if(e && e.response && e.response.data.title[0]) {
+                    setMessage('Article with current title exist, try another please');
+                }
+                setMessage(e.message);
             })
         } else {
             setMessage('Write all fields please');
