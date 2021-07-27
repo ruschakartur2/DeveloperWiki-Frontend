@@ -21,7 +21,7 @@ const UpdateProfile = (props) => {
     const checkBtn = useRef();
     const form = useRef();
     const dispatch = useDispatch()
-    const [nickname, setNickname] = useState(null);
+    const [nickname, setNickname] = useState(props.profile.nickname);
     const [image,setImage] = useState(null);
 
 

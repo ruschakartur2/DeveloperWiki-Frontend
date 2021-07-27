@@ -1,15 +1,18 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getProfile} from "../actions/auth";
+import UpdateProfile from "./UpdateProfile";
 
 
 const UsersProfile = (props) => {
     const profile = useSelector(state => state.auth.profile);
+    const user = useSelector(state => state.auth.user);
+
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        dispatch(getProfile(props.location.state.id));
-    },[dispatch, props.location.state.id])
+        dispatch(getProfile(props.match.params.id));
+    },[dispatch, props.match.params.id])
 
     return (
         <div>
@@ -28,9 +31,12 @@ const UsersProfile = (props) => {
                             : (<h5 className="offline">Offline</h5>)
                         }
 
-                        <img src={profile.image ? ("http://127.0.0.1:8000"+profile.image) : ("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F352477108322644529%2F&psig=AOvVaw1QBGj5DDHEVw0YHyGvRmq4&ust=1627045855806000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCOj996Xg9vECFQAAAAAdAAAAABAD")} alt="" className="rounded-circle" width="150px" height="150px"/>
+                        <img src={profile.image} alt="" className="rounded-circle" width="150px" height="150px"/>
 
                     </header>
+                    {user.id === profile.id && (
+                        <UpdateProfile profile={profile}/>
+                    )}
 
                 </div>
             )}
