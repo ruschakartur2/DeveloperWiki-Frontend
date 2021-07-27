@@ -21,7 +21,7 @@ const UpdateProfile = (props) => {
     const checkBtn = useRef();
     const form = useRef();
     const dispatch = useDispatch()
-    const [nickname, setNickname] = useState(props.profile.nickname);
+    const [nickname, setNickname] = useState(null);
     const [image,setImage] = useState(null);
 
 
@@ -65,7 +65,7 @@ const UpdateProfile = (props) => {
                         className="form-control"
                         name="fistName"
                         value={nickname}
-                        placeholder="Set nickname"
+                        placeholder="Change nickname"
                         onChange={onChangeNickname}
                         validations={[required]}
                     />

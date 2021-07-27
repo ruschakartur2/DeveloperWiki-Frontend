@@ -128,12 +128,12 @@ const ArticlesList = (props) => {
                                 <h3 className="card-title">{article.title}</h3>
                             </Link>
                             <h5 className="text-danger">{article.tags && article.tags.length >= 1 ? article.tags.map((tag, key) => (
-                                <span key={key} role="button" className="badge badge-dark  mr-3" onClick={(e) => {
+                                <span key={key} role="button" className="badge badge-dark  mr-3" onClick={() => {
                                     getByTag(tag)
                                 }}>{tag}</span>
                             )) : (<span className="badge badge-dark">Without tag</span>)}</h5>
                             <div>
-                                <Link to={{pathname: "/profile/" + article.author.id, state: {id: article.author.id}}}
+                                <Link to={  {pathname: "/profile/" + article.author.id, state: {id: article.author.id}}}
                                       className="mt-2 mb-2 text-muted">{article.author.email}</Link>
                             </div>
                             <small className="text-muted">{article.created_at} | {article.visits}</small><br/>
@@ -162,7 +162,7 @@ const ArticlesList = (props) => {
                         <li
                             type="button"
                             key={index}
-                            onClick={(e) => getByTag(tag.title)}
+                            onClick={() => getByTag(tag.title)}
                             className={
                                 selectedTag === tag.title ?
                                     ('list-group-item d-flex justify-content-between align-items-center active') :
