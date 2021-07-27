@@ -3,7 +3,7 @@ import 'react-quill/dist/quill.snow.css';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getProfile, profileUpdate} from "../actions/auth";
 
 const required = (value) => {
@@ -23,6 +23,7 @@ const UpdateProfile = (props) => {
     const dispatch = useDispatch()
     const [nickname, setNickname] = useState(props.profile.nickname);
     const [image,setImage] = useState(null);
+    const profile = useSelector(state => state.auth.profile);
 
 
     const onChangeNickname = (e) => {
@@ -47,8 +48,9 @@ const UpdateProfile = (props) => {
         dispatch(profileUpdate(props.profile.id,
                 form_data,
             )
-        ).then(() => {
-            dispatch(getProfile(props.profile.id))
+        ).then((e) => {
+            console.log(e);
+            dispatch(getProfile(profile.id))
         })
     }
 
