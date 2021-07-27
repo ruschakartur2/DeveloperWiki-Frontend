@@ -77,9 +77,8 @@ const App = () => {
                     {profile ? (
                         <div className="navbar-nav ml-auto">
                             <li className="nav-item">
-                                <Link to={"/profile"} className="nav-link">
-                                    {user.email}
-                                </Link>
+                                <Link to={  {pathname: "/profile/" + user.id, state: {id: user.id}}}
+                                      className="mt-2 mb-2 text-muted">{user.email}</Link>
                             </li>
                             <li className="nav-item">
                                 <a href="/login" className="nav-link" onClick={logOut}>

@@ -1,15 +1,18 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getProfile} from "../actions/auth";
+import UpdateProfile from "./UpdateProfile";
 
 
 const UsersProfile = (props) => {
     const profile = useSelector(state => state.auth.profile);
+    const user = useSelector(state => state.auth.user);
+
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        dispatch(getProfile(props.location.state.id));
-    },[dispatch, props.location.state.id])
+        dispatch(getProfile(props.match.params.id));
+    },[dispatch, props.match.params.id])
 
     return (
         <div>
@@ -30,7 +33,11 @@ const UsersProfile = (props) => {
 
                         <img src={profile.image} alt="User avatar" className="rounded-circle" width="150px" height="150px"/>
 
+
                     </header>
+                    {user.id === profile.id && (
+                        <UpdateProfile profile={profile}/>
+                    )}
 
                 </div>
             )}
