@@ -131,3 +131,17 @@ export const getArticleByTag = (tag,page,popular,newest) => async (dispatch) => 
         console.log(err)
     }
 }
+
+export const getUserArticles = (id) => async (dispatch) => {
+    try {
+        const res = await ArticleService.getUserArticles(id);
+        console.log(res.data);
+        dispatch({
+            type: ARTICLE_RETRIEVE,
+            payload: res.data,
+        })
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
