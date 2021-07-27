@@ -31,7 +31,8 @@ const UsersProfile = (props) => {
                             : (<h5 className="offline">Offline</h5>)
                         }
 
-                        <img src={profile.image} alt="" className="rounded-circle" width="150px" height="150px"/>
+                        <img src={profile.image} alt="User avatar" className="rounded-circle" width="150px" height="150px"/>
+
 
                     </header>
                     {user.id === profile.id && (
