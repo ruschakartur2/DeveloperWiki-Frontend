@@ -2,17 +2,19 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getProfile} from "../actions/auth";
 import UpdateProfile from "./UpdateProfile";
+import UserArticles from "./UserArticles";
 
 
 const UsersProfile = (props) => {
     const profile = useSelector(state => state.auth.profile);
     const user = useSelector(state => state.auth.user);
-
     const dispatch = useDispatch();
 
     useEffect(()=>{
         dispatch(getProfile(props.match.params.id));
     },[dispatch, props.match.params.id])
+
+
 
     return (
         <div>
@@ -37,7 +39,9 @@ const UsersProfile = (props) => {
                     {user.id === profile.id && (
                         <UpdateProfile profile={profile}/>
                     )}
-
+                    <div className="Articles">
+                         <UserArticles author={profile}/>
+                        </div>
                 </div>
             )}
         </div>
