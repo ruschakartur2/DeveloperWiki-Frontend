@@ -8,7 +8,6 @@ import {
 } from './types';
 
 import ArticleService from "../services/article.service";
-import UserArticles from "../components/UserArticles";
 
 export const createArticle = (title,tags,body,author) => async (dispatch) => {
     try {
