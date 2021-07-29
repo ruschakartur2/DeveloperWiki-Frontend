@@ -5,7 +5,9 @@ import {
 } from "../actions/types";
 
 const initialState = {
-    comments: [],
+    comments: [
+
+    ],
     totalCount: null,
     currentPage: 1,
     newChild: false,

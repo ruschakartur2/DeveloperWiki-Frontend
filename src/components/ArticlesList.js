@@ -35,7 +35,7 @@ const ArticlesList = (props) => {
     }, [currentPage, dispatch, props.location.state]);
 
     const getByTag = (tag) => {
-        dispatch(setCurrentPage(1))
+        dispatch(setCurrentPage(currentPage))
         setSelectedTag(tag)
         if (activeNew) {
             dispatch(getArticleByTag(tag, currentPage, null, true))
@@ -65,6 +65,8 @@ const ArticlesList = (props) => {
     }
     const clearTags = () => {
         dispatch(retrieveArticles(currentPage));
+        setActiveNew(false);
+        setActivePopular(false);
         setSelectedTag("")
     }
 
@@ -152,7 +154,7 @@ const ArticlesList = (props) => {
                 <div className="pages">
                     {pages.map((page, index) => <span key={index}
                                                       className={currentPage === page ? "current-page" : "page"}
-                                                      onClick={() => dispatch(setCurrentPage(page))}
+                                                      onClick={() => dispatch(setCurrentPage(page,activePopular, activeNew))}
                     >{page}</span>)}
                 </div>
             </div>
