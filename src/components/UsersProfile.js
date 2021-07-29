@@ -20,11 +20,11 @@ const UsersProfile = (props) => {
 
     useEffect(() => {
         dispatch(getUserArticles(props.match.params.id,userArticlesPage));
-    }, [dispatch, props.match.params.id])
+    }, [dispatch, props.match.params.id, userArticlesPage])
 
 
     const nextPage = () => {
-        dispatch(retrieveMoreUserArticles(props.match.params.id,2)) .then((res) => {
+        dispatch(retrieveMoreUserArticles(props.match.params.id,2)).then((res) => {
             setUserArticlesPage(userArticlesPage + 1)
             if (res === undefined) {
                 setLoadedAll(true);
