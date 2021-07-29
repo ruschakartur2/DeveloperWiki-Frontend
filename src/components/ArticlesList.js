@@ -47,18 +47,18 @@ const ArticlesList = (props) => {
     }
     const getPopulars = () => {
         if (selectedTag) {
-            dispatch(getArticleByTag(selectedTag, currentPage, 'get', null))
+            dispatch(getArticleByTag(selectedTag, currentPage, '1', null))
         } else {
-            dispatch(retrieveArticles(currentPage, 'get', null));
+            dispatch(retrieveArticles(currentPage, '1', null));
         }
         setActivePopular(true);
         setActiveNew(false);
     }
     const getNewest = () => {
         if (selectedTag) {
-            dispatch(getArticleByTag(selectedTag, currentPage, null, 'get'))
+            dispatch(getArticleByTag(selectedTag, currentPage, null, '1'))
         } else {
-            dispatch(retrieveArticles(currentPage, null, 'get'));
+            dispatch(retrieveArticles(currentPage, null, '1'));
         }
         setActivePopular(false);
         setActiveNew(true);
