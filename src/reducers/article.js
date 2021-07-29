@@ -3,7 +3,7 @@ import {
     ARTICLE_RETRIEVE,
     ARTICLE_UPDATE,
     ARTICLE_DELETE,
-    SET_CURRENT_PAGE, SET_POPULAR, SET_NEWEST,
+    SET_CURRENT_PAGE, SET_POPULAR, SET_NEWEST, ARTICLE_RETRIEVE_MORE,
 } from "../actions/types";
 
 const initialState = {
@@ -24,10 +24,22 @@ function articleReducer(state = initialState, action) {
             return [...state.items,payload];
 
         case ARTICLE_RETRIEVE:
+            console.log(state.items)
+
             return {
                 ...state,
-                items: action.payload.results,
+                items: [
+                    ...action.payload.results,
+                ],
                 totalCount: action.payload.count,
+            };
+        case ARTICLE_RETRIEVE_MORE:
+            console.log(state.items)
+            return {
+                ...state,
+                items: [
+                    ...state.items, ...action.payload.results,
+                ]
             };
 
 
@@ -41,11 +53,15 @@ function articleReducer(state = initialState, action) {
             return {
                 ...state,
                 byPopular: action.payload,
+                totalCount: action.payload.count,
+
             }
         case SET_NEWEST:
             return {
                 ...state,
                 byNewest: action.payload,
+                totalCount: action.payload.count,
+
             }
 
         case ARTICLE_UPDATE:

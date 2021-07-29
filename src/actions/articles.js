@@ -3,11 +3,12 @@ import {
     ARTICLE_RETRIEVE,
     ARTICLE_UPDATE,
     ARTICLE_DELETE,
-    SET_CURRENT_PAGE,
+    SET_CURRENT_PAGE, ARTICLE_RETRIEVE_MORE,
 
 } from './types';
 
 import ArticleService from "../services/article.service";
+import UserArticles from "../components/UserArticles";
 
 export const createArticle = (title,tags,body,author) => async (dispatch) => {
     try {
@@ -132,9 +133,9 @@ export const getArticleByTag = (tag,page,popular,newest) => async (dispatch) => 
     }
 }
 
-export const getUserArticles = (id) => async (dispatch) => {
+export const getUserArticles = (id,page) => async (dispatch) => {
     try {
-        const res = await ArticleService.getUserArticles(id);
+        const res = await ArticleService.getUserArticles(id,page);
         console.log(res.data);
         dispatch({
             type: ARTICLE_RETRIEVE,
@@ -143,5 +144,18 @@ export const getUserArticles = (id) => async (dispatch) => {
     }
     catch (err) {
         console.log(err)
+    }
+}
+export const retrieveMoreUserArticles = (id, page) => async (dispatch) => {
+    try {
+        const res = await ArticleService.getUserArticles(id, page);
+        dispatch({
+            type: ARTICLE_RETRIEVE_MORE,
+            payload: res.data,
+
+        });
+
+    } catch (err) {
+        console.log(err);
     }
 }
