@@ -34,7 +34,7 @@ const Article = (props) => {
             })
     }
 
-    const removeArticle = (e) => {
+    const removeArticle = () => {
         dispatch(deleteArticle(currentArticle.slug))
             .then(() => {
                 props.history.push("/articles/");
