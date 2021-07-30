@@ -81,11 +81,13 @@ const getByTag = (tag, page, popular = null, newest = null) => {
             }
         });
 }
-const getUserArticles = (id) => {
-    return axios.get(`${ARTICLE_URL}?author__id=${id}`, {
+
+const getUserArticles = (id,page) => {
+    return axios.get(`${ARTICLE_URL}?author__id=${id}&page=${page}`, {
         headers: {
             'Content-type': 'application/json',
             'Authorization': 'Token ' + JSON.parse((localStorage.getItem('token'))),
+
         }
     })
 }
