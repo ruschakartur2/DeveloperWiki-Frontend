@@ -6,7 +6,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
-import { login } from "../actions/auth";
+import {githubLogin, login} from "../actions/auth";
 
 import LoginGithub from "react-login-github";
 import axios from "axios";
@@ -73,7 +73,9 @@ const Login = (props) => {
 
 
   const onSuccess = response => {
+
     return axios.post('https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', {
+
       "client_id": "f64304f6601dbf74431b",
       "client_secret": "d36f978f5e8fba938744ee5e844480b2c2033059",
       "code": response.code,
@@ -83,6 +85,10 @@ const Login = (props) => {
         'Accept': 'application/json',
       }
     }).then(res => {
+        console.log(res.data.access_token)
+        if(res && res.data && res.data.access_token) {
+          githubLogin(res.data.access_token)
+        }
     })
 
   };
