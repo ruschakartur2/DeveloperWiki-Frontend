@@ -81,13 +81,11 @@ const getByTag = (tag, page, popular = null, newest = null) => {
             }
         });
 }
-
-const getMyArticles = () => {
-    return axios.get(`${ARTICLE_URL}?my=get)`, {
+const getUserArticles = (id) => {
+    return axios.get(`${ARTICLE_URL}?author__id=${id}`, {
         headers: {
             'Content-type': 'application/json',
             'Authorization': 'Token ' + JSON.parse((localStorage.getItem('token'))),
-
         }
     })
 }
@@ -100,7 +98,7 @@ const ArticleService = {
     remove,
     findByTitle,
     getByTag,
-    getMyArticles,
+    getUserArticles,
 };
 
 export default ArticleService;
