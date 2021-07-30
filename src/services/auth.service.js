@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const USERS_URL = "https://swiki.bvblogic.dev/api/v1/accounts/";
+const USERS_URL = "http://localhost:8000/api/accounts/";
 
 const register = (email, password) => {
     return axios.post(USERS_URL + "create/", {
@@ -36,6 +36,7 @@ const githubLogin = (token) => {
                 localStorage.setItem("token", JSON.stringify(response.data.token));
                 localStorage.setItem("profile", JSON.stringify(response.data.profile));
             }
+            return response.data;
         })
 }
 
