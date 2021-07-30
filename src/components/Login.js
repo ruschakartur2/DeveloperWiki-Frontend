@@ -85,7 +85,7 @@ const Login = (props) => {
     }).then(res => {
         console.log(res.data.access_token)
         if(res && res.data && res.data.access_token) {
-          githubLogin(res.data.access_token)
+         dispatch(githubLogin(res.data.access_token))
         }
     })
 
