@@ -69,26 +69,19 @@ const Login = (props) => {
   }
 
 
-
-
-
+  const cors_demo_server = 'https://thingproxy.freeboard.io/fetch/';
   const onSuccess = response => {
 
-    return axios.post('https://github.com/login/oauth/access_token/', {
-
-      "client_id": "f64304f6601dbf74431b",
-      "client_secret": "d36f978f5e8fba938744ee5e844480b2c2033059",
-      "code": response.code,
-      "redirect_uri": "https://swiki.bvblogic.dev/",
-    }, {
+    return axios.post(cors_demo_server+'https://github.com/login/oauth/access_token', {
       headers: {
         'Accept': 'application/json',
-        'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
         "Access-Control-Max-Age": "3600",
-        "Access-Control-Allow-Headers": "authorization, content-type, xsrf-token",
-        "Access-Control-Expose-Headers": "xsrf-token",
-      }
+        "Access-Control-Allow-Headers":"authorization, content-type, xsrf-token",
+
+      "redirect_uri": "https://swiki.bvblogic.dev/",
+    },
     }).then(res => {
         console.log(res.data.access_token)
         if(res && res.data && res.data.access_token) {

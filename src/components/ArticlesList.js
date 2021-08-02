@@ -16,20 +16,22 @@ const ArticlesList = (props) => {
     const dispatch = useDispatch();
     const [activeNew, setActiveNew] = useState(false);
     const [activePopular, setActivePopular] = useState(false);
-    const [searchTitle, setSearchTitle] = useState("");
+    const [searchTitle, setSearchTitle] = useState('');
     const pagesCount = Math.ceil(totalCount / 10)
     const pages = [];
     const [selectedTag, setSelectedTag] = useState('')
     createPages(pages, pagesCount, currentPage)
     const [message, setMessage] = useState('')
     const [articleSlug, setArticleSlug] = useState('')
-
+    const [type, setType] = useState('');
     useEffect(() => {
         dispatch(retrieveArticles(currentPage));
         dispatch(retrieveTags());
         if (props.location.state) {
             setMessage(props.location.state.message)
             setArticleSlug(props.location.state.slug)
+            setType(props.location.state.type)
+
         }
 
     }, [currentPage, dispatch, props.location.state]);
@@ -76,12 +78,14 @@ const ArticlesList = (props) => {
         window.history.replaceState(null, '')
     }
 
+
     const findByTitle = (e) => {
         const searchTitle = e.target.value;
         setSearchTitle(searchTitle);
         dispatch(setCurrentPage(1))
         dispatch(findArticleByTitle(searchTitle, currentPage))
     }
+
 
     return (
         <div className="row">
@@ -98,7 +102,7 @@ const ArticlesList = (props) => {
                 </div>
             </div>
             <div className="col-8">
-                {message && articleSlug && (
+                {message && type && articleSlug && (
                     <div className="alert alert-warning alert-dismissible fade show" role="alert">
                         {message}. <b><Link to={"article/" + articleSlug}>See
                         now</Link></b>
@@ -106,12 +110,14 @@ const ArticlesList = (props) => {
                                 onClick={closeAlert}>
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>)}
+                    </div>
+                )
+                }
 
 
                 <h2 className="m-auto">Article list</h2>
                 <div className="">
-                    <h5>Tag selected: {selectedTag}</h5>
+                    <h5>Selected: {selectedTag}</h5>
                     <span className="btn btn-warning c-pointer" onClick={clearTags}>Clear</span>
                     <hr/>
                     <span type={"button"} onClick={getPopulars}
@@ -135,7 +141,7 @@ const ArticlesList = (props) => {
                                 }}>{tag}</span>
                             )) : (<span className="badge badge-dark">Without tag</span>)}</h5>
                             <div>
-                                <Link to={  {pathname: "/profile/" + article.author.id, state: {id: article.author.id}}}
+                                <Link to={{pathname: "/profile/" + article.author.id, state: {id: article.author.id}}}
                                       className="mt-2 mb-2 text-muted">{article.author.email}</Link>
                             </div>
                             <small className="text-muted">{article.created_at} | {article.visits}</small><br/>
@@ -154,7 +160,7 @@ const ArticlesList = (props) => {
                 <div className="pages">
                     {pages.map((page, index) => <span key={index}
                                                       className={currentPage === page ? "current-page" : "page"}
-                                                      onClick={() => dispatch(setCurrentPage(page,activePopular, activeNew))}
+                                                      onClick={() => dispatch(setCurrentPage(page, activePopular, activeNew))}
                     >{page}</span>)}
                 </div>
             </div>

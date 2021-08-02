@@ -33,14 +33,20 @@ const Article = (props) => {
                 setCurrentArticle(response.data);
             })
     }
-
+    const deleted = 'Article deleted'
     const removeArticle = () => {
         dispatch(deleteArticle(currentArticle.slug))
             .then(() => {
-                props.history.push("/articles/");
-                dispatch(setCurrentPage(1));
-            })
-    };
+                dispatch(setCurrentPage(1))
+                props.history.push({
+                    pathname: '/articles',
+                    state: {
+                        type: 'deleted',
+                        message: deleted,
+                    },
+                })
+            });
+    }
 
 
     useEffect(() => {
@@ -81,7 +87,10 @@ const Article = (props) => {
                             <hr/>
                             <small
                                 className="text-muted">{currentArticle.created_at} | {currentArticle.visits}</small><br/>
-                            <small><strong>{currentArticle.author && currentArticle.author.email}</strong></small>
+                            <small><strong>{currentArticle.author && currentArticle.author.email && ( <div>
+                                <Link to={  {pathname: "/profile/" + currentArticle.author.id, state: {id: currentArticle.author.id}}}
+                                      className="mt-2 mb-2 text-muted">{currentArticle.author.email}</Link>
+                            </div>)}</strong></small>
                             <hr/>
                             {currentArticle.author && currentUser && currentArticle.author.id === currentUser.id && (
                                 <div>
@@ -92,7 +101,7 @@ const Article = (props) => {
                                     >
                                         Edit
                                     </Link>
-                                    <small className="btn btn-danger ml-4" onClick={removeArticle}>delete</small>
+                                    <small className="btn btn-danger ml-4" onClick={removeArticle}>Delete</small>
 
                                 </div>
                             )}

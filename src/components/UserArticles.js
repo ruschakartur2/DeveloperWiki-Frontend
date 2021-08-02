@@ -1,18 +1,13 @@
-import React, {useEffect} from "react";
-import {useDispatch} from "react-redux";
+import React from "react";
 
-import {getUserArticles} from "../actions/articles";
 import {Link} from "react-router-dom";
 
 
 
 const UserArticles = (props) => {
-    const dispatch = useDispatch();
 
 
-    useEffect(() => {
-        dispatch(getUserArticles(props.author.id,1));
-    }, [dispatch, props.author.id])
+
 
     return (
         <div className="pb-5 pt-5 ">
