@@ -71,10 +71,11 @@ const Login = (props) => {
 
 
 
+   const my_cors_server = 'http://0.0.0.0:8080/';
 
   const onSuccess = response => {
 
-    return axios.post('https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token', {
+    return axios.post(my_cors_server+'https://github.com/login/oauth/access_token', {
 
       "client_id": "f64304f6601dbf74431b",
       "client_secret": "d36f978f5e8fba938744ee5e844480b2c2033059",
