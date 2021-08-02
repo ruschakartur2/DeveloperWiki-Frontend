@@ -22,8 +22,9 @@ import CommentTree from "./components/CommentTree";
 import AddComment from "./components/AddComment";
 import Tag from "./components/Tag";
 import UsersProfile from "./components/UsersProfile";
+import OauthProcess from "./components/OauthProcess";
 
-const App = () => {
+const App = (props) => {
 
     const dispatch = useDispatch();
     const user = useSelector(state=>state.auth.user);
@@ -31,6 +32,7 @@ const App = () => {
     const logOut = () => {
         dispatch(logout());
     };
+
 
     return (
         <Router history={history}>
@@ -129,6 +131,7 @@ const App = () => {
                         <Route exact path="/add" component={AddArticle}/>
                         <Route exact path="/update/:id" component={ArticleUpdate}/>
                         <Route exact path="/article/:id" component={Article}/>
+                        <Route exact path="/process" component={OauthProcess}/>
                         <Route exact path="/comment/:id" component={Comment}/>
                         <Route exact path="/comments" component={CommentTree}/>
                         <Route exact path="/comment/add" component={AddComment}/>
