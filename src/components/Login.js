@@ -70,6 +70,20 @@ const Login = (props) => {
 
 
   const cors_demo_server = 'https://thingproxy.freeboard.io/fetch/';
+
+  const reqToGithub = () => {
+    return axios.get('https://github.com/login/oauth/authorize/?client_id=f64304f6601dbf74431b', {
+      headers: {
+        'Accept': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Max-Age": "3600",
+        "Access-Control-Allow-Headers":"authorization, content-type, xsrf-token",
+        "Access-Control-Expose-Headers": "xsrf-token",
+      }
+    })
+  }
+
   const onSuccess = response => {
 
     return axios.post(cors_demo_server+'https://github.com/login/oauth/access_token', {
@@ -147,6 +161,7 @@ const Login = (props) => {
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
 
+        <span onClick={reqToGithub}>Send Github</span>
 
         <LoginGithub clientId="f64304f6601dbf74431b"
                      onSuccess={onSuccess}
