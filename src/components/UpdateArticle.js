@@ -20,13 +20,18 @@ const ArticleUpdate = (props) => {
     const [submitted, setSubmitted] = useState(false);
     const form = useRef();
 
+
     const [currentArticle, setCurrentArticle] = useState(initialArticleState);
+
     const [newTitle, setNewTitle] = useState('');
     const [newBody, setNewBody] = useState('');
     const [selectedTags, setSelectedTags] = useState([])
     const {user: currentUser} = useSelector((state) => state.auth);
 
     const dispatch = useDispatch();
+
+    const updated = 'Your article successful updated'
+    const slug = currentArticle.slug
 
     const getArticle = id => {
         ArticleDataService.get(id)
@@ -44,8 +49,7 @@ const ArticleUpdate = (props) => {
     useEffect(() => {
         getArticle(props.match.params.id);
     }, [props.match.params.id, dispatch]);
-    const success = 'Your article successful updated'
-    const slug = currentArticle.slug
+
     const updateContent = () => {
         dispatch(updateArticle(currentArticle.slug, {
                 'title': newTitle,
@@ -58,8 +62,9 @@ const ArticleUpdate = (props) => {
                 props.history.push({
                     pathname: '/articles',
                     state: {
-                        message: success,
-                        slug: slug
+                        message: updated,
+                        slug: slug,
+                        type: 'updated',
                     },
                 })
             })
@@ -81,10 +86,12 @@ const ArticleUpdate = (props) => {
                 props.history.push({
                     pathname: '/articles',
                     state: {
-                        message: success,
-                        slug: slug
+                        message: updated,
+                        slug: slug,
+                        type: 'updated',
                     },
-                })            })
+                })
+            })
             .catch(e => {
                 console.log(e);
 
@@ -95,7 +102,7 @@ const ArticleUpdate = (props) => {
 
     const handleTitleChange = e => {
         let title = e.target.value;
-        title = title.replace(/[^A-Za-zwА-Яа-яІЄЇ]+/ig, '')
+        title = title.replace(/[^A-Za-zwА-Яа-яІЄЇ ]+/ig, '')
 
         setNewTitle(title);
     }
@@ -138,8 +145,10 @@ const ArticleUpdate = (props) => {
                     <label htmlFor="tags">Tags</label>
                     <TagsInput name="tags"
                                value={selectedTags}
-                               onChange={(e) => {setSelectedTags(e)}}
-                                required={true}
+                               onChange={(e) => {
+                                   setSelectedTags(e)
+                               }}
+                               required={true}
                                onlyUnique={true}
                                addOnBlur={true}/>
 

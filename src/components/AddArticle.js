@@ -27,6 +27,8 @@ const AddArticle = (props) => {
     const [submitted, setSubmitted] = useState(false);
     const [selectedTags, setSelectedTags] = useState([])
     const [message, setMessage] = useState('');
+    const success = 'Your article successful added'
+
     const validateTitle = (value) => {
         if (!value) {
             return (
@@ -60,10 +62,17 @@ const AddArticle = (props) => {
                 .then((data) => {
                     setSubmitted(true);
                     dispatch(setCurrentPage(1))
-                    props.history.push('/articles')
+                    props.history.push({
+                        pathname: '/articles',
+                        state: {
+                            message: success,
+                            slug: data.slug,
+                            type: 'added',
+                        },
+                    })
                     console.log(data);
                 }).catch(e => {
-                if(e && e.response && e.response.data.title[0]) {
+                if (e && e.response && e.response.data.title[0]) {
                     setMessage('Article with current title exist, try another please');
                 }
                 setMessage(e.message);
@@ -91,6 +100,7 @@ const AddArticle = (props) => {
                         type="text"
                         className="form-control"
                         name="title"
+                        placeholder="Add title"
                         value={title}
                         required={true}
                         onChange={onChangeTitle}
@@ -99,23 +109,27 @@ const AddArticle = (props) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="tags">Tags</label>
-                <TagsInput
-                            name="tags"
-                           value={selectedTags}
-                           onChange={(e) => {setSelectedTags(e)}}
-                           required={true}
-                           onlyUnique={true}
-                           addOnBlur={true}/>
+                    <TagsInput
+                        name="tags"
+                        placeholder="Add tags"
+                        value={selectedTags}
+                        onChange={(e) => {
+                            setSelectedTags(e)
+                        }}
+                        required={true}
+                        onlyUnique={true}
+                        addOnBlur={true}/>
                 </div>
 
 
                 <div className="form-group mt-2">
                     <label htmlFor="body">Text</label>
-                        <ReactQuill required={true}
-                                    name="body"
-                                    theme="snow"
-                                    value={body}
-                                    onChange={onChangeBody}/>
+                    <ReactQuill required={true}
+                                name="body"
+                                theme="snow"
+                                placeholder="Add text"
+                                value={body}
+                                onChange={onChangeBody}/>
 
                 </div>
                 {message && (<div className="alert alert-danger"><b>* {message}</b></div>

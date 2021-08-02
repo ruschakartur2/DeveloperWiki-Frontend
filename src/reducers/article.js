@@ -25,7 +25,6 @@ function articleReducer(state = initialState, action) {
 
         case ARTICLE_RETRIEVE:
             console.log(state.items)
-
             return {
                 ...state,
                 items: [
@@ -34,13 +33,14 @@ function articleReducer(state = initialState, action) {
                 totalCount: action.payload.count,
             };
         case ARTICLE_RETRIEVE_MORE:
-            console.log(state.items)
             return {
                 ...state,
                 items: [
                     ...state.items, ...action.payload.results,
                 ]
+
             };
+
 
 
         case SET_CURRENT_PAGE:

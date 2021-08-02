@@ -80,7 +80,7 @@ export const setCurrentPage = (page) => async (dispatch) => {
 
 export const updateArticle = (slug,data) => async (dispatch) => {
     try {
-        const res = ArticleService.update(slug,data);
+        const res =  ArticleService.update(slug,data);
 
         dispatch({
             type: ARTICLE_UPDATE,
@@ -153,6 +153,7 @@ export const retrieveMoreUserArticles = (id, page) => async (dispatch) => {
             payload: res.data,
 
         });
+        return Promise.resolve(res.data);
 
     } catch (err) {
         console.log(err);

@@ -28,7 +28,6 @@ const App = () => {
     const dispatch = useDispatch();
     const user = useSelector(state=>state.auth.user);
 
-
     const logOut = () => {
         dispatch(logout());
     };

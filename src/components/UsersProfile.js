@@ -14,6 +14,7 @@ const UsersProfile = (props) => {
     const articles = useSelector(state => state.articles.items)
     const [loadedAll, setLoadedAll] = useState(false);
     const [userArticlesPage, setUserArticlesPage] = useState(1);
+
     useEffect(()=>{
         dispatch(getProfile(props.match.params.id));
     },[dispatch, props.match.params.id])
@@ -24,8 +25,9 @@ const UsersProfile = (props) => {
 
 
     const nextPage = () => {
-        dispatch(retrieveMoreUserArticles(props.match.params.id,2)).then((res) => {
+        dispatch(retrieveMoreUserArticles(props.match.params.id,userArticlesPage)).then((res) => {
             setUserArticlesPage(userArticlesPage + 1)
+            console.log(res)
             if (res === undefined) {
                 setLoadedAll(true);
             }
