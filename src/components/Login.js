@@ -6,10 +6,8 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
-import {githubLogin, login} from "../actions/auth";
+import {login} from "../actions/auth";
 
-import LoginGithub from "react-login-github";
-import axios from "axios";
 
 const required = (value) => {
   if (!value) {
@@ -69,49 +67,9 @@ const Login = (props) => {
   }
 
 
-  const cors_demo_server = 'https://thingproxy.freeboard.io/fetch/';
+  const CLIENT_ID = 'f64304f6601dbf74431b';
+  const REDIRECT_URI = 'http://localhost:3000/process';
 
-  const reqToGithub = () => {
-    return axios.get('https://github.com/login/oauth/authorize/?client_id=f64304f6601dbf74431b', {
-      headers: {
-        'Accept': 'application/json',
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Max-Age": "3600",
-        "Access-Control-Allow-Headers":"authorization, content-type, xsrf-token",
-        "Access-Control-Expose-Headers": "xsrf-token",
-      }
-    })
-  }
-
-  const onSuccess = response => {
-
-    return axios.post(cors_demo_server+'https://github.com/login/oauth/access_token', {
-
-      "client_id": "f64304f6601dbf74431b",
-      "client_secret": "d36f978f5e8fba938744ee5e844480b2c2033059",
-      "code": response.code,
-      "redirect_uri": "http://localhost:3000/login",
-    }, {
-      headers: {
-        'Accept': 'application/json',
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Max-Age": "3600",
-        "Access-Control-Allow-Headers":"authorization, content-type, xsrf-token",
-        "Access-Control-Expose-Headers": "xsrf-token",
-      }
-    }).then(res => {
-        console.log(res.data.access_token)
-        if(res && res.data && res.data.access_token) {
-         dispatch(githubLogin(res.data.access_token))
-        }
-    })
-
-  };
-  const onFailure = error => {
-    console.error(error)
-  };
   return (
     <div className="col-md-12">
       <div className="card card-container">
@@ -160,12 +118,10 @@ const Login = (props) => {
           )}
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
-
-        <span onClick={reqToGithub}>Send Github</span>
-
-        <LoginGithub clientId="f64304f6601dbf74431b"
-                     onSuccess={onSuccess}
-                     onFailure={onFailure}/></div>
+        <a
+            href={`https://github.com/login/oauth/authorize?scope=user:email&client_id=${CLIENT_ID}&scope=user&redirect_uri=${REDIRECT_URI}`}
+        >   Github login    </a>
+        </div>
     </div>
   );
 };
