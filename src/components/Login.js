@@ -83,6 +83,11 @@ const Login = (props) => {
     }, {
       headers: {
         'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Max-Age": "3600",
+        "Access-Control-Allow-Headers": "authorization, content-type, xsrf-token",
+        "Access-Control-Expose-Headers": "xsrf-token",
       }
     }).then(res => {
         console.log(res.data.access_token)
