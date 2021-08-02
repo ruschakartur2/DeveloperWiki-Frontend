@@ -79,7 +79,7 @@ const Login = (props) => {
       "client_id": "f64304f6601dbf74431b",
       "client_secret": "d36f978f5e8fba938744ee5e844480b2c2033059",
       "code": response.code,
-      "redirect_uri": "https://swiki.bvblogic.dev/login/",
+      "redirect_uri": "https://swiki.bvblogic.dev/",
     }, {
       headers: {
         'Accept': 'application/json',
