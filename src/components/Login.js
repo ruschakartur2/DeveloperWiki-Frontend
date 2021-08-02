@@ -74,12 +74,11 @@ const Login = (props) => {
   const reqToGithub = () => {
     return axios.get('https://github.com/login/oauth/authorize/?client_id=f64304f6601dbf74431b', {
       headers: {
-        'Accept': 'application/json',
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Max-Age": "3600",
-        "Access-Control-Allow-Headers":"authorization, content-type, xsrf-token",
-        "Access-Control-Expose-Headers": "xsrf-token",
+        "Access-Control-Allow-Origin": "*" always,
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS" always,
+        "Access-Control-Max-Age": "3600" always,
+        "Access-Control-Allow-Headers":"authorization, content-type, xsrf-token" always,
+        "Access-Control-Expose-Headers": "xsrf-token" always,
       }
     })
   }
