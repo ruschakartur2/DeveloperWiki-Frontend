@@ -68,7 +68,7 @@ const Login = (props) => {
 
 
   const CLIENT_ID = 'f64304f6601dbf74431b';
-  const REDIRECT_URI = 'http://localhost:3000/process';
+  const REDIRECT_URI = 'https://swiki.bvblogic.dev/process';
 
   return (
     <div className="col-md-12">
