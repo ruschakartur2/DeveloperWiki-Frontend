@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const ARTICLE_URL = "https://swiki.bvblogic.dev/api/v1/articles/"
+const ARTICLE_URL = "http://localhost:8000/api/articles/"
 
 
 
@@ -64,7 +64,6 @@ const findByTitle = (title, page) => {
         {
             headers: {
                 'Content-type': 'application/json',
-                'Authorization': 'Token ' + JSON.parse((localStorage.getItem('token'))),
             }
         }
     );
@@ -76,7 +75,6 @@ const getByTag = (tag, page, popular = null, newest = null) => {
         {
             headers: {
                 'Content-type': 'application/json',
-                'Authorization': 'Token ' + JSON.parse((localStorage.getItem('token'))),
 
             }
         });

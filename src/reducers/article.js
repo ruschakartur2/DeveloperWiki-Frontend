@@ -24,7 +24,6 @@ function articleReducer(state = initialState, action) {
             return [...state.items,payload];
 
         case ARTICLE_RETRIEVE:
-            console.log(state.items)
             return {
                 ...state,
                 items: [
@@ -37,7 +36,7 @@ function articleReducer(state = initialState, action) {
                 ...state,
                 items: [
                     ...state.items, ...action.payload.results,
-                ]
+                ],
 
             };
 

@@ -16,7 +16,7 @@ const OauthProcess = (props) => {
             if (code && !loading) {
                 dispatch(githubLogin(code))
                     .then(() => {
-                        props.history.push('/profile/');
+                        props.history.push('/profile');
                         setLoading(true);
                     })
             }

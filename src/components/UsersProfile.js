@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getProfile} from "../actions/auth";
 import UpdateProfile from "./UpdateProfile";
 import UserArticles from "./UserArticles";
-import {getUserArticles, retrieveMoreUserArticles} from "../actions/articles";
-import {Waypoint} from "react-waypoint";
+import {getUserArticles} from "../actions/articles";
+import {Redirect} from "react-router-dom";
 
 
 const UsersProfile = (props) => {
@@ -12,34 +12,34 @@ const UsersProfile = (props) => {
     const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
     const articles = useSelector(state => state.articles.items)
-    const [loadedAll, setLoadedAll] = useState(false);
-    const [userArticlesPage, setUserArticlesPage] = useState(1);
+    const {isLoggedIn} = useSelector(state => state.auth);
 
     useEffect(()=>{
         dispatch(getProfile(props.match.params.id));
     },[dispatch, props.match.params.id])
 
     useEffect(() => {
-        dispatch(getUserArticles(props.match.params.id,userArticlesPage));
-    }, [dispatch, props.match.params.id, userArticlesPage])
+        dispatch(getUserArticles(props.match.params.id,1));
+    }, [dispatch, props.match.params.id])
 
 
-    const nextPage = () => {
-        dispatch(retrieveMoreUserArticles(props.match.params.id,userArticlesPage)).then((res) => {
-            setUserArticlesPage(userArticlesPage + 1)
-            console.log(res)
-            if (res === undefined) {
-                setLoadedAll(true);
-            }
-        })
-            .catch((err) => {
-                setLoadedAll(true);
-            })
+
+
+    if (!isLoggedIn) {
+        return <Redirect to="/login"/>;
     }
-
 
     return (
         <div>
+            {!profile && (
+                <div>
+                <h2>Error</h2>
+                <h3>
+                    No internet connection
+                </h3>
+                </div>
+            )}
+
             {profile && (
 
                 <div className="container">
@@ -65,9 +65,7 @@ const UsersProfile = (props) => {
                     <div className="Articles">
                          <UserArticles author={profile} articles={articles}/>
                         <hr/>
-                        {articles.length >= 10 && !loadedAll ? (
-                            <Waypoint onEnter={nextPage}/>
-                        ) : <div/>}
+
                         </div>
                 </div>
             )}
