@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const ARTICLE_URL = "http://localhost:8000/api/articles/"
+const ARTICLE_URL = "https://swiki.bvblogic.dev/api/v1/articles/"
 
 
 
