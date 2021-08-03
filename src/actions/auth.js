@@ -107,15 +107,22 @@ export const login = (username, password) => (dispatch) => {
         }
     );
 };
-export const githubLogin = (token) => (dispatch) => {
-    return AuthService.githubLogin(token).then(
+export const githubLogin = (token) =>  async (dispatch) => {
+    return await AuthService.githubLogin(token).then(
         (data) => {
             console.log(data);
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: {
-                    user: data.user,
-                    profile: data.profile,
+                    user: {id: data.id,
+                            email: data.email}
+                    ,
+                    profile: {
+                        id: data.id,
+                        email: data.email,
+                        nickname: data.nickname,
+                        image: data.image,
+                    },
                 },
             });
 

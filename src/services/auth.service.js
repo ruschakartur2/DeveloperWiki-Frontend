@@ -25,18 +25,21 @@ const login = (email, password) => {
             return response.data;
         });
 };
-const githubLogin = (token) => {
-    return axios.post(USERS_URL + 'oauth/', {
-        'access_token': token,
+const githubLogin = (code) => {
+    return axios.post(USERS_URL + 'oauth/social/token_user/', {
+        'code': code,
         'provider': 'github',
     })
-        .then((response) => {
-            if (response.data.token) {
-                localStorage.setItem("user", JSON.stringify(response.data.user));
-                localStorage.setItem("token", JSON.stringify(response.data.token));
-                localStorage.setItem("profile", JSON.stringify(response.data.profile));
+        .then((res) => {
+            if (res.data.token) {
+                localStorage.setItem("user", JSON.stringify({id: res.data.id, email: res.data.email}));
+                localStorage.setItem("token", JSON.stringify(res.data.token));
+                localStorage.setItem("profile", JSON.stringify({id: res.data.id,
+                    email: res.data.email,
+                    nickname: res.data.nickname,
+                    image: res.data.image}));
             }
-            return response.data;
+            return res.data;
         })
 }
 
