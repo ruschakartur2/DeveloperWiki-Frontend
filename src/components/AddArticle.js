@@ -55,8 +55,7 @@ const AddArticle = (props) => {
 
     const handleAdd = (e) => {
         e.preventDefault();
-        console.log(selectedTags);
-        console.log(currentUser.id)
+        setSubmitted(true);
         if (selectedTags.length >= 1 && title.length >= 1 && body.length >= 1) {
             dispatch(createArticle(title, selectedTags, body.toString(), currentUser.id))
                 .then((data) => {
@@ -70,7 +69,6 @@ const AddArticle = (props) => {
                             type: 'added',
                         },
                     })
-                    console.log(data);
                 }).catch(e => {
                 if (e && e.response && e.response.data.title[0]) {
                     setMessage('Article with current title exist, try another please');

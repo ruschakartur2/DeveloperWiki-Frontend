@@ -3,8 +3,9 @@ import 'react-quill/dist/quill.snow.css';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getProfile, profileUpdate} from "../actions/auth";
+import {Redirect} from "react-router-dom";
 
 const required = (value) => {
     if (!value) {
@@ -23,6 +24,9 @@ const UpdateProfile = (props) => {
     const dispatch = useDispatch()
     const [nickname, setNickname] = useState(props.profile.nickname);
     const [image,setImage] = useState(null);
+    const [alert, setAlert] = useState('');
+    const {isLoggedIn} = useSelector(state => state.auth);
+    const [sending, setSending] = useState(false);
 
 
     const onChangeNickname = (e) => {
@@ -35,6 +39,9 @@ const UpdateProfile = (props) => {
         console.log(image);
     }
 
+    if (!isLoggedIn) {
+        return <Redirect to="/login"/>;
+    }
 
     const handleUpdateProfile = (e) => {
         e.preventDefault();
@@ -43,19 +50,30 @@ const UpdateProfile = (props) => {
         if (image !== null) {
             form_data.append('image', image, image.name);
         }
-
+        setSending(true);
         dispatch(profileUpdate(props.profile.id,
                 form_data,
             )
         ).then(() => {
             dispatch(getProfile(props.profile.id))
+            setAlert('Your profile successfully updated');
+
         })
+            .catch(e => {
+                setAlert('Something go wrong. Try again please');
+            })
     }
 
 
     return (
 
         <div>
+            {alert !== '' && (
+                <div className="alert alert-warning">
+                {alert}
+                </div>
+            )}
+
             <Form ref={form} onSubmit={handleUpdateProfile}>
 
 
@@ -78,10 +96,11 @@ const UpdateProfile = (props) => {
                            onChange={onChangeImage}/>
                 </div>
                 <div className="form-group">
-                    <button className="btn btn-primary btn-block">
+                    <button className="btn btn-primary btn-block" disabled={sending}>
                         <span>Update</span>
                     </button>
                 </div>
+
 
 
                 <CheckButton style={{display: "none"}} ref={checkBtn}/>

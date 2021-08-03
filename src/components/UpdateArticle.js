@@ -18,6 +18,8 @@ const ArticleUpdate = (props) => {
         previous_version: {}
     };
     const [submitted, setSubmitted] = useState(false);
+    const [message, setMessage] = useState('');
+
     const form = useRef();
 
 
@@ -51,6 +53,7 @@ const ArticleUpdate = (props) => {
     }, [props.match.params.id, dispatch]);
 
     const updateContent = () => {
+        setSubmitted(true);
         dispatch(updateArticle(currentArticle.slug, {
                 'title': newTitle,
                 'update_tags': selectedTags,
@@ -58,7 +61,6 @@ const ArticleUpdate = (props) => {
             })
         )
             .then(() => {
-                setSubmitted(true);
                 props.history.push({
                     pathname: '/articles',
                     state: {
@@ -77,6 +79,7 @@ const ArticleUpdate = (props) => {
     }
 
     const previousUpdate = () => {
+        setSubmitted(true);
         dispatch(updateArticle(currentArticle.slug, {
             'title': currentArticle.previous_version.title,
             'body': currentArticle.previous_version.body,
@@ -91,11 +94,12 @@ const ArticleUpdate = (props) => {
                         type: 'updated',
                     },
                 })
-            })
-            .catch(e => {
-                console.log(e);
-
-            })
+            }).catch(e => {
+            if (e && e.response && e.response.data.title[0]) {
+                setMessage('Article with current title exist, try another please');
+            }
+            setMessage(e.message);
+            });
         dispatch(setCurrentPage(1))
 
     }
@@ -103,7 +107,6 @@ const ArticleUpdate = (props) => {
     const handleTitleChange = e => {
         let title = e.target.value;
         title = title.replace(/[^A-Za-zwА-Яа-яІЄЇ ]+/ig, '')
-
         setNewTitle(title);
     }
 
@@ -159,6 +162,8 @@ const ArticleUpdate = (props) => {
                                     onChange={handleBodyChange}
                         />
                     </div>
+                    {message && (<div className="alert alert-danger"><b>* {message}</b></div>
+                    )}
                     <div className="form-group">
                         <button className="btn btn-primary btn-block" disabled={submitted}>
                             {submitted && (
