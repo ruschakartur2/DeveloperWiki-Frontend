@@ -14,6 +14,7 @@ const Comment = (props) => {
     const dispatch = useDispatch();
 
     const [reply,setReply] = useState(false);
+    const [more,setMore] = useState(false);
 
     const removeComment = () => {
         dispatch(deleteComment(props.comment.id))
@@ -30,6 +31,9 @@ const Comment = (props) => {
 
     const handleReplyClick = () => {
         setReply(!reply);
+    }
+    const handleMoreClick = () => {
+        setMore(!more);
     }
     return (
         <div>
@@ -49,7 +53,8 @@ const Comment = (props) => {
                 {currentUser.id && props.author.id && currentUser.id === props.author.id &&
                 ( <small className="btn btn-danger" onClick={removeComment}>delete</small>
                 )}
-                <span onClick={handleReplyClick}>Reply</span>
+                <button onClick={handleReplyClick}>Reply</button>
+                <button onClick={handleMoreClick}>Show more</button>
                 {isLoggedIn && reply && (<div> {props.article && (<AddComment article={props.article} parent={props.comment.id}/>)}</div>) }
 
                 </div>
