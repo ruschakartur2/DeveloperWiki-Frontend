@@ -112,17 +112,18 @@ const Article = (props) => {
                         </div>
                         <hr/>
 
-                        {currentArticle && comments && comments.length >= 1 && (
+                        {currentArticle && comments && comments.length >= 1 && comments.map((comment,index)=>(
                             <div>
-                                <CommentTree comments={comments} article={currentArticle}/>
+                                <CommentTree comment={comment} author={comment.author} article={currentArticle}/>
 
                                 <hr/>
-                                {comments.length >= 10 && !loadedAll ? (
-                                    <Waypoint onEnter={nextPage}/>
-                                ) : <div>No more comments</div>}
-                            </div>)}
 
-                        <h2>Write now!</h2>
+                            </div>
+                        ))}
+                        {comments.length >= 10 && !loadedAll ? (
+                            <Waypoint onEnter={nextPage}/>
+                        ) : <div className="ml-4">No more comments</div>}
+                        <h2 className="ml-4">Write now!</h2>
                         <AddComment article={currentArticle}/>
 
                     </div>

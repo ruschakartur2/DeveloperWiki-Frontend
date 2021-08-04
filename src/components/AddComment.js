@@ -52,7 +52,7 @@ const AddComment = (props) => {
     }
     return (
 
-        <div>
+        <div className="m-3">
             <Form ref={form} onSubmit={handleAddComment}>
                 <div className="form-group">
                     <Input
