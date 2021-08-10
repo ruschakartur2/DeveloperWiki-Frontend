@@ -1,8 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {setCurrentPage, updateArticle} from '../actions/articles';
-import ArticleDataService from '../services/article.service';
+import {setCurrentPage, updateArticle} from '../../actions/articles';
+import ArticleDataService from '../../services/article.service';
 
 import ReactQuill from 'react-quill';
 import Form from "react-validation/build/form";

@@ -5,9 +5,9 @@ import 'react-quill/dist/quill.snow.css';
 
 import Form from "react-validation/build/form";
 import CheckButton from "react-validation/build/button";
-import {createArticle, setCurrentPage} from "../actions/articles";
+import {createArticle, setCurrentPage} from "../../actions/articles";
 import {Redirect} from 'react-router-dom';
-import {retrieveTags} from "../actions/tags";
+import {retrieveTags} from "../../actions/tags";
 
 import TagsInput from 'react-tagsinput'
 

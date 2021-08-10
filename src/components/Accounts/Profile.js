@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getProfile} from "../actions/auth";
+import {getProfile} from "../../actions/auth";
 import {Redirect} from "react-router-dom";
 
 

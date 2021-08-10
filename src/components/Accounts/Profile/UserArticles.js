@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 import {Link} from "react-router-dom";
-import {retrieveMoreUserArticles} from "../actions/articles";
+import {retrieveMoreUserArticles} from "../../../actions/articles";
 import {useDispatch} from "react-redux";
 import {Waypoint} from "react-waypoint";
 

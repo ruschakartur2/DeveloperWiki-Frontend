@@ -6,23 +6,25 @@ import {Router, Switch, Route, Link} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Login from "./components/Accounts/Login";
+import Register from "./components/Accounts/Register";
 import Home from "./components/Home";
-import Profile from "./components/Profile";
-import ArticlesList from "./components/ArticlesList";
-import AddArticle from "./components/AddArticle";
-import ArticleUpdate from "./components/UpdateArticle";
-import Article from "./components/Article";
+import Profile from "./components/Accounts/Profile";
+import ArticlesList from "./components/Articles/ArticlesList";
+import AddArticle from "./components/Articles/AddArticle";
+import ArticleUpdate from "./components/Articles/UpdateArticle";
+import Article from "./components/Articles/Article";
 
 import {logout} from "./actions/auth";
 
 import {history} from "./helpers/history";
-import CommentTree from "./components/CommentTree";
-import AddComment from "./components/AddComment";
+import CommentTree from "./components/Comments/CommentTree";
+import AddComment from "./components/Comments/AddComment";
 import Tag from "./components/Tag";
-import UsersProfile from "./components/UsersProfile";
-import OauthProcess from "./components/OauthProcess";
+import UsersProfile from "./components/Accounts/Profile/UsersProfile";
+import OauthProcess from "./components/Accounts/OauthProcess";
+import AdminHome from "./components/AdminPanel/AdminHome";
+import AdminUsers from "./components/AdminPanel/AdminUsers";
 
 const App = (props) => {
 
@@ -37,6 +39,7 @@ const App = (props) => {
     return (
         <Router history={history}>
             <div>
+                <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
                 <link rel="stylesheet"
                       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
                       integrity="sha256-aAr2Zpq8MZ+YA/D6JtRD3xtrwpEz2IqOS+pWD/7XKIw=" crossOrigin="anonymous"/>
@@ -91,6 +94,12 @@ const App = (props) => {
 
                     </div>
 
+                    {user && user.is_staff && (
+                        <span className="alert alert-light">
+                            <Link to={"/admin"} className="text-dark">(A)</Link>
+                        </span>
+                    )}
+
                     {user ? (
                         <div className="navbar-nav ml-auto">
                             <li className="nav-item">
@@ -136,6 +145,9 @@ const App = (props) => {
                         <Route exact path="/comments" component={CommentTree}/>
                         <Route exact path="/comment/add" component={AddComment}/>
                         <Route exact path="/tags" component={Tag}/>
+
+                        <Route exact path="/admin" component={AdminHome}/>
+                        <Route exact path="/admin/users" component={AdminUsers}/>
 
                     </Switch>
                 </div>

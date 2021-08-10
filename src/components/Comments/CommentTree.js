@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import AddComment from "./AddComment";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteComment} from "../actions/comments";
+import {deleteComment} from "../../actions/comments";
 import {Link} from "react-router-dom";
 
 
 
 const CommentTree = (props) => {
-
 
     const {isLoggedIn} = useSelector(state => state.auth);
     const {user: currentUser} = useSelector((state) => state.auth);
@@ -42,7 +41,7 @@ const CommentTree = (props) => {
         <div className="m-3 ml-5">
             <div className="main-content p-3 d-flex">
                 <div className="author_side border-bottom border-right p-2">
-                    <img src={props.comment.author.image} className="rounded-circle" width={150} height={150} alt=""/>
+                    <img src={props.comment.author.image == null ? ('https://w7.pngwing.com/pngs/858/581/png-transparent-profile-icon-user-computer-icons-system-chinese-wind-title-column-miscellaneous-service-logo.png') : (props.comment.author.image) } className="rounded-circle" width={150} height={150} alt=""/>
                     <h5 className="mt-2 p-2 text-center"><Link
                         to={"/profile/" + props.comment.author.id}>{props.comment.author.email}</Link>
                     </h5>

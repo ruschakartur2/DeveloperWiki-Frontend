@@ -4,7 +4,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import {useDispatch, useSelector} from "react-redux";
-import {getProfile, profileUpdate} from "../actions/auth";
+import {getProfile, profileUpdate} from "../../../actions/auth";
 import {Redirect} from "react-router-dom";
 
 const required = (value) => {

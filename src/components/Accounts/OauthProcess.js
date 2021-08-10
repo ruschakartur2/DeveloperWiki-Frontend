@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {githubLogin} from "../actions/auth";
+import {githubLogin} from "../../actions/auth";
 
 
 const OauthProcess = (props) => {

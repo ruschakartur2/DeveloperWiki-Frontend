@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getArticleByTag, retrieveArticles, findArticleByTitle, setCurrentPage} from "../actions/articles";
+import {getArticleByTag, retrieveArticles, findArticleByTitle, setCurrentPage} from "../../actions/articles";
 
-import {createPages} from '../pagesCreator';
+import {createPages} from '../../pagesCreator';
 import ReactHtmlParser from 'react-html-parser';
 import {Link} from "react-router-dom";
-import {retrieveTags} from "../actions/tags";
+import {retrieveTags} from "../../actions/tags";
 
 const ArticlesList = (props) => {
     const articles = useSelector(state => state.articles.items);

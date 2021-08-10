@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getProfile} from "../actions/auth";
+import {getProfile} from "../../../actions/auth";
 import UpdateProfile from "./UpdateProfile";
 import UserArticles from "./UserArticles";
-import {getUserArticles} from "../actions/articles";
+import {getUserArticles} from "../../../actions/articles";
 import {Redirect} from "react-router-dom";
 
 
@@ -44,9 +44,14 @@ const UsersProfile = (props) => {
 
                 <div className="container">
                     <header className="jumbotron">
-                        <h3>
-                            <strong>{profile.email}</strong> profile
-                        </h3>
+                        <h2>
+                            <strong className={profile.is_staff ? ('text-danger') : '' && profile.is_moder ? ('text-warning') : ''}>{profile.email}</strong> profile
+                            <span className="ml-3">
+                            {profile.is_staff ? (<div className="p-2 mr-1  badge badge-danger">A</div>) : ('')}
+                            {profile.is_moder ? (<div className="p-2  badge badge-warning">M</div>) : ('')}
+                            </span>
+                            </h2>
+
                         <h5>
                             {profile.nickname}
                         </h5>

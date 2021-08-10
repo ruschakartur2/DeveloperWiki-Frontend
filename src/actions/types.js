@@ -25,6 +25,11 @@ export const TAG_RETRIEVE = "TAG_RETRIEVE";
 export const TAG_CREATE = "TAG_CREATE";
 export const TAG_DELETE = "TAG_DELETE";
 
+export const ADMIN_USERS_RETRIEVE = "ADMIN_USERS_RETRIEVE";
+export const ADMIN_USERS_DELETE = "ADMIN_USERS_DELETE";
+export const ADMIN_USERS_UPDATE = "ADMIN_USERS_UPDATE";
+
+
 export const SET_MESSAGE = "SET_MESSAGE";
 export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
 
